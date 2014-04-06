@@ -27,7 +27,6 @@
     AudioServicesCreateSystemSoundID(CFBridgingRetain(soundURL), &soundEffect);
     
     
-    
     self.crystalBall = [[CBACrystalBall alloc] init];
     self.backgroundImageView.animationImages = [[NSArray alloc] initWithObjects:
                                                 [UIImage imageNamed:@"CB00001"],
@@ -95,6 +94,7 @@
     self.backgroundImageView.animationRepeatCount = 1;
     
    }
+
 
 - (void)didReceiveMemoryWarning
 {

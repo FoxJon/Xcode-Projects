@@ -38,6 +38,8 @@
     textField1.placeholder = @"Default Keyboard";
     [self.view addSubview:textField1];
     
+
+    
     
     UITextField *textField2 = [[UITextField alloc]initWithFrame:
                                CGRectMake(20, 100, 280, 30)];
@@ -87,6 +89,11 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField{
     textField.placeholder = @"Enter here";
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 

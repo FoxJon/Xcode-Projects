@@ -40,21 +40,21 @@
      UIControlStateNormal];
     [self.view addSubview:roundRectButton];
     
-//    UIButton *customButton = [UIButton buttonWithType: UIButtonTypeCustom];
-//    [customButton setBackgroundColor: [UIColor lightGrayColor]];
-//    [customButton setTitleColor:[UIColor blackColor] forState:
-//     UIControlStateHighlighted];
-//    //sets background image for normal state
-//    [customButton setBackgroundImage:[UIImage imageNamed:
-//                                      @"Button_Default.png"]
-//                            forState:UIControlStateNormal];
-//    //sets background image for highlighted state
-//    [customButton setBackgroundImage:[UIImage imageNamed:
-//                                      @"Button_Highlighted.png"]
-//                            forState:UIControlStateHighlighted];
-//    [customButton setFrame:CGRectMake(60, 100, 200, 40)];
-//    [customButton setTitle:@"Custom Button" forState:UIControlStateNormal];
-//    [self.view addSubview:customButton];
+    UIButton *customButton = [UIButton buttonWithType: UIButtonTypeCustom];
+    [customButton setBackgroundColor: [UIColor lightGrayColor]];
+    [customButton setTitleColor:[UIColor blackColor] forState:
+     UIControlStateHighlighted];
+    //sets background image for normal state
+    [customButton setBackgroundImage:[UIImage imageNamed:
+                                      @"Button_Default.png"]
+                            forState:UIControlStateNormal];
+    //sets background image for highlighted state
+    [customButton setBackgroundImage:[UIImage imageNamed:
+                                      @"Button_Highlighted.png"]
+                            forState:UIControlStateHighlighted];
+    [customButton setFrame:CGRectMake(60, 100, 200, 40)];
+    [customButton setTitle:@"Custom Button" forState:UIControlStateNormal];
+    [self.view addSubview:customButton];
     
     UIButton *detailDisclosureButton = [UIButton buttonWithType:
                                         UIButtonTypeDetailDisclosure];

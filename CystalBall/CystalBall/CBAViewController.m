@@ -93,6 +93,8 @@
     self.backgroundImageView.animationDuration = 2.5f;
     self.backgroundImageView.animationRepeatCount = 1;
     
+    
+    
    }
 
 

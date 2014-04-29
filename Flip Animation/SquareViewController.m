@@ -27,25 +27,28 @@
 {
     [super viewDidLoad];
     UIView *square = [[UIView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
-    square.backgroundColor = [UIColor redColor];
+    square.backgroundColor = [UIColor cyanColor];
     [self.view addSubview:square];
     
-    square.layer.shadowColor = [UIColor blackColor].CGColor;
-    square.layer.shadowOpacity = 0.75;
-    square.layer.shadowRadius = 15.0;
-    square.layer.shadowOffset = (CGSize){0.0,20.0};
-    
-    [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
-                     animations: ^(void) {
-                         square.transform = CGAffineTransformMakeScale(-1, 1);
-                     }
-                     completion:^(BOOL b) {
-                         square.layer.shadowColor = [UIColor blackColor].CGColor;
-                         square.layer.shadowOpacity = 0.75;
-                         square.layer.shadowRadius = 15.0;
-                         square.layer.shadowOffset = (CGSize){0.0, 20.0};
-                     }];
-    
+    [UIView animateWithDuration:1.0 animations:^{
+        square.backgroundColor = [UIColor blackColor];
+        
+        square.layer.shadowColor = [UIColor blackColor].CGColor;
+        square.layer.shadowOpacity = 0.75;
+        square.layer.shadowRadius = 15.0;
+        square.layer.shadowOffset = (CGSize){0.0,20.0};
+        
+        [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+                         animations: ^(void) {
+                             square.transform = CGAffineTransformMakeScale(-1, 1);
+                         }
+                         completion:^(BOOL b) {
+                             square.layer.shadowColor = [UIColor blackColor].CGColor;
+                             square.layer.shadowOpacity = 0.75;
+                             square.layer.shadowRadius = 15.0;
+                             square.layer.shadowOffset = (CGSize){0.0, 20.0};
+                         }];
+    }];
 }
 
 - (void)didReceiveMemoryWarning

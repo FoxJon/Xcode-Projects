@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B0FC23D5190F3D9600109A8E"
-               BuildableName = "TEMP.app"
+               BuildableName = "Flip Animation.app"
                BlueprintName = "Flip Animation"
                ReferencedContainer = "container:Flip Animation.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B0FC23F0190F3D9700109A8E"
-               BuildableName = "TEMPTests.xctest"
+               BuildableName = "Flip AnimationTests.xctest"
                BlueprintName = "Flip AnimationTests"
                ReferencedContainer = "container:Flip Animation.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FC23D5190F3D9600109A8E"
-            BuildableName = "TEMP.app"
+            BuildableName = "Flip Animation.app"
             BlueprintName = "Flip Animation"
             ReferencedContainer = "container:Flip Animation.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FC23D5190F3D9600109A8E"
-            BuildableName = "TEMP.app"
+            BuildableName = "Flip Animation.app"
             BlueprintName = "Flip Animation"
             ReferencedContainer = "container:Flip Animation.xcodeproj">
          </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FC23D5190F3D9600109A8E"
-            BuildableName = "TEMP.app"
+            BuildableName = "Flip Animation.app"
             BlueprintName = "Flip Animation"
             ReferencedContainer = "container:Flip Animation.xcodeproj">
          </BuildableReference>

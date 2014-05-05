@@ -38,7 +38,7 @@
         square.layer.shadowRadius = 15.0;
         square.layer.shadowOffset = (CGSize){0.0,20.0};
         
-        [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState
+        [UIView animateWithDuration:1.0 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
                          animations: ^(void) {
                              square.transform = CGAffineTransformMakeScale(-1, 1);
                          }

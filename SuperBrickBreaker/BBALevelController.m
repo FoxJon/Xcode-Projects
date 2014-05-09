@@ -63,7 +63,7 @@
         self.bricks = [@[]mutableCopy];
         self.balls = [@[]mutableCopy];
         
-        paddleWidth = 50;
+        paddleWidth = 40;
         
         self.view.backgroundColor = [UIColor colorWithWhite:0.1 alpha:1.0];
         
@@ -96,15 +96,15 @@
     self.collider.collisionDelegate = self;
     self.collider.collisionMode = UICollisionBehaviorModeEverything;
    
-    //self.collider.translatesReferenceBoundsIntoBoundary = YES;
+    self.collider.translatesReferenceBoundsIntoBoundary = YES;
     
-    int w = self.view.frame.size.width;
-    int h = self.view.frame.size.height;
-
-    [self.collider addBoundaryWithIdentifier:@"ceiling" fromPoint:CGPointMake(0, 0) toPoint:CGPointMake(w, 0)];
-    [self.collider addBoundaryWithIdentifier:@"leftWall" fromPoint:CGPointMake(0, 0) toPoint:CGPointMake(0, h)];
-    [self.collider addBoundaryWithIdentifier:@"rightWall" fromPoint:CGPointMake(w, 0) toPoint:CGPointMake(w, h)];
-    [self.collider addBoundaryWithIdentifier:@"floor" fromPoint:CGPointMake(0, h + 10) toPoint:CGPointMake(w, h + 10)];
+//    int w = self.view.frame.size.width;
+//    int h = self.view.frame.size.height;
+//
+//    [self.collider addBoundaryWithIdentifier:@"ceiling" fromPoint:CGPointMake(0, 0) toPoint:CGPointMake(w, 0)];
+//    [self.collider addBoundaryWithIdentifier:@"leftWall" fromPoint:CGPointMake(0, 0) toPoint:CGPointMake(0, h)];
+//    [self.collider addBoundaryWithIdentifier:@"rightWall" fromPoint:CGPointMake(w, 0) toPoint:CGPointMake(w, h)];
+//    [self.collider addBoundaryWithIdentifier:@"floor" fromPoint:CGPointMake(0, h + 10) toPoint:CGPointMake(w, h + 10)];
     
     [self.animator addBehavior:self.collider];
     
@@ -117,9 +117,13 @@
     
     self.paddleDynamicProperties.density = 100000;
     self.bricksDynamicProperties.density = 100000;
+    self.bricksDynamicProperties.elasticity = 1.0;
+    self.bricksDynamicProperties addLinearVelocity:CGPointMake(100, 100) forItem:self.bricks;
 
-    self.ballsDynamicProperties.elasticity = 1.0;
-    self.ballsDynamicProperties.resistance = 0.0;
+    self.ballsDynamicProperties.elasticity = 0.9;
+    self.ballsDynamicProperties.resistance = 0.1;
+    self.ballsDynamicProperties.friction = 0.0;
+    self.ballsDynamicProperties.allowsRotation = YES;
 
 }
 
@@ -155,47 +159,47 @@
     
 }
 
--(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p
-{
-    if ([(NSString *)identifier isEqualToString:@"floor"])
-     {
-         NSLog(@"FLOOR");
-
-         ball = (UIView *)item;
-         newBall = (UIView *)item;
-
-         
-     
-         [ball removeFromSuperview];
-         [self.collider removeItem:ball];
-         [self.balls removeObject:ball];
-         
-         [newBall removeFromSuperview];
-         [self.collider removeItem:newBall];
-         [self.balls removeObject:newBall];
-         
-         lives += 1;
-         [self statsLogger];
-         
-         int totalLives = 3;
-         totalLives -= lives;
-         NSLog(@"LIVES = %d", totalLives);
-         [self.delegate addLives:totalLives];
-         if (totalLives == 0) {
-             [self.delegate gameDone:points];
-         }else
-         {
-         [self createBall];
-         }
-     }
-}
+//-(void)collisionBehavior:(UICollisionBehavior *)behavior beganContactForItem:(id<UIDynamicItem>)item withBoundaryIdentifier:(id<NSCopying>)identifier atPoint:(CGPoint)p
+//{
+//    if ([(NSString *)identifier isEqualToString:@"floor"])
+//     {
+//         NSLog(@"FLOOR");
+//
+//         ball = (UIView *)item;
+//         newBall = (UIView *)item;
+//
+//         
+//     
+//         [ball removeFromSuperview];
+//         [self.collider removeItem:ball];
+//         [self.balls removeObject:ball];
+//         
+//         [newBall removeFromSuperview];
+//         [self.collider removeItem:newBall];
+//         [self.balls removeObject:newBall];
+//         
+//         lives += 1;
+//         [self statsLogger];
+//         
+//         int totalLives = 3;
+//         totalLives -= lives;
+//         NSLog(@"LIVES = %d", totalLives);
+//         [self.delegate addLives:totalLives];
+//         if (totalLives == 0) {
+//             [self.delegate gameDone:points];
+//         }else
+//         {
+//         [self createBall];
+//         }
+//     }
+//}
 
 -(void) statsLogger
 
 {
     NSLog(@"Total bricks = %d", brickCount);
 
-    if (brickCount == brickCols * brickRows) {
+    if (brickCount == (brickCols * brickRows)*2) {
         [self.delegate gameDone:points];
     }
 
@@ -248,7 +252,7 @@
 
 -(void)createPaddle
 {
-    self.paddle = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - paddleWidth)/2, SCREEN_HEIGHT/2, paddleWidth, 6)];
+    self.paddle = [[UIView alloc]initWithFrame:CGRectMake((SCREEN_WIDTH - paddleWidth)/2, self.view.frame.size.height/2, paddleWidth, 6)];
    
     self.paddle.backgroundColor = [UIColor colorWithWhite:0.5 alpha:1.0];
     self.paddle.layer.cornerRadius = 3;
@@ -263,11 +267,11 @@
 
 -(void)createTopBricks
 {
-    brickCols = 10;
+    brickCols = 8;
     brickRows = 4;
     
     float brickWidth = (SCREEN_WIDTH - (brickCols + 1)) / brickCols;
-    float brickHeight = 10;
+    float brickHeight = 20;
     
     
     for (int c = 0; c < brickCols; c++)
@@ -280,7 +284,7 @@
             
             UIView * brick = [[UIView alloc]initWithFrame:CGRectMake(brickX, brickY, brickWidth, brickHeight)];
             
-            brick.layer.cornerRadius = 2;
+            brick.layer.cornerRadius = 4;
             brick.backgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:1.0 alpha:0.7];
             
             int random = arc4random_uniform(5) * 50;
@@ -293,11 +297,11 @@
 }
 -(void)createBottomBricks
 {
-    brickCols = 10;
+    brickCols = 8;
     brickRows = 4;
     
     float brickWidth = (SCREEN_WIDTH - (brickCols + 1)) / brickCols;
-    float brickHeight = 10;
+    float brickHeight = 20;
     
     
     for (int c = 0; c < brickCols; c++)

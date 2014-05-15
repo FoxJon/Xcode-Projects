@@ -38,6 +38,7 @@
     {
         
         SKPhysicsBody * scenePhysics = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(0, 0, size.width,     size.height)];
+        
         self.physicsBody = scenePhysics;
         
         float barArea = ((SCREEN_WIDTH - 20) / 2.0) - 35;
@@ -107,13 +108,37 @@
         floor.physicsBody = floorPhysics;
         
         self.physicsWorld.contactDelegate = self;
+        
+        player2 = [SKSpriteNode spriteNodeWithColor:[SKColor purpleColor] size:CGSizeMake(40, 100)];
+        
+        player2.position = CGPointMake(SCREEN_WIDTH * 0.75, 80);
+        
+        [self addChild:player2];
+        
+        SKPhysicsBody * player2Physics = [SKPhysicsBody bodyWithRectangleOfSize:player2.size];
+        player1.physicsBody = playerPhysics;
+        
+        player2.physicsBody = player2Physics;
+        
+        player2.userData = [@{@"type":@"player2"}mutableCopy];
+        
+        player2. physicsBody.collisionBitMask = 1;
     }
     return self;
 }
 
 -(void)didBeginContact:(SKPhysicsContact *)contact
 {
-    NSLog(@"%@", contact);
+    
+    NSArray * nodes = @[contact.bodyA.node, contact.bodyB.node];
+    
+    for (SKNode * node in nodes) {
+        
+        if ([node.userData[@"type"]isEqualToString:@"fireball"])
+        {
+            [node removeFromParent];
+        }
+    }
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -138,18 +163,25 @@
                 case 0:
                     NSLog(@"punch");
                 {
-                    SKSpriteNode * fireball = [SKSpriteNode spriteNodeWithColor:[SKColor redColor] size:CGSizeMake(10, 10)];
-                    fireball.position = player1.position;
+                    SKSpriteNode * fireball = [SKSpriteNode spriteNodeWithColor:[SKColor blueColor] size:CGSizeMake(5, 5)];
+                    
+                    fireball.position = CGPointMake(player1.position.x + 25.0, player1.position.y);
+                    
+                  //  fireball.position = player1.position;
                     
                     SKPhysicsBody * fireballPhysics = [SKPhysicsBody bodyWithRectangleOfSize:fireball.size];
                     
                     fireball.physicsBody = fireballPhysics;
                     
+                    fireball.physicsBody.contactTestBitMask = 1;
+                    
+                    fireball.userData = [@{@"type":@"fireball"}mutableCopy];
+
+                    
                     [self addChild:fireball];
                     
-                    [fireball.physicsBody applyImpulse:CGVectorMake(8.0, 2.0)];
-                              
-                                                       }
+                    [fireball.physicsBody applyImpulse:CGVectorMake(1.0, 0.5)];
+                }
                     break;
                 case 1:
                     NSLog(@"kick");

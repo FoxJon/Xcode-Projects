@@ -21,6 +21,9 @@
 		B034F4421924F69E00F86126 /* Stuffed_Animal_BattleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F4411924F69E00F86126 /* Stuffed_Animal_BattleTests.m */; };
 		B034F44D1924F6FA00F86126 /* SABViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F44C1924F6FA00F86126 /* SABViewController.m */; };
 		B034F4501924FBF200F86126 /* SABGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F44F1924FBF200F86126 /* SABGameScene.m */; };
+		B034F45319253F5600F86126 /* Fireball.sks in Resources */ = {isa = PBXBuildFile; fileRef = B034F45119253F5600F86126 /* Fireball.sks */; };
+		B034F45419253F5600F86126 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = B034F45219253F5600F86126 /* spark.png */; };
+		B034F456192540DD00F86126 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B034F455192540DD00F86126 /* Explosion.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		B034F44C1924F6FA00F86126 /* SABViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SABViewController.m; sourceTree = "<group>"; };
 		B034F44E1924FBF200F86126 /* SABGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SABGameScene.h; sourceTree = "<group>"; };
 		B034F44F1924FBF200F86126 /* SABGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SABGameScene.m; sourceTree = "<group>"; };
+		B034F45119253F5600F86126 /* Fireball.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fireball.sks; sourceTree = "<group>"; };
+		B034F45219253F5600F86126 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
+		B034F455192540DD00F86126 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +89,9 @@
 		B034F4101924F69E00F86126 = {
 			isa = PBXGroup;
 			children = (
+				B034F455192540DD00F86126 /* Explosion.sks */,
+				B034F45119253F5600F86126 /* Fireball.sks */,
+				B034F45219253F5600F86126 /* spark.png */,
 				B034F44E1924FBF200F86126 /* SABGameScene.h */,
 				B034F44F1924FBF200F86126 /* SABGameScene.m */,
 				B034F44B1924F6FA00F86126 /* SABViewController.h */,
@@ -231,6 +240,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B034F4271924F69E00F86126 /* InfoPlist.strings in Resources */,
+				B034F45419253F5600F86126 /* spark.png in Resources */,
+				B034F456192540DD00F86126 /* Explosion.sks in Resources */,
+				B034F45319253F5600F86126 /* Fireball.sks in Resources */,
 				B034F42F1924F69E00F86126 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,6 +462,7 @@
 				B034F4471924F69E00F86126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B034F4481924F69E00F86126 /* Build configuration list for PBXNativeTarget "Stuffed Animal BattleTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +471,7 @@
 				B034F44A1924F69E00F86126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

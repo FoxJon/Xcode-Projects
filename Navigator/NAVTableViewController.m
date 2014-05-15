@@ -54,7 +54,12 @@
 -(void)loadColorDetailView
 {
     NAVColorViewController * cvc = [[NAVColorViewController alloc]initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:cvc animated:YES];
+    [self.navigationController pushViewController:cvc animated:NO];
+    CATransition* transition = [CATransition animation];
+    transition.duration = .45;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
 
 }
 
@@ -111,7 +116,7 @@
         cell = [[NAVTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
  
-    cell.backgroundColor = [UIColor redColor];
+    cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.1];
 //    cell.index = colors[indexPath.row];
     
     return cell;

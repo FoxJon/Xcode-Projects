@@ -31,7 +31,7 @@
     
     UIView * redRing = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-51, self.view.frame.size.height/2-51, 102, 102)];
     redRing.backgroundColor = [UIColor redColor];
-    redRing.layer.cornerRadius = 51;
+    redRing.layer.cornerRadius = 52;
     [self.view addSubview:redRing];
     
     UIView * blackRing = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-50, self.view.frame.size.height/2-50, 100, 100)];

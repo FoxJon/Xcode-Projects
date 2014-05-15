@@ -26,7 +26,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.view.backgroundColor = [UIColor whiteColor];
+        self.view.backgroundColor = [UIColor blueColor];
         
         drawer = [[UIView alloc]initWithFrame:CGRectMake(-100, 44, 100, self.view.frame.size.height-44)];
         drawer.backgroundColor = [UIColor darkGrayColor];

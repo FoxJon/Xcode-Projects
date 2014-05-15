@@ -18,6 +18,7 @@
     
     NAVViewController * rvc = [[NAVViewController alloc]initWithNibName:nil bundle:nil];
     UINavigationController * nc = [[UINavigationController alloc]initWithRootViewController:rvc];
+
     
     self.window.rootViewController = nc;
     self.window.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.97];

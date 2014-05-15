@@ -7,6 +7,9 @@
 //
 
 #import "NAVTableViewController.h"
+#import "NAVTableViewCell.h"
+#import "NAVColorViewController.h"
+#import "NAVNumberViewController.h"
 
 @interface NAVTableViewController ()
 
@@ -15,6 +18,8 @@
 @implementation NAVTableViewController
 {
     UINavigationController * navController;
+    NSArray * colors;
+    NSArray * numbers;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -22,16 +27,13 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.tableView.rowHeight = 30;
+        self.tableView.rowHeight = 40;
         self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
-
         
-//        NSArray * colors = @[@"Red", @"Yellow", @"Green", @"Blue"];
-//        NSArray * numbers = @[@"One", @"Thirty-two", @"Fourty", @"One Hundred"];
-//        
-//        UIBarButtonItem * backButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(back)];
-//        self.navigationItem.rightBarButtonItem = backButton;
+        self.navigationController.toolbarHidden = NO;
         
+        colors = @[@"Red", @"Yellow", @"Green", @"Blue"];
+        numbers = @[@"One", @"Thirty-two", @"Fourty", @"One Hundred"];
     }
     return self;
 }
@@ -45,11 +47,39 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+
+    //self.clearsSelectionOnViewWillAppear = NO;
+}
+
+-(void)loadColorDetailView
+{
+    NAVColorViewController * cvc = [[NAVColorViewController alloc]initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:cvc animated:YES];
+
+}
+
+-(void)loadNumberDetailView
+{
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.toolbarHidden = NO;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    UIBarButtonItem * button1 = [[UIBarButtonItem alloc]initWithTitle:@"Colors" style:UIBarButtonItemStylePlain target:nil action:nil]; //@selector(loadColorsList)
+    [self.navigationController.toolbar setItems:@[button1] animated:YES];
+    
+    UIBarButtonItem * button2 = [[UIBarButtonItem alloc]initWithTitle:@"Numbers" style:UIBarButtonItemStylePlain target:nil action:nil]; //@selector(loadNumbersList)
+    [self.navigationController.toolbar setItems:@[button1, button2] animated:YES];
+    
+    UIBarButtonItem * flexible = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    
+    [self.navigationController.toolbar setItems:@[flexible, button1, flexible, button2, flexible] animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,22 +93,33 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return 0;
+    if ([colors count] > [numbers count]) {
+        return [colors count];
+    }else{
+        return [numbers count];
+    }
 }
 
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    NAVTableViewController *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-//    
-//    // Configure the cell...
-//    
-//    if (cell==nil) {
-//        cell = [NAVTableViewController]
-//    }
-//    
-//    return cell;
-//}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NAVTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    // Configure the cell...
+    
+    if (cell==nil) {
+        cell = [[NAVTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+ 
+    cell.backgroundColor = [UIColor redColor];
+//    cell.index = colors[indexPath.row];
+    
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self loadColorDetailView];
+}
 
 
 /*

@@ -19,6 +19,15 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.view.backgroundColor = [UIColor blueColor];
+        
+        UIView * drawer = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 100, self.view.frame.size.height)];
+        drawer.backgroundColor = [UIColor darkGrayColor];
+        [self.view addSubview:drawer];
+        
+        UIView * tab = [[UIView alloc]initWithFrame:CGRectMake(100, 50, 20, 30)];
+        tab.backgroundColor = [UIColor redColor];
+        [drawer addSubview:tab];
     }
     return self;
 }
@@ -45,5 +54,8 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+-(BOOL)prefersStatusBarHidden{return YES;}
+
 
 @end

@@ -23,6 +23,7 @@
 		B034F3CB1924125B00F86126 /* NAVColorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3CA1924125B00F86126 /* NAVColorViewController.m */; };
 		B034F3CE1924126500F86126 /* NAVNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3CD1924126500F86126 /* NAVNumberViewController.m */; };
 		B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D01924127300F86126 /* NAVTableViewController.m */; };
+		B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D319243DC900F86126 /* NAVTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,8 @@
 		B034F3CD1924126500F86126 /* NAVNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVNumberViewController.m; sourceTree = "<group>"; };
 		B034F3CF1924127300F86126 /* NAVTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVTableViewController.h; sourceTree = "<group>"; };
 		B034F3D01924127300F86126 /* NAVTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVTableViewController.m; sourceTree = "<group>"; };
+		B034F3D219243DC900F86126 /* NAVTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAVTableViewCell.h; path = ../NAVTableViewCell.h; sourceTree = "<group>"; };
+		B034F3D319243DC900F86126 /* NAVTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAVTableViewCell.m; path = ../NAVTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +130,8 @@
 		B034F39D192411A900F86126 /* Navigator */ = {
 			isa = PBXGroup;
 			children = (
+				B034F3D219243DC900F86126 /* NAVTableViewCell.h */,
+				B034F3D319243DC900F86126 /* NAVTableViewCell.m */,
 				B034F3A6192411A900F86126 /* NAVAppDelegate.h */,
 				B034F3A7192411A900F86126 /* NAVAppDelegate.m */,
 				B034F3A9192411A900F86126 /* Images.xcassets */,
@@ -263,6 +268,7 @@
 				B034F3C81924125100F86126 /* NAVViewController.m in Sources */,
 				B034F3A8192411A900F86126 /* NAVAppDelegate.m in Sources */,
 				B034F3CB1924125B00F86126 /* NAVColorViewController.m in Sources */,
+				B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */,
 				B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */,
 				B034F3A4192411A900F86126 /* main.m in Sources */,
 				B034F3CE1924126500F86126 /* NAVNumberViewController.m in Sources */,

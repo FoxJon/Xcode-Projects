@@ -15,6 +15,9 @@
 @end
 
 @implementation SABViewController
+{
+    UIButton * buttonA;
+}
 
 -(id)init
 {
@@ -30,9 +33,22 @@
         skView.showsFPS = YES;
         skView.showsNodeCount = YES;
         
-        
-        
+        skScene.backgroundColor = [SKColor cyanColor];
+
         [skView presentScene:skScene];
+        
+        buttonA = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-110, SCREEN_HEIGHT-110, 40, 40)];
+        
+        [buttonA addTarget:skScene action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        
+        buttonA.backgroundColor = [UIColor lightGrayColor];
+        buttonA.layer.cornerRadius = 20;
+        
+        [buttonA setTitle:@"A" forState:UIControlStateNormal];
+        
+        [self.view addSubview:buttonA];
+        
+        
     }
     return self;
 }
@@ -43,22 +59,14 @@
     // Do any additional setup after loading the view.
 }
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 -(BOOL)prefersStatusBarHidden {return YES;}
 

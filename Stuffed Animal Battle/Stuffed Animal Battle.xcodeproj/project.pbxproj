@@ -31,6 +31,7 @@
 		B034F45419253F5600F86126 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = B034F45219253F5600F86126 /* spark.png */; };
 		B034F456192540DD00F86126 /* Explosion.sks in Resources */ = {isa = PBXBuildFile; fileRef = B034F455192540DD00F86126 /* Explosion.sks */; };
 		B061164B192665F80076EA71 /* dance.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B061164A192665F80076EA71 /* dance.atlas */; };
+		B061164D1926A3240076EA71 /* powerUp.sks in Resources */ = {isa = PBXBuildFile; fileRef = B061164C1926A3240076EA71 /* powerUp.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,7 @@
 		B034F45219253F5600F86126 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		B034F455192540DD00F86126 /* Explosion.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Explosion.sks; sourceTree = "<group>"; };
 		B061164A192665F80076EA71 /* dance.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = dance.atlas; sourceTree = "<group>"; };
+		B061164C1926A3240076EA71 /* powerUp.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = powerUp.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +105,7 @@
 		B034F4101924F69E00F86126 = {
 			isa = PBXGroup;
 			children = (
+				B061164C1926A3240076EA71 /* powerUp.sks */,
 				B061164A192665F80076EA71 /* dance.atlas */,
 				B0207585192656890027E204 /* char.atlas */,
 				B034F455192540DD00F86126 /* Explosion.sks */,
@@ -264,6 +267,7 @@
 				B034F4271924F69E00F86126 /* InfoPlist.strings in Resources */,
 				B034F45419253F5600F86126 /* spark.png in Resources */,
 				B020757D19255D3F0027E204 /* Beaver.png in Resources */,
+				B061164D1926A3240076EA71 /* powerUp.sks in Resources */,
 				B02075831925997C0027E204 /* Feet.wav in Resources */,
 				B0207586192656890027E204 /* char.atlas in Resources */,
 				B02075841925997C0027E204 /* FireballShot.wav in Resources */,

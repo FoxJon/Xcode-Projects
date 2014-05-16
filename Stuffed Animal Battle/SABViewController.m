@@ -15,9 +15,6 @@
 @end
 
 @implementation SABViewController
-{
-    UIButton * buttonA;
-}
 
 -(id)init
 {
@@ -37,17 +34,68 @@
 
         [skView presentScene:skScene];
         
-        buttonA = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-110, SCREEN_HEIGHT-110, 40, 40)];
+         UIButton * buttonA = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-50, SCREEN_HEIGHT-110, 40, 40)];
         
-        [buttonA addTarget:skScene action:@selector(buttonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [buttonA addTarget:skScene action:@selector(fire:) forControlEvents:UIControlEventTouchUpInside];
         
-        buttonA.backgroundColor = [UIColor lightGrayColor];
+        buttonA.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
         buttonA.layer.cornerRadius = 20;
         
         [buttonA setTitle:@"A" forState:UIControlStateNormal];
         
         [self.view addSubview:buttonA];
         
+         UIButton * buttonB = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-80, SCREEN_HEIGHT-70, 40, 40)];
+        
+        [buttonB addTarget:skScene action:@selector(power:) forControlEvents:UIControlEventTouchUpInside];
+        
+        buttonB.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
+        buttonB.layer.cornerRadius = 20;
+        
+        [buttonB setTitle:@"B" forState:UIControlStateNormal];
+        
+        [self.view addSubview:buttonB];
+        
+        UIButton * dpadUp = [[UIButton alloc]initWithFrame:CGRectMake(40, 200, 30, 30)];
+        
+        [dpadUp addTarget:skScene action:@selector(up:) forControlEvents:UIControlEventTouchUpInside];
+        
+        dpadUp.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
+        dpadUp.layer.cornerRadius = 15;
+        
+        [dpadUp setTitle:nil forState:UIControlStateNormal];
+        
+        [self.view addSubview:dpadUp];
+        
+        UIButton * dpadDown = [[UIButton alloc]initWithFrame:CGRectMake(40, 260, 30, 30)];
+        [dpadDown addTarget:skScene action:@selector(down:) forControlEvents:UIControlEventTouchUpInside];
+        
+        dpadDown.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
+        dpadDown.layer.cornerRadius = 15;
+        
+        [dpadDown setTitle:nil forState:UIControlStateNormal];
+        
+        [self.view addSubview:dpadDown];
+        
+        UIButton * dpadLeft = [[UIButton alloc]initWithFrame:CGRectMake(15, 230, 30, 30)];
+        [dpadLeft addTarget:skScene action:@selector(left:) forControlEvents:UIControlEventTouchUpInside];
+        
+        dpadLeft.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
+        dpadLeft.layer.cornerRadius = 15;
+        
+        [dpadLeft setTitle:nil forState:UIControlStateNormal];
+        
+        [self.view addSubview:dpadLeft];
+        
+        UIButton * dpadRight = [[UIButton alloc]initWithFrame:CGRectMake(65, 230, 30, 30)];
+        [dpadRight addTarget:skScene action:@selector(right:) forControlEvents:UIControlEventTouchUpInside];
+        
+        dpadRight.backgroundColor = [UIColor colorWithRed:200.0/255.0 green:200.0/255.0 blue:200.0/255.0 alpha:0.5];
+        dpadRight.layer.cornerRadius = 15;
+        
+        [dpadRight setTitle:nil forState:UIControlStateNormal];
+        
+        [self.view addSubview:dpadRight];
         
     }
     return self;

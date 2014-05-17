@@ -7,6 +7,8 @@
 //
 
 #import "NAVColorViewController.h"
+#import "NAVTableViewController.h"
+#import "NAVData.h"
 
 @interface NAVColorViewController ()
 
@@ -14,6 +16,7 @@
 
 @implementation NAVColorViewController
 {
+    UIView * frame;
     UIView * drawer;
     UIView * tab;
     UIView * tapLocation1;
@@ -26,13 +29,21 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.view.backgroundColor = [UIColor blueColor];
+        if ([[NAVData mainData].color isEqual: @"Red"]) {
+            self.view.backgroundColor = [UIColor redColor];
+        }else if ([[NAVData mainData].color isEqual: @"Yellow"]) {
+            self.view.backgroundColor = [UIColor yellowColor];
+        }else if ([[NAVData mainData].color isEqual: @"Green"]) {
+            self.view.backgroundColor = [UIColor greenColor];
+        }else if ([[NAVData mainData].color isEqual: @"Blue"]) {
+            self.view.backgroundColor = [UIColor blueColor];
+        }
         
-        drawer = [[UIView alloc]initWithFrame:CGRectMake(-100, 44, 100, self.view.frame.size.height-44)];
+        drawer = [[UIView alloc]initWithFrame:CGRectMake(-75, 44, 75, self.view.frame.size.height-44)];
         drawer.backgroundColor = [UIColor darkGrayColor];
         [self.view addSubview:drawer];
         
-        tab = [[UIView alloc]initWithFrame:CGRectMake(100, 5, 15, 40)];
+        tab = [[UIView alloc]initWithFrame:CGRectMake(75, 5, 15, 40)];
         tab.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
         [drawer addSubview:tab];
         
@@ -40,46 +51,118 @@
         tapLocation1.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tapLocation1];
         
-        tapLocation2 = [[UIView alloc]initWithFrame:CGRectMake(100, 49, 15, 40)];
+        tapLocation2 = [[UIView alloc]initWithFrame:CGRectMake(75, 49, 15, 40)];
         tapLocation2.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tapLocation2];
         
-        UIView * circle = [[UIView alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-40, 23.2, 80, 80)];
-        circle.backgroundColor = [UIColor redColor];
-        [drawer addSubview:circle];
         
-        UIView * square = [[UIView alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-40, 126.4, 80, 80)];
-        square.backgroundColor = [UIColor yellowColor];
-        [drawer addSubview:square];
+        UIButton * circleButton = [[UIButton alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-30, 23.2, 60, 60)];
+        circleButton.backgroundColor = [UIColor cyanColor];
+        [circleButton addTarget:self action:@selector(addCircle) forControlEvents:UIControlEventTouchUpInside];
+        [drawer addSubview:circleButton];
         
-        UIView * triangle = [[UIView alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-40, 229.6, 80, 80)];
-        triangle.backgroundColor = [UIColor orangeColor];
-        [drawer addSubview:triangle];
+        UIButton * squareButton = [[UIButton alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-30, 126.4, 60, 60)];
+        squareButton.backgroundColor = [UIColor orangeColor];
+        [squareButton addTarget:self action:@selector(addSquare) forControlEvents:UIControlEventTouchUpInside];
+        [drawer addSubview:squareButton];
         
-        UIView * diamond = [[UIView alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-40, 332.8, 80, 80)];
-        diamond.backgroundColor = [UIColor greenColor];
-        [drawer addSubview:diamond];
+        UIButton * triangleButton = [[UIButton alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-30, 229.6, 60, 60)];
+        triangleButton.backgroundColor = [UIColor purpleColor];
+        [triangleButton addTarget:self action:@selector(addTriangle) forControlEvents:UIControlEventTouchUpInside];
+        [drawer addSubview:triangleButton];
         
+        UIButton * diamondButton = [[UIButton alloc]initWithFrame:CGRectMake(drawer.frame.size.width/2-30, 332.8, 60, 60)];
+        diamondButton.backgroundColor = [UIColor magentaColor];
+        [diamondButton addTarget:self action:@selector(addDiamond) forControlEvents:UIControlEventTouchUpInside];
+        [drawer addSubview:diamondButton];
+        
+        frame = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-75, self.view.frame.size.height/2-75, 150, 150)];
+        frame.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
+        [self.view addSubview:frame];
     }
     return self;
+}
+
+- (void)addCircle
+{
+    UIView * circleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    circleView.backgroundColor = [UIColor cyanColor];
+    [frame addSubview:circleView];
+    [UIView animateWithDuration:0.3 delay:0.0 options:
+     UIViewAnimationOptionCurveEaseInOut animations:^{
+         
+         drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+     } completion:^(BOOL finished) {
+         
+     }];
+}
+
+- (void)addSquare
+{
+    UIView * squareView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    squareView.backgroundColor = [UIColor orangeColor];
+    [frame addSubview:squareView];
+    [UIView animateWithDuration:0.3 delay:0.0 options:
+     UIViewAnimationOptionCurveEaseInOut animations:^{
+         
+         drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+     } completion:^(BOOL finished) {
+         
+     }];
+}
+
+- (void)addTriangle
+{
+    UIView * triangleView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    triangleView.backgroundColor = [UIColor purpleColor];
+    [frame addSubview:triangleView];
+    [UIView animateWithDuration:0.3 delay:0.0 options:
+     UIViewAnimationOptionCurveEaseInOut animations:^{
+         
+         drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+     } completion:^(BOOL finished) {
+         
+     }];
+}
+
+- (void)addDiamond
+{
+    UIView * diamondView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 150, 150)];
+    diamondView.backgroundColor = [UIColor magentaColor];
+    [frame addSubview:diamondView];
+    [UIView animateWithDuration:0.3 delay:0.0 options:
+     UIViewAnimationOptionCurveEaseInOut animations:^{
+         
+         drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+     } completion:^(BOOL finished) {
+         
+     }];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
-//    UIBarButtonItem * back = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:nil action:nil];
-//    self.navigationItem.rightBarButtonItem = back;
-    self.navigationController.navigationBarHidden = NO;
+
+//    UIBarButtonItem * exitButton = [[UIBarButtonItem alloc]initWithTitle:@"Exit" style:UIBarButtonItemStylePlain target:self action:@selector(exit)];
+//    self.navigationItem.rightBarButtonItem = exitButton;
     
     UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTap:)];
     [self.view addGestureRecognizer:tap];
+}
 
+-(void)exit
+{
+//     NAVTableViewController * tvc = [[NAVTableViewController alloc]initWithNibName:nil bundle:nil];
+//     [self.navigationController pushViewController:tvc animated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     self.navigationController.navigationBar.hidden = NO;
+    self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
+
+
+//    self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
 
 }
@@ -98,7 +181,7 @@
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
          
-    drawer.frame = CGRectMake(0, 44, 100, self.view.frame.size.height-44);
+    drawer.frame = CGRectMake(0, 44, 75, self.view.frame.size.height-44);
      } completion:^(BOOL finished) {
          
      }];
@@ -108,7 +191,7 @@
             [UIView animateWithDuration:0.3 delay:0.0 options:
              UIViewAnimationOptionCurveEaseInOut animations:^{
                  
-                 drawer.frame = CGRectMake(-100, 44, 100, self.view.frame.size.height-44);
+                 drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
              } completion:^(BOOL finished) {
                  
              }];

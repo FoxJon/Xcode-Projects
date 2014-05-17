@@ -24,6 +24,7 @@
 		B034F3CE1924126500F86126 /* NAVNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3CD1924126500F86126 /* NAVNumberViewController.m */; };
 		B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D01924127300F86126 /* NAVTableViewController.m */; };
 		B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D319243DC900F86126 /* NAVTableViewCell.m */; };
+		B03F60FD19280F0300E1ADC3 /* NAVData.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F60FC19280F0300E1ADC3 /* NAVData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		B034F3D01924127300F86126 /* NAVTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVTableViewController.m; sourceTree = "<group>"; };
 		B034F3D219243DC900F86126 /* NAVTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NAVTableViewCell.h; path = ../NAVTableViewCell.h; sourceTree = "<group>"; };
 		B034F3D319243DC900F86126 /* NAVTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAVTableViewCell.m; path = ../NAVTableViewCell.m; sourceTree = "<group>"; };
+		B03F60FB19280F0300E1ADC3 /* NAVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVData.h; sourceTree = "<group>"; };
+		B03F60FC19280F0300E1ADC3 /* NAVData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +95,8 @@
 		B034F38B192411A900F86126 = {
 			isa = PBXGroup;
 			children = (
+				B03F60FB19280F0300E1ADC3 /* NAVData.h */,
+				B03F60FC19280F0300E1ADC3 /* NAVData.m */,
 				B034F3C61924125100F86126 /* NAVViewController.h */,
 				B034F3C71924125100F86126 /* NAVViewController.m */,
 				B034F3CF1924127300F86126 /* NAVTableViewController.h */,
@@ -268,6 +273,7 @@
 				B034F3C81924125100F86126 /* NAVViewController.m in Sources */,
 				B034F3A8192411A900F86126 /* NAVAppDelegate.m in Sources */,
 				B034F3CB1924125B00F86126 /* NAVColorViewController.m in Sources */,
+				B03F60FD19280F0300E1ADC3 /* NAVData.m in Sources */,
 				B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */,
 				B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */,
 				B034F3A4192411A900F86126 /* main.m in Sources */,
@@ -468,6 +474,7 @@
 				B034F3C2192411A900F86126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B034F3C3192411A900F86126 /* Build configuration list for PBXNativeTarget "NavigatorTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +483,7 @@
 				B034F3C5192411A900F86126 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

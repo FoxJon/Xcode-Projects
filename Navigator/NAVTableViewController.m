@@ -10,6 +10,7 @@
 #import "NAVTableViewCell.h"
 #import "NAVColorViewController.h"
 #import "NAVNumberViewController.h"
+#import "NAVData.h"
 
 @interface NAVTableViewController ()
 
@@ -20,6 +21,7 @@
     UINavigationController * navController;
     NSArray * colors;
     NSArray * numbers;
+    
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -65,7 +67,13 @@
 
 -(void)loadNumberDetailView
 {
-    
+    NAVNumberViewController * nvc = [[NAVNumberViewController alloc]initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:nvc animated:NO];
+    CATransition* transition = [CATransition animation];
+    transition.duration = .45;
+    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    transition.type = kCATransitionPush;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -109,7 +117,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NAVTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
+
     // Configure the cell...
     
     if (cell==nil) {
@@ -117,13 +125,23 @@
     }
  
     cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.1];
-//    cell.index = colors[indexPath.row];
+
+    cell.textLabel.text = colors[indexPath.row];
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self loadColorDetailView];
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    
+    if ([cell.textLabel.text isEqualToString:@"Red"]||@"Yellow"||@"Green"||@"Blue") {
+        NSString * chosenColor = cell.textLabel.text;
+        [NAVData mainData].color = chosenColor;
+        [self loadColorDetailView];
+    }
+    
+    
 }
 
 

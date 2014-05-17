@@ -13,6 +13,12 @@
 		B02075831925997C0027E204 /* Feet.wav in Resources */ = {isa = PBXBuildFile; fileRef = B02075801925997C0027E204 /* Feet.wav */; };
 		B02075841925997C0027E204 /* FireballShot.wav in Resources */ = {isa = PBXBuildFile; fileRef = B02075811925997C0027E204 /* FireballShot.wav */; };
 		B0207586192656890027E204 /* char.atlas in Resources */ = {isa = PBXBuildFile; fileRef = B0207585192656890027E204 /* char.atlas */; };
+		B0301EB01926E43100FF00A3 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0301EAE1926E43100FF00A3 /* MyParticle.sks */; };
+		B0301EB11926E43100FF00A3 /* bokeh.png in Resources */ = {isa = PBXBuildFile; fileRef = B0301EAF1926E43100FF00A3 /* bokeh.png */; };
+		B0301EB31926E49B00FF00A3 /* Fireflies.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0301EB21926E49B00FF00A3 /* Fireflies.sks */; };
+		B0301EB51926E50700FF00A3 /* Magic.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0301EB41926E50700FF00A3 /* Magic.sks */; };
+		B0301EB71926E55C00FF00A3 /* Rain.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0301EB61926E55B00FF00A3 /* Rain.sks */; };
+		B0301EB91926E60600FF00A3 /* Snow.sks in Resources */ = {isa = PBXBuildFile; fileRef = B0301EB81926E60600FF00A3 /* Snow.sks */; };
 		B034F41D1924F69E00F86126 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F41C1924F69E00F86126 /* Foundation.framework */; };
 		B034F41F1924F69E00F86126 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F41E1924F69E00F86126 /* CoreGraphics.framework */; };
 		B034F4211924F69E00F86126 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F4201924F69E00F86126 /* UIKit.framework */; };
@@ -51,6 +57,12 @@
 		B02075801925997C0027E204 /* Feet.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Feet.wav; sourceTree = "<group>"; };
 		B02075811925997C0027E204 /* FireballShot.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = FireballShot.wav; sourceTree = "<group>"; };
 		B0207585192656890027E204 /* char.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = char.atlas; sourceTree = "<group>"; };
+		B0301EAE1926E43100FF00A3 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
+		B0301EAF1926E43100FF00A3 /* bokeh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bokeh.png; sourceTree = "<group>"; };
+		B0301EB21926E49B00FF00A3 /* Fireflies.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Fireflies.sks; sourceTree = "<group>"; };
+		B0301EB41926E50700FF00A3 /* Magic.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Magic.sks; sourceTree = "<group>"; };
+		B0301EB61926E55B00FF00A3 /* Rain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Rain.sks; sourceTree = "<group>"; };
+		B0301EB81926E60600FF00A3 /* Snow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Snow.sks; sourceTree = "<group>"; };
 		B034F4191924F69E00F86126 /* Stuffed Animal Battle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Stuffed Animal Battle.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034F41C1924F69E00F86126 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B034F41E1924F69E00F86126 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -105,6 +117,12 @@
 		B034F4101924F69E00F86126 = {
 			isa = PBXGroup;
 			children = (
+				B0301EB81926E60600FF00A3 /* Snow.sks */,
+				B0301EB61926E55B00FF00A3 /* Rain.sks */,
+				B0301EB41926E50700FF00A3 /* Magic.sks */,
+				B0301EB21926E49B00FF00A3 /* Fireflies.sks */,
+				B0301EAE1926E43100FF00A3 /* MyParticle.sks */,
+				B0301EAF1926E43100FF00A3 /* bokeh.png */,
 				B061164C1926A3240076EA71 /* powerUp.sks */,
 				B061164A192665F80076EA71 /* dance.atlas */,
 				B0207585192656890027E204 /* char.atlas */,
@@ -268,14 +286,20 @@
 				B034F45419253F5600F86126 /* spark.png in Resources */,
 				B020757D19255D3F0027E204 /* Beaver.png in Resources */,
 				B061164D1926A3240076EA71 /* powerUp.sks in Resources */,
+				B0301EB31926E49B00FF00A3 /* Fireflies.sks in Resources */,
+				B0301EB11926E43100FF00A3 /* bokeh.png in Resources */,
 				B02075831925997C0027E204 /* Feet.wav in Resources */,
 				B0207586192656890027E204 /* char.atlas in Resources */,
+				B0301EB71926E55C00FF00A3 /* Rain.sks in Resources */,
 				B02075841925997C0027E204 /* FireballShot.wav in Resources */,
 				B034F456192540DD00F86126 /* Explosion.sks in Resources */,
 				B02075821925997C0027E204 /* Explo.wav in Resources */,
+				B0301EB51926E50700FF00A3 /* Magic.sks in Resources */,
 				B061164B192665F80076EA71 /* dance.atlas in Resources */,
+				B0301EB01926E43100FF00A3 /* MyParticle.sks in Resources */,
 				B034F45319253F5600F86126 /* Fireball.sks in Resources */,
 				B034F42F1924F69E00F86126 /* Images.xcassets in Resources */,
+				B0301EB91926E60600FF00A3 /* Snow.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

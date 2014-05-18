@@ -41,7 +41,6 @@
         
         drawer = [[UIView alloc]initWithFrame:CGRectMake(-75, 44, 75, self.view.frame.size.height-44)];
         drawer.backgroundColor = [UIColor darkGrayColor];
-        [self.view addSubview:drawer];
         
         tab = [[UIView alloc]initWithFrame:CGRectMake(75, 5, 15, 40)];
         tab.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
@@ -78,6 +77,7 @@
         
         frame = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-75, self.view.frame.size.height/2-75, 150, 150)];
         frame.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
+        
         [self.view addSubview:frame];
     }
     return self;
@@ -161,11 +161,21 @@
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.navigationBar.backgroundColor = [UIColor whiteColor];
 
-
 //    self.navigationItem.hidesBackButton = YES;
     self.navigationController.toolbarHidden = YES;
 
 }
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.view addSubview:drawer];
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [drawer removeFromSuperview];
+}
+
 
 - (void)didReceiveMemoryWarning
 {

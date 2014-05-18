@@ -53,27 +53,28 @@
     //self.clearsSelectionOnViewWillAppear = NO;
 }
 
+
 -(void)loadColorDetailView
 {
     NAVColorViewController * cvc = [[NAVColorViewController alloc]initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:cvc animated:NO];
-    CATransition* transition = [CATransition animation];
-    transition.duration = .45;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionPush;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController pushViewController:cvc animated:YES];
+//    CATransition* transition = [CATransition animation];
+//    transition.duration = .45;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = kCATransitionPush;
+//    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
 
 }
 
 -(void)loadNumberDetailView
 {
     NAVNumberViewController * nvc = [[NAVNumberViewController alloc]initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:nvc animated:NO];
-    CATransition* transition = [CATransition animation];
-    transition.duration = .45;
-    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    transition.type = kCATransitionPush;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    [self.navigationController pushViewController:nvc animated:YES];
+//    CATransition* transition = [CATransition animation];
+//    transition.duration = .45;
+//    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    transition.type = kCATransitionPush;
+//    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -113,35 +114,41 @@
     }
 }
 
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NAVTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-
+    
     // Configure the cell...
     
     if (cell==nil) {
         cell = [[NAVTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
- 
+    
     cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.1];
-
+    
     cell.textLabel.text = colors[indexPath.row];
     
     return cell;
 }
 
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     
+    NSLog(@"%@", cell.textLabel.text);
     
-    if ([cell.textLabel.text isEqualToString:@"Red"]||@"Yellow"||@"Green"||@"Blue") {
+//    if ([cell.textLabel.text isEqualToString:@"Red"])
+//    {
+//        NSLog(@"IF");
         NSString * chosenColor = cell.textLabel.text;
         [NAVData mainData].color = chosenColor;
         [self loadColorDetailView];
-    }
-    
-    
+//    }else{
+//        NSLog(@"ELSE");
+//        NSString * chosenNumber = cell.textLabel.text;
+//        [NAVData mainData].number = chosenNumber;
+//        [self loadNumberDetailView];
+//    }
 }
 
 

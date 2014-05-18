@@ -7,6 +7,7 @@
 //
 
 #import "NAVNumberViewController.h"
+#import "NAVData.h"
 
 @interface NAVNumberViewController ()
 
@@ -19,6 +20,30 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        self.view.backgroundColor = [UIColor whiteColor];
+        
+        UIImageView *chalkboard = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 - 137.5, 100, 275, 183)];
+        chalkboard.image = [UIImage imageNamed:@"chalkboard.png"];
+        [self.view addSubview:chalkboard];
+        
+        UILabel * numberFrame = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 275, 183)];
+        numberFrame.backgroundColor = [UIColor clearColor];
+        numberFrame.layer.cornerRadius = 100;
+        numberFrame.textColor = [UIColor whiteColor];
+        numberFrame.font = [UIFont fontWithName:@"Chalkduster" size:100];
+        numberFrame.textAlignment = 1;
+        if ([[NAVData mainData].number isEqual: @"One"]) {
+            numberFrame.text = @"1";
+        }else if ([[NAVData mainData].number isEqual: @"Thirty-two"]) {
+            numberFrame.text = @"32";
+        }else if ([[NAVData mainData].number isEqual: @"Fourty"]) {
+            numberFrame.text = @"40";
+        }else if ([[NAVData mainData].number isEqual: @"One Hundred"]) {
+            numberFrame.text = @"100";
+        }
+        
+        [chalkboard addSubview:numberFrame];
+        
     }
     return self;
 }
@@ -27,6 +52,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -46,6 +72,6 @@
 }
 */
 
-//-(BOOL)prefersStatusBarHidden{return YES;}
+-(BOOL)prefersStatusBarHidden{return YES;}
 
 @end

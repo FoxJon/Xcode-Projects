@@ -25,6 +25,7 @@
 		B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D01924127300F86126 /* NAVTableViewController.m */; };
 		B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D319243DC900F86126 /* NAVTableViewCell.m */; };
 		B03F60FD19280F0300E1ADC3 /* NAVData.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F60FC19280F0300E1ADC3 /* NAVData.m */; };
+		B03F60FF19284C3600E1ADC3 /* chalkboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B03F60FE19284C3600E1ADC3 /* chalkboard.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		B034F3D319243DC900F86126 /* NAVTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NAVTableViewCell.m; path = ../NAVTableViewCell.m; sourceTree = "<group>"; };
 		B03F60FB19280F0300E1ADC3 /* NAVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVData.h; sourceTree = "<group>"; };
 		B03F60FC19280F0300E1ADC3 /* NAVData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVData.m; sourceTree = "<group>"; };
+		B03F60FE19284C3600E1ADC3 /* chalkboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chalkboard.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +150,7 @@
 		B034F39E192411A900F86126 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B03F60FE19284C3600E1ADC3 /* chalkboard.png */,
 				B034F39F192411A900F86126 /* Navigator-Info.plist */,
 				B034F3A0192411A900F86126 /* InfoPlist.strings */,
 				B034F3A3192411A900F86126 /* main.m */,
@@ -250,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03F60FF19284C3600E1ADC3 /* chalkboard.png in Resources */,
 				B034F3A2192411A900F86126 /* InfoPlist.strings in Resources */,
 				B034F3AA192411A900F86126 /* Images.xcassets in Resources */,
 			);

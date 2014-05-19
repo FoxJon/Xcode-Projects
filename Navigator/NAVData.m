@@ -22,16 +22,5 @@
     return singleton;
 }
 
--(void)setColor:(NSString *)color
-{
-    _color = color;
-  //  NSLog(@"color is %@", _color);
-}
-
--(void)setNumber:(NSString *)number
-{
-    _number = number;
-    NSLog(@"red score is %ld", (long)_number);
-}
 
 @end

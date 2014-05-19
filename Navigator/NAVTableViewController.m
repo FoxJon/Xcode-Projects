@@ -22,6 +22,9 @@
     NSArray * colors;
     NSArray * numbers;
     
+    NSArray * selectedArray;
+    
+//    BOOL colorsIsSelected;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -34,8 +37,12 @@
         
         self.navigationController.toolbarHidden = NO;
         
+//        colorsIsSelected = YES;
+        
         colors = @[@"Red", @"Yellow", @"Green", @"Blue"];
         numbers = @[@"One", @"Thirty-two", @"Fourty", @"One Hundred"];
+        
+        selectedArray = colors;
     }
     return self;
 }
@@ -63,7 +70,6 @@
 //    transition.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
 //    transition.type = kCATransitionPush;
 //    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-
 }
 
 -(void)loadNumberDetailView
@@ -79,21 +85,36 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [self.tableView reloadData];
+
     self.navigationController.navigationBar.hidden = NO;
     self.navigationController.toolbarHidden = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    UIBarButtonItem * button1 = [[UIBarButtonItem alloc]initWithTitle:@"Colors" style:UIBarButtonItemStylePlain target:nil action:nil]; //@selector(loadColorsList)
+    UIBarButtonItem * button1 = [[UIBarButtonItem alloc]initWithTitle:@"Colors" style:UIBarButtonItemStylePlain target:self action:@selector(loadList:)];
     [self.navigationController.toolbar setItems:@[button1] animated:YES];
     
-    UIBarButtonItem * button2 = [[UIBarButtonItem alloc]initWithTitle:@"Numbers" style:UIBarButtonItemStylePlain target:nil action:nil]; //@selector(loadNumbersList)
+    UIBarButtonItem * button2 = [[UIBarButtonItem alloc]initWithTitle:@"Numbers" style:UIBarButtonItemStylePlain target:self action:@selector(loadList:)];
     [self.navigationController.toolbar setItems:@[button1, button2] animated:YES];
     
     UIBarButtonItem * flexible = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
     [self.navigationController.toolbar setItems:@[flexible, button1, flexible, button2, flexible] animated:YES];
+}
+
+-(void)loadList:(UIBarButtonItem *)sender
+{
+    // will return true if Colors else return false if Numbers
+//    colorsIsSelected = [sender.title isEqualToString:@"Colors"];
+    
+    if ([sender.title isEqualToString:@"Colors"]) {
+        selectedArray = colors;
+    }else{
+        selectedArray = numbers;
+    }
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -106,12 +127,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    return [selectedArray count];
+    
     // Return the number of rows in the section.
-    if ([colors count] > [numbers count]) {
-        return [colors count];
-    }else{
-        return [numbers count];
-    }
+//    if (colorsIsSelected) {
+//        return [colors count];
+//    }else{
+//        return [numbers count];
+//    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -124,31 +147,42 @@
         cell = [[NAVTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
     
-    cell.backgroundColor = [UIColor colorWithWhite:0.9 alpha:0.1];
     
-    cell.textLabel.text = colors[indexPath.row];
+    cell.textLabel.text = selectedArray[indexPath.row];
     
+    if ([cell.textLabel.text isEqualToString:@"Red"]) {
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor redColor];
+    } else if ([cell.textLabel.text isEqualToString:@"Yellow"]){
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor yellowColor];
+    } else if ([cell.textLabel.text isEqualToString:@"Green"]){
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor greenColor];
+    } else if ([cell.textLabel.text isEqualToString:@"Blue"]){
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.backgroundColor = [UIColor blueColor];
+    }else if (![cell.textLabel.text isEqualToString:@"Blue"]){
+        cell.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.02];
+        cell.textLabel.textColor = [UIColor blackColor];
+    }
     return cell;
 }
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
-    NSLog(@"%@", cell.textLabel.text);
-    
-//    if ([cell.textLabel.text isEqualToString:@"Red"])
-//    {
-//        NSLog(@"IF");
+        
+    if ([selectedArray[0] isEqualToString:@"Red"])
+    {
         NSString * chosenColor = cell.textLabel.text;
         [NAVData mainData].color = chosenColor;
         [self loadColorDetailView];
-//    }else{
-//        NSLog(@"ELSE");
-//        NSString * chosenNumber = cell.textLabel.text;
-//        [NAVData mainData].number = chosenNumber;
-//        [self loadNumberDetailView];
-//    }
+    }else{
+        NSString * chosenNumber = cell.textLabel.text;
+        [NAVData mainData].number = chosenNumber;
+        [self loadNumberDetailView];
+    }
 }
 
 

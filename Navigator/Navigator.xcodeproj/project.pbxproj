@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B018F5421929228D007B539A /* NAVCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = B018F5411929228D007B539A /* NAVCircle.m */; };
+		B018F54519298607007B539A /* NAVTriangle.m in Sources */ = {isa = PBXBuildFile; fileRef = B018F54419298607007B539A /* NAVTriangle.m */; };
+		B018F54819298A1B007B539A /* NAVDiamond.m in Sources */ = {isa = PBXBuildFile; fileRef = B018F54719298A1B007B539A /* NAVDiamond.m */; };
+		B018F54B1929A12B007B539A /* NAVSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = B018F54A1929A12B007B539A /* NAVSquare.m */; };
 		B034F398192411A900F86126 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F397192411A900F86126 /* Foundation.framework */; };
 		B034F39A192411A900F86126 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F399192411A900F86126 /* CoreGraphics.framework */; };
 		B034F39C192411A900F86126 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B034F39B192411A900F86126 /* UIKit.framework */; };
@@ -26,6 +30,7 @@
 		B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B034F3D319243DC900F86126 /* NAVTableViewCell.m */; };
 		B03F60FD19280F0300E1ADC3 /* NAVData.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F60FC19280F0300E1ADC3 /* NAVData.m */; };
 		B03F60FF19284C3600E1ADC3 /* chalkboard.png in Resources */ = {isa = PBXBuildFile; fileRef = B03F60FE19284C3600E1ADC3 /* chalkboard.png */; };
+		B03F6102192903ED00E1ADC3 /* NAVSettingsTab.m in Sources */ = {isa = PBXBuildFile; fileRef = B03F6101192903ED00E1ADC3 /* NAVSettingsTab.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +44,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B018F5401929228D007B539A /* NAVCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVCircle.h; sourceTree = "<group>"; };
+		B018F5411929228D007B539A /* NAVCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVCircle.m; sourceTree = "<group>"; };
+		B018F54319298607007B539A /* NAVTriangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVTriangle.h; sourceTree = "<group>"; };
+		B018F54419298607007B539A /* NAVTriangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVTriangle.m; sourceTree = "<group>"; };
+		B018F54619298A1B007B539A /* NAVDiamond.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVDiamond.h; sourceTree = "<group>"; };
+		B018F54719298A1B007B539A /* NAVDiamond.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVDiamond.m; sourceTree = "<group>"; };
+		B018F5491929A12B007B539A /* NAVSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVSquare.h; sourceTree = "<group>"; };
+		B018F54A1929A12B007B539A /* NAVSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVSquare.m; sourceTree = "<group>"; };
 		B034F394192411A900F86126 /* Navigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B034F397192411A900F86126 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B034F399192411A900F86126 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -68,6 +81,8 @@
 		B03F60FB19280F0300E1ADC3 /* NAVData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVData.h; sourceTree = "<group>"; };
 		B03F60FC19280F0300E1ADC3 /* NAVData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVData.m; sourceTree = "<group>"; };
 		B03F60FE19284C3600E1ADC3 /* chalkboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chalkboard.png; sourceTree = "<group>"; };
+		B03F6100192903ED00E1ADC3 /* NAVSettingsTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NAVSettingsTab.h; sourceTree = "<group>"; };
+		B03F6101192903ED00E1ADC3 /* NAVSettingsTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NAVSettingsTab.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +112,7 @@
 		B034F38B192411A900F86126 = {
 			isa = PBXGroup;
 			children = (
+				B03F61031929075100E1ADC3 /* Drawings */,
 				B03F60FB19280F0300E1ADC3 /* NAVData.h */,
 				B03F60FC19280F0300E1ADC3 /* NAVData.m */,
 				B034F3C61924125100F86126 /* NAVViewController.h */,
@@ -175,6 +191,23 @@
 				B034F3B9192411A900F86126 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B03F61031929075100E1ADC3 /* Drawings */ = {
+			isa = PBXGroup;
+			children = (
+				B03F6100192903ED00E1ADC3 /* NAVSettingsTab.h */,
+				B03F6101192903ED00E1ADC3 /* NAVSettingsTab.m */,
+				B018F5401929228D007B539A /* NAVCircle.h */,
+				B018F5411929228D007B539A /* NAVCircle.m */,
+				B018F5491929A12B007B539A /* NAVSquare.h */,
+				B018F54A1929A12B007B539A /* NAVSquare.m */,
+				B018F54319298607007B539A /* NAVTriangle.h */,
+				B018F54419298607007B539A /* NAVTriangle.m */,
+				B018F54619298A1B007B539A /* NAVDiamond.h */,
+				B018F54719298A1B007B539A /* NAVDiamond.m */,
+			);
+			name = Drawings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,11 +307,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B018F54519298607007B539A /* NAVTriangle.m in Sources */,
 				B034F3C81924125100F86126 /* NAVViewController.m in Sources */,
+				B018F5421929228D007B539A /* NAVCircle.m in Sources */,
+				B018F54B1929A12B007B539A /* NAVSquare.m in Sources */,
 				B034F3A8192411A900F86126 /* NAVAppDelegate.m in Sources */,
 				B034F3CB1924125B00F86126 /* NAVColorViewController.m in Sources */,
+				B03F6102192903ED00E1ADC3 /* NAVSettingsTab.m in Sources */,
 				B03F60FD19280F0300E1ADC3 /* NAVData.m in Sources */,
 				B034F3D419243DC900F86126 /* NAVTableViewCell.m in Sources */,
+				B018F54819298A1B007B539A /* NAVDiamond.m in Sources */,
 				B034F3D11924127300F86126 /* NAVTableViewController.m in Sources */,
 				B034F3A4192411A900F86126 /* main.m in Sources */,
 				B034F3CE1924126500F86126 /* NAVNumberViewController.m in Sources */,

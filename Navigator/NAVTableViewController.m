@@ -32,7 +32,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
-        self.tableView.rowHeight = 40;
+        self.tableView.rowHeight = 80;
         self.tableView.separatorInset = UIEdgeInsetsMake(0, 20, 0, 20);
         
         self.navigationController.toolbarHidden = NO;

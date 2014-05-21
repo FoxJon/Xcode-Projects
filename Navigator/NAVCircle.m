@@ -19,14 +19,43 @@
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
+//- (void)drawRect:(CGRect)rect
+//{
+//    CGContextRef context = UIGraphicsGetCurrentContext();
+//    
+//    [[UIColor cyanColor] set];
+//    CGContextFillEllipseInRect(context, CGRectMake(2, 2, 55, 55));
+//
+//    CGContextStrokePath(context);
+//}
+
+- (void) drawRect:(CGRect)rect
 {
+    // Create a gradient from white to red
+    CGFloat colors [] = {
+        0.000, 1.000, 1.000, 1.0,
+        0.000, 0.792, 0.792, 1.0
+    };
+    
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    [[UIColor cyanColor] set];
-    CGContextFillEllipseInRect(context, CGRectMake(2, 2, 55, 55));
-
-    CGContextStrokePath(context);
+    CGContextSaveGState(context);
+    CGContextAddEllipseInRect(context, rect);
+    CGContextClip(context);
+    
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
+    
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
+    
+    CGContextRestoreGState(context);
+    
+    CGContextAddEllipseInRect(context, rect);
 }
 
 @end

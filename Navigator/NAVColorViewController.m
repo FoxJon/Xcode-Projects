@@ -53,22 +53,22 @@
             self.view.backgroundColor = [UIColor blueColor];
         }
         
-        drawer = [[UIView alloc]initWithFrame:CGRectMake(-75, 44, 75, self.view.frame.size.height-44)];
+        drawer = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44)];
         drawer.backgroundColor = [UIColor darkGrayColor];
         
-        tab = [[UIView alloc]initWithFrame:CGRectMake(75, 5, 15, 40)];
+        tab = [[UIView alloc]initWithFrame:CGRectMake(-20, 15, 20, 45)];
         //tab.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
         [drawer addSubview:tab];
         
-        tabView = [[NAVSettingsTab alloc]initWithFrame:CGRectMake(0, 0, 15, 40)];
+        tabView = [[NAVSettingsTab alloc]initWithFrame:CGRectMake(0, 10, 20, 45)];
         tabView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
         [tab addSubview:tabView];
         
-        tapLocation1 = [[UIView alloc]initWithFrame:CGRectMake(0, 49, 15, 40)];
+        tapLocation1 = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 20, 67, 20, 45)];
         tapLocation1.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tapLocation1];
         
-        tapLocation2 = [[UIView alloc]initWithFrame:CGRectMake(75, 49, 15, 40)];
+        tapLocation2 = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width-95, 67, 20, 45)];
         tapLocation2.backgroundColor = [UIColor clearColor];
         [self.view addSubview:tapLocation2];
         
@@ -121,19 +121,19 @@
 - (void)addCircle
 {
     if (squareDraw.frame.origin.x == 0) {
-        squareDraw.frame = CGRectMake(85, 165, 150, 150);
+        squareDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:squareDraw];
     }else if (diamondDraw.frame.origin.x == 0) {
-        diamondDraw.frame = CGRectMake(85, 165, 150, 150);
+        diamondDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:diamondDraw];
     }else if (triangleDraw.frame.origin.x == 0) {
-        triangleDraw.frame = CGRectMake(85, 165, 150, 150);
+        triangleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:triangleDraw];
     }
     
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
-         circleDraw.frame = CGRectMake(85, 165, 150, 150);
+         circleDraw.frame = CGRectMake(-158, 165, 150, 150);
          squareDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 126.4, 60, 60);
          triangleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 229.6, 60, 60);
          diamondDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 332.8, 60, 60);
@@ -144,7 +144,7 @@
         [UIView animateWithDuration:0.3 delay:0.0 options:
          UIViewAnimationOptionCurveEaseInOut animations:^{
              
-             drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+             drawer.frame = CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44);
          } completion:^(BOOL finished) {
           }];
      }];
@@ -153,20 +153,20 @@
 - (void)addSquare
 {
     if (circleDraw.frame.origin.x == 0) {
-        circleDraw.frame = CGRectMake(85, 165, 150, 150);
+        circleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:circleDraw];
     }else if (diamondDraw.frame.origin.x == 0) {
-        diamondDraw.frame = CGRectMake(85, 165, 150, 150);
+        diamondDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:diamondDraw];
     }else if (triangleDraw.frame.origin.x == 0) {
-        triangleDraw.frame = CGRectMake(85, 165, 150, 150);
+        triangleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:triangleDraw];
     }
     
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
          circleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 23.2, 60, 60);
-         squareDraw.frame = CGRectMake(85, 165, 150, 150);
+         squareDraw.frame = CGRectMake(-158, 165, 150, 150);
          triangleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 229.6, 60, 60);
          diamondDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 332.8, 60, 60);
      } completion:^(BOOL finished) {
@@ -175,7 +175,7 @@
         
         [UIView animateWithDuration:0.3 delay:0.0 options:
          UIViewAnimationOptionCurveEaseInOut animations:^{
-             drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+             drawer.frame = CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44);
          } completion:^(BOOL finished) {
     
          }];
@@ -185,18 +185,18 @@
 - (void)addTriangle
 {
     if (circleDraw.frame.origin.x == 0) {
-        circleDraw.frame = CGRectMake(85, 165, 150, 150);
+        circleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:circleDraw];
     }else if (squareDraw.frame.origin.x == 0) {
-        squareDraw.frame = CGRectMake(85, 165, 150, 150);
+        squareDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:squareDraw];
     }else if (diamondDraw.frame.origin.x == 0) {
-        diamondDraw.frame = CGRectMake(85, 165, 150, 150);
+        diamondDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:diamondDraw];
     }
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
-         triangleDraw.frame = CGRectMake(85, 165, 150, 150);
+         triangleDraw.frame = CGRectMake(-158, 165, 150, 150);
          squareDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 126.4, 60, 60);
          circleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 23.2, 60, 60);
          diamondDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 332.8, 60, 60);
@@ -207,7 +207,7 @@
          [UIView animateWithDuration:0.3 delay:0.0 options:
           UIViewAnimationOptionCurveEaseInOut animations:^{
               
-              drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+              drawer.frame = CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44);
           } completion:^(BOOL finished) {
           }];
      }];
@@ -216,18 +216,18 @@
 - (void)addDiamond
 {
     if (circleDraw.frame.origin.x == 0) {
-        circleDraw.frame = CGRectMake(85, 165, 150, 150);
+        circleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:circleDraw];
     }else if (squareDraw.frame.origin.x == 0) {
-        squareDraw.frame = CGRectMake(85, 165, 150, 150);
+        squareDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:squareDraw];
     }else if (triangleDraw.frame.origin.x == 0) {
-        triangleDraw.frame = CGRectMake(85, 165, 150, 150);
+        triangleDraw.frame = CGRectMake(-158, 165, 150, 150);
         [drawer addSubview:triangleDraw];
     }
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
-         diamondDraw.frame = CGRectMake(85, 165, 150, 150);
+         diamondDraw.frame = CGRectMake(-158, 165, 150, 150);
          squareDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 126.4, 60, 60);
          triangleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 229.6, 60, 60);
          circleDraw.frame = CGRectMake(drawer.frame.size.width/2-30, 23.2, 60, 60);
@@ -238,7 +238,7 @@
          [UIView animateWithDuration:0.3 delay:0.0 options:
           UIViewAnimationOptionCurveEaseInOut animations:^{
               
-              drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+              drawer.frame = CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44);
           } completion:^(BOOL finished) {
           }];
      }];
@@ -285,7 +285,7 @@
     [UIView animateWithDuration:0.3 delay:0.0 options:
      UIViewAnimationOptionCurveEaseInOut animations:^{
          
-    drawer.frame = CGRectMake(0, 44, 75, self.view.frame.size.height-44);
+    drawer.frame = CGRectMake(self.view.frame.size.width -75, 44, 75, self.view.frame.size.height-44);
      } completion:^(BOOL finished) {
          
      }];
@@ -295,7 +295,7 @@
             [UIView animateWithDuration:0.3 delay:0.0 options:
              UIViewAnimationOptionCurveEaseInOut animations:^{
                  
-                 drawer.frame = CGRectMake(-75, 44, 75, self.view.frame.size.height-44);
+                 drawer.frame = CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44);
              } completion:^(BOOL finished) {
                  
              }];

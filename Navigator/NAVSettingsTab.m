@@ -31,22 +31,30 @@
     
     //[self.tintColor set];
     
-    CGContextMoveToPoint(context, 0, 0);
-    CGContextAddLineToPoint(context, 15, 5);
-    CGContextMoveToPoint(context, 0, 14);
-    CGContextAddLineToPoint(context, 11, 14);
     
-    CGContextMoveToPoint(context,15, 5);
-    CGContextAddLineToPoint(context, 15, 35);
-    CGContextMoveToPoint(context, 0, 20);
-    CGContextAddLineToPoint(context, 11, 20);
+    CGContextMoveToPoint(context, 4, 13.75);
+    CGContextAddLineToPoint(context, 16, 13.75);
     
-    CGContextMoveToPoint(context, 15, 35);
-    CGContextAddLineToPoint(context, 0, 40);
-    CGContextMoveToPoint(context, 0, 26);
-    CGContextAddLineToPoint(context, 11, 26);
+    CGContextMoveToPoint(context, 4, 22.5);
+    CGContextAddLineToPoint(context, 16, 22.5);
+    
+    CGContextMoveToPoint(context, 4, 31.25);
+    CGContextAddLineToPoint(context, 16, 31.25);
     
     CGContextStrokePath(context);
+    
+    CGContextBeginPath(context);
+    CGContextMoveToPoint(context, 20, 0);
+    CGContextAddLineToPoint(context, 0, 5);
+    CGContextAddLineToPoint(context, 0, 40);
+    CGContextAddLineToPoint(context, 20, 45);
+    CGContextClosePath(context);
+    
+    [[UIColor colorWithWhite:0.7 alpha:0.3] set];
+    
+    CGContextFillPath(context);
+    
 }
+
 
 @end

@@ -54,7 +54,7 @@
         }
         
         drawer = [[UIView alloc]initWithFrame:CGRectMake(self.view.frame.size.width, 44, 75, self.view.frame.size.height-44)];
-        drawer.backgroundColor = [UIColor darkGrayColor];
+        drawer.backgroundColor = [UIColor colorWithWhite:0.6 alpha:0.3];
         
         tab = [[UIView alloc]initWithFrame:CGRectMake(-20, 15, 20, 45)];
         //tab.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
@@ -278,6 +278,7 @@
 }
 
 - (void)singleTap:(UITapGestureRecognizer *)recognizer {
+    
     CGPoint location = [recognizer locationInView:[recognizer.view superview]];    
     
     if (CGRectContainsPoint(tapLocation1.frame, location))    {

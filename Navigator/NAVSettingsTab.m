@@ -50,7 +50,7 @@
     CGContextAddLineToPoint(context, 20, 45);
     CGContextClosePath(context);
     
-    [[UIColor colorWithWhite:0.7 alpha:0.3] set];
+    [[UIColor colorWithWhite:0.6 alpha:0.3] set];
     
     CGContextFillPath(context);
     

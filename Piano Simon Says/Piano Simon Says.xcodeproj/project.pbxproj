@@ -20,19 +20,7 @@
 		B0FBA6041931FBD800AF1C08 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6021931FBD800AF1C08 /* InfoPlist.strings */; };
 		B0FBA6061931FBD800AF1C08 /* Piano_Simon_SaysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6051931FBD800AF1C08 /* Piano_Simon_SaysTests.m */; };
 		B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */; };
-		B0FBA61B193221DE00AF1C08 /* PSSCNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA61A193221DE00AF1C08 /* PSSCNotePlayer.m */; };
-		B0FBA61E1932253E00AF1C08 /* PSSCsNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA61D1932253E00AF1C08 /* PSSCsNotePlayer.m */; };
-		B0FBA6351932277000AF1C08 /* PSSANotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6201932276F00AF1C08 /* PSSANotePlayer.m */; };
-		B0FBA6361932277000AF1C08 /* PSSAsNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6221932276F00AF1C08 /* PSSAsNotePlayer.m */; };
-		B0FBA6371932277000AF1C08 /* PSSBNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6241932276F00AF1C08 /* PSSBNotePlayer.m */; };
-		B0FBA6381932277000AF1C08 /* PSSC2NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6261932276F00AF1C08 /* PSSC2NotePlayer.m */; };
-		B0FBA6391932277000AF1C08 /* PSSDNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6281932276F00AF1C08 /* PSSDNotePlayer.m */; };
-		B0FBA63A1932277000AF1C08 /* PSSDsNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA62A1932276F00AF1C08 /* PSSDsNotePlayer.m */; };
-		B0FBA63B1932277000AF1C08 /* PSSENotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA62C1932276F00AF1C08 /* PSSENotePlayer.m */; };
-		B0FBA63C1932277000AF1C08 /* PSSFNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA62E1932276F00AF1C08 /* PSSFNotePlayer.m */; };
-		B0FBA63D1932277000AF1C08 /* PSSFsNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6301932276F00AF1C08 /* PSSFsNotePlayer.m */; };
-		B0FBA63E1932277000AF1C08 /* PSSGNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6321932276F00AF1C08 /* PSSGNotePlayer.m */; };
-		B0FBA63F1932277000AF1C08 /* PSSGsNotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6341932276F00AF1C08 /* PSSGsNotePlayer.m */; };
+		B0FBA6351932277000AF1C08 /* PSSPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6201932276F00AF1C08 /* PSSPlayer.m */; };
 		B0FBA64E1932583E00AF1C08 /* aNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6411932583E00AF1C08 /* aNote.wav */; };
 		B0FBA64F1932583E00AF1C08 /* asNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6421932583E00AF1C08 /* asNote.wav */; };
 		B0FBA6501932583E00AF1C08 /* bNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6431932583E00AF1C08 /* bNote.wav */; };
@@ -90,32 +78,8 @@
 		B0FBA6051931FBD800AF1C08 /* Piano_Simon_SaysTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Piano_Simon_SaysTests.m; sourceTree = "<group>"; };
 		B0FBA60F1931FCB300AF1C08 /* PSSPianoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSPianoViewController.h; sourceTree = "<group>"; };
 		B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPianoViewController.m; sourceTree = "<group>"; };
-		B0FBA619193221DE00AF1C08 /* PSSCNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSCNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA61A193221DE00AF1C08 /* PSSCNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSCNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA61C1932253E00AF1C08 /* PSSCsNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSCsNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA61D1932253E00AF1C08 /* PSSCsNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSCsNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA61F1932276F00AF1C08 /* PSSANotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSANotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6201932276F00AF1C08 /* PSSANotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSANotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6211932276F00AF1C08 /* PSSAsNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSAsNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6221932276F00AF1C08 /* PSSAsNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSAsNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6231932276F00AF1C08 /* PSSBNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSBNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6241932276F00AF1C08 /* PSSBNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSBNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6251932276F00AF1C08 /* PSSC2NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSC2NotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6261932276F00AF1C08 /* PSSC2NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSC2NotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6271932276F00AF1C08 /* PSSDNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSDNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6281932276F00AF1C08 /* PSSDNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSDNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6291932276F00AF1C08 /* PSSDsNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSDsNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA62A1932276F00AF1C08 /* PSSDsNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSDsNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA62B1932276F00AF1C08 /* PSSENotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSENotePlayer.h; sourceTree = "<group>"; };
-		B0FBA62C1932276F00AF1C08 /* PSSENotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSENotePlayer.m; sourceTree = "<group>"; };
-		B0FBA62D1932276F00AF1C08 /* PSSFNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSFNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA62E1932276F00AF1C08 /* PSSFNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSFNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA62F1932276F00AF1C08 /* PSSFsNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSFsNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6301932276F00AF1C08 /* PSSFsNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSFsNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6311932276F00AF1C08 /* PSSGNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSGNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6321932276F00AF1C08 /* PSSGNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSGNotePlayer.m; sourceTree = "<group>"; };
-		B0FBA6331932276F00AF1C08 /* PSSGsNotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSGsNotePlayer.h; sourceTree = "<group>"; };
-		B0FBA6341932276F00AF1C08 /* PSSGsNotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSGsNotePlayer.m; sourceTree = "<group>"; };
+		B0FBA61F1932276F00AF1C08 /* PSSPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSPlayer.h; sourceTree = "<group>"; };
+		B0FBA6201932276F00AF1C08 /* PSSPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPlayer.m; sourceTree = "<group>"; };
 		B0FBA6411932583E00AF1C08 /* aNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = aNote.wav; sourceTree = "<group>"; };
 		B0FBA6421932583E00AF1C08 /* asNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = asNote.wav; sourceTree = "<group>"; };
 		B0FBA6431932583E00AF1C08 /* bNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bNote.wav; sourceTree = "<group>"; };
@@ -245,32 +209,8 @@
 		B0FBA61519321E9200AF1C08 /* Players */ = {
 			isa = PBXGroup;
 			children = (
-				B0FBA61F1932276F00AF1C08 /* PSSANotePlayer.h */,
-				B0FBA6201932276F00AF1C08 /* PSSANotePlayer.m */,
-				B0FBA6211932276F00AF1C08 /* PSSAsNotePlayer.h */,
-				B0FBA6221932276F00AF1C08 /* PSSAsNotePlayer.m */,
-				B0FBA6231932276F00AF1C08 /* PSSBNotePlayer.h */,
-				B0FBA6241932276F00AF1C08 /* PSSBNotePlayer.m */,
-				B0FBA6251932276F00AF1C08 /* PSSC2NotePlayer.h */,
-				B0FBA6261932276F00AF1C08 /* PSSC2NotePlayer.m */,
-				B0FBA6271932276F00AF1C08 /* PSSDNotePlayer.h */,
-				B0FBA6281932276F00AF1C08 /* PSSDNotePlayer.m */,
-				B0FBA6291932276F00AF1C08 /* PSSDsNotePlayer.h */,
-				B0FBA62A1932276F00AF1C08 /* PSSDsNotePlayer.m */,
-				B0FBA62B1932276F00AF1C08 /* PSSENotePlayer.h */,
-				B0FBA62C1932276F00AF1C08 /* PSSENotePlayer.m */,
-				B0FBA62D1932276F00AF1C08 /* PSSFNotePlayer.h */,
-				B0FBA62E1932276F00AF1C08 /* PSSFNotePlayer.m */,
-				B0FBA62F1932276F00AF1C08 /* PSSFsNotePlayer.h */,
-				B0FBA6301932276F00AF1C08 /* PSSFsNotePlayer.m */,
-				B0FBA6311932276F00AF1C08 /* PSSGNotePlayer.h */,
-				B0FBA6321932276F00AF1C08 /* PSSGNotePlayer.m */,
-				B0FBA6331932276F00AF1C08 /* PSSGsNotePlayer.h */,
-				B0FBA6341932276F00AF1C08 /* PSSGsNotePlayer.m */,
-				B0FBA619193221DE00AF1C08 /* PSSCNotePlayer.h */,
-				B0FBA61A193221DE00AF1C08 /* PSSCNotePlayer.m */,
-				B0FBA61C1932253E00AF1C08 /* PSSCsNotePlayer.h */,
-				B0FBA61D1932253E00AF1C08 /* PSSCsNotePlayer.m */,
+				B0FBA61F1932276F00AF1C08 /* PSSPlayer.h */,
+				B0FBA6201932276F00AF1C08 /* PSSPlayer.m */,
 			);
 			name = Players;
 			sourceTree = "<group>";
@@ -447,21 +387,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */,
-				B0FBA63C1932277000AF1C08 /* PSSFNotePlayer.m in Sources */,
-				B0FBA6361932277000AF1C08 /* PSSAsNotePlayer.m in Sources */,
-				B0FBA63E1932277000AF1C08 /* PSSGNotePlayer.m in Sources */,
-				B0FBA6381932277000AF1C08 /* PSSC2NotePlayer.m in Sources */,
-				B0FBA63D1932277000AF1C08 /* PSSFsNotePlayer.m in Sources */,
 				B0FBA5ED1931FBD800AF1C08 /* main.m in Sources */,
-				B0FBA63A1932277000AF1C08 /* PSSDsNotePlayer.m in Sources */,
-				B0FBA61E1932253E00AF1C08 /* PSSCsNotePlayer.m in Sources */,
 				B0FBA5F11931FBD800AF1C08 /* PSSAppDelegate.m in Sources */,
-				B0FBA61B193221DE00AF1C08 /* PSSCNotePlayer.m in Sources */,
-				B0FBA6371932277000AF1C08 /* PSSBNotePlayer.m in Sources */,
-				B0FBA63B1932277000AF1C08 /* PSSENotePlayer.m in Sources */,
-				B0FBA6391932277000AF1C08 /* PSSDNotePlayer.m in Sources */,
-				B0FBA6351932277000AF1C08 /* PSSANotePlayer.m in Sources */,
-				B0FBA63F1932277000AF1C08 /* PSSGsNotePlayer.m in Sources */,
+				B0FBA6351932277000AF1C08 /* PSSPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -660,6 +588,7 @@
 				B0FBA60B1931FBD800AF1C08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B0FBA60C1931FBD800AF1C08 /* Build configuration list for PBXNativeTarget "Piano Simon SaysTests" */ = {
 			isa = XCConfigurationList;
@@ -668,6 +597,7 @@
 				B0FBA60E1931FBD800AF1C08 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

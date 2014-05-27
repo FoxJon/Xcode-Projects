@@ -1,5 +1,5 @@
 //
-//  PSSCsNotePlayer.h
+//  PSSANotePlayer.h
 //  Piano Simon Says
 //
 //  Created by Jonathan Fox on 5/25/14.
@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface PSSCsNotePlayer : NSObject <AVAudioPlayerDelegate>
+@interface PSSPlayer : NSObject <AVAudioPlayerDelegate>
 
-@property (nonatomic) AVAudioPlayer * player;
+// create an array property
+@property (nonatomic) NSMutableArray * players;
 
 - (void)playSoundWithName:(NSString *)soundName;
 

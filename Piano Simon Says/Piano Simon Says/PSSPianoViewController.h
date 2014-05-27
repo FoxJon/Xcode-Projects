@@ -10,4 +10,6 @@
 
 @interface PSSPianoViewController : UIViewController
 
+@property (nonatomic) NSTimer * timer;
+
 @end

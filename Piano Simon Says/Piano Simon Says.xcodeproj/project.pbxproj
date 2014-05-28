@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
 		B0FBA5E11931FBD800AF1C08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E01931FBD800AF1C08 /* Foundation.framework */; };
 		B0FBA5E31931FBD800AF1C08 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */; };
 		B0FBA5E51931FBD800AF1C08 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E41931FBD800AF1C08 /* UIKit.framework */; };
@@ -21,19 +22,6 @@
 		B0FBA6061931FBD800AF1C08 /* Piano_Simon_SaysTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6051931FBD800AF1C08 /* Piano_Simon_SaysTests.m */; };
 		B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */; };
 		B0FBA6351932277000AF1C08 /* PSSPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B0FBA6201932276F00AF1C08 /* PSSPlayer.m */; };
-		B0FBA64E1932583E00AF1C08 /* aNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6411932583E00AF1C08 /* aNote.wav */; };
-		B0FBA64F1932583E00AF1C08 /* asNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6421932583E00AF1C08 /* asNote.wav */; };
-		B0FBA6501932583E00AF1C08 /* bNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6431932583E00AF1C08 /* bNote.wav */; };
-		B0FBA6511932583E00AF1C08 /* c2Note.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6441932583E00AF1C08 /* c2Note.wav */; };
-		B0FBA6521932583E00AF1C08 /* cNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6451932583E00AF1C08 /* cNote.wav */; };
-		B0FBA6531932583E00AF1C08 /* csNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6461932583E00AF1C08 /* csNote.wav */; };
-		B0FBA6541932583E00AF1C08 /* dNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6471932583E00AF1C08 /* dNote.wav */; };
-		B0FBA6551932583E00AF1C08 /* dsNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6481932583E00AF1C08 /* dsNote.wav */; };
-		B0FBA6561932583E00AF1C08 /* eNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA6491932583E00AF1C08 /* eNote.wav */; };
-		B0FBA6571932583E00AF1C08 /* fNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA64A1932583E00AF1C08 /* fNote.wav */; };
-		B0FBA6581932583E00AF1C08 /* fsNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA64B1932583E00AF1C08 /* fsNote.wav */; };
-		B0FBA6591932583E00AF1C08 /* gNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA64C1932583E00AF1C08 /* gNote.wav */; };
-		B0FBA65A1932583E00AF1C08 /* gsNote.wav in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA64D1932583E00AF1C08 /* gsNote.wav */; };
 		B0FBA66A193267A600AF1C08 /* aNote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA65D193267A600AF1C08 /* aNote.mp3 */; };
 		B0FBA66B193267A600AF1C08 /* asNote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA65E193267A600AF1C08 /* asNote.mp3 */; };
 		B0FBA66C193267A600AF1C08 /* bNote.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B0FBA65F193267A600AF1C08 /* bNote.mp3 */; };
@@ -60,6 +48,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B06F54EF19357046006B1D72 /* cs2Note.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Note.mp3; sourceTree = "<group>"; };
 		B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piano Simon Says.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FBA5E01931FBD800AF1C08 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -80,19 +69,6 @@
 		B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPianoViewController.m; sourceTree = "<group>"; };
 		B0FBA61F1932276F00AF1C08 /* PSSPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSPlayer.h; sourceTree = "<group>"; };
 		B0FBA6201932276F00AF1C08 /* PSSPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPlayer.m; sourceTree = "<group>"; };
-		B0FBA6411932583E00AF1C08 /* aNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = aNote.wav; sourceTree = "<group>"; };
-		B0FBA6421932583E00AF1C08 /* asNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = asNote.wav; sourceTree = "<group>"; };
-		B0FBA6431932583E00AF1C08 /* bNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bNote.wav; sourceTree = "<group>"; };
-		B0FBA6441932583E00AF1C08 /* c2Note.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = c2Note.wav; sourceTree = "<group>"; };
-		B0FBA6451932583E00AF1C08 /* cNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = cNote.wav; sourceTree = "<group>"; };
-		B0FBA6461932583E00AF1C08 /* csNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = csNote.wav; sourceTree = "<group>"; };
-		B0FBA6471932583E00AF1C08 /* dNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dNote.wav; sourceTree = "<group>"; };
-		B0FBA6481932583E00AF1C08 /* dsNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dsNote.wav; sourceTree = "<group>"; };
-		B0FBA6491932583E00AF1C08 /* eNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = eNote.wav; sourceTree = "<group>"; };
-		B0FBA64A1932583E00AF1C08 /* fNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fNote.wav; sourceTree = "<group>"; };
-		B0FBA64B1932583E00AF1C08 /* fsNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = fsNote.wav; sourceTree = "<group>"; };
-		B0FBA64C1932583E00AF1C08 /* gNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gNote.wav; sourceTree = "<group>"; };
-		B0FBA64D1932583E00AF1C08 /* gsNote.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = gsNote.wav; sourceTree = "<group>"; };
 		B0FBA65D193267A600AF1C08 /* aNote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aNote.mp3; sourceTree = "<group>"; };
 		B0FBA65E193267A600AF1C08 /* asNote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asNote.mp3; sourceTree = "<group>"; };
 		B0FBA65F193267A600AF1C08 /* bNote.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bNote.mp3; sourceTree = "<group>"; };
@@ -218,7 +194,6 @@
 		B0FBA640193257D400AF1C08 /* Samples */ = {
 			isa = PBXGroup;
 			children = (
-				B0FBA65C1932678000AF1C08 /* wav */,
 				B0FBA65B1932676D00AF1C08 /* mp3 */,
 			);
 			name = Samples;
@@ -227,6 +202,7 @@
 		B0FBA65B1932676D00AF1C08 /* mp3 */ = {
 			isa = PBXGroup;
 			children = (
+				B06F54EF19357046006B1D72 /* cs2Note.mp3 */,
 				B0FBA65D193267A600AF1C08 /* aNote.mp3 */,
 				B0FBA65E193267A600AF1C08 /* asNote.mp3 */,
 				B0FBA65F193267A600AF1C08 /* bNote.mp3 */,
@@ -242,26 +218,6 @@
 				B0FBA669193267A600AF1C08 /* gsNote.mp3 */,
 			);
 			name = mp3;
-			sourceTree = "<group>";
-		};
-		B0FBA65C1932678000AF1C08 /* wav */ = {
-			isa = PBXGroup;
-			children = (
-				B0FBA6411932583E00AF1C08 /* aNote.wav */,
-				B0FBA6421932583E00AF1C08 /* asNote.wav */,
-				B0FBA6431932583E00AF1C08 /* bNote.wav */,
-				B0FBA6441932583E00AF1C08 /* c2Note.wav */,
-				B0FBA6451932583E00AF1C08 /* cNote.wav */,
-				B0FBA6461932583E00AF1C08 /* csNote.wav */,
-				B0FBA6471932583E00AF1C08 /* dNote.wav */,
-				B0FBA6481932583E00AF1C08 /* dsNote.wav */,
-				B0FBA6491932583E00AF1C08 /* eNote.wav */,
-				B0FBA64A1932583E00AF1C08 /* fNote.wav */,
-				B0FBA64B1932583E00AF1C08 /* fsNote.wav */,
-				B0FBA64C1932583E00AF1C08 /* gNote.wav */,
-				B0FBA64D1932583E00AF1C08 /* gsNote.wav */,
-			);
-			name = wav;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -312,6 +268,9 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = "Jon Fox";
 				TargetAttributes = {
+					B0FBA5DC1931FBD800AF1C08 = {
+						DevelopmentTeam = Y99DUZCLEB;
+					};
 					B0FBA5F71931FBD800AF1C08 = {
 						TestTargetID = B0FBA5DC1931FBD800AF1C08;
 					};
@@ -342,29 +301,17 @@
 			files = (
 				B0FBA671193267A600AF1C08 /* dsNote.mp3 in Resources */,
 				B0FBA674193267A600AF1C08 /* fsNote.mp3 in Resources */,
-				B0FBA6581932583E00AF1C08 /* fsNote.wav in Resources */,
 				B0FBA670193267A600AF1C08 /* dNote.mp3 in Resources */,
-				B0FBA64F1932583E00AF1C08 /* asNote.wav in Resources */,
-				B0FBA6571932583E00AF1C08 /* fNote.wav in Resources */,
 				B0FBA66B193267A600AF1C08 /* asNote.mp3 in Resources */,
 				B0FBA66E193267A600AF1C08 /* cNote.mp3 in Resources */,
-				B0FBA6551932583E00AF1C08 /* dsNote.wav in Resources */,
-				B0FBA6591932583E00AF1C08 /* gNote.wav in Resources */,
 				B0FBA675193267A600AF1C08 /* gNote.mp3 in Resources */,
-				B0FBA64E1932583E00AF1C08 /* aNote.wav in Resources */,
-				B0FBA6531932583E00AF1C08 /* csNote.wav in Resources */,
 				B0FBA5EB1931FBD800AF1C08 /* InfoPlist.strings in Resources */,
+				B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */,
 				B0FBA66C193267A600AF1C08 /* bNote.mp3 in Resources */,
-				B0FBA6511932583E00AF1C08 /* c2Note.wav in Resources */,
 				B0FBA676193267A600AF1C08 /* gsNote.mp3 in Resources */,
 				B0FBA66D193267A600AF1C08 /* c2Note.mp3 in Resources */,
 				B0FBA673193267A600AF1C08 /* fNote.mp3 in Resources */,
-				B0FBA6541932583E00AF1C08 /* dNote.wav in Resources */,
-				B0FBA65A1932583E00AF1C08 /* gsNote.wav in Resources */,
-				B0FBA6521932583E00AF1C08 /* cNote.wav in Resources */,
 				B0FBA672193267A600AF1C08 /* eNote.mp3 in Resources */,
-				B0FBA6501932583E00AF1C08 /* bNote.wav in Resources */,
-				B0FBA6561932583E00AF1C08 /* eNote.wav in Resources */,
 				B0FBA66F193267A600AF1C08 /* csNote.mp3 in Resources */,
 				B0FBA66A193267A600AF1C08 /* aNote.mp3 in Resources */,
 				B0FBA5F31931FBD800AF1C08 /* Images.xcassets in Resources */,
@@ -508,6 +455,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";
@@ -521,6 +469,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";

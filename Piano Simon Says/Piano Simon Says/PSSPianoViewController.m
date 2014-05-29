@@ -11,6 +11,8 @@
 
 @interface PSSPianoViewController ()
 
+@property (nonatomic) int playlength;
+
 @end
 
 @implementation PSSPianoViewController
@@ -29,6 +31,9 @@
     UIButton * bKey;
     UIButton * c2Key;
     UIButton * cs2Key;
+    UIButton * startButton;
+    
+    int noteCount;
     
     UIView * whiteKeyGlow;
     UIView * blackKeyGlow;
@@ -37,13 +42,18 @@
     NSArray * keys;
     NSMutableArray * glowKeys;
     NSMutableArray * songList;
+    NSMutableArray * tempSongNotesArray;
     
     PSSPlayer * player;
+    
+    BOOL gameOn;
 
 //SONGS
     NSDictionary * rewardSequenceArray;
+    NSDictionary * endGameSequenceArray;
     NSDictionary * twinkleTwinkleArray;
     NSDictionary * maryHadALittleLambArray;
+    NSDictionary * oldMacDonaldArray;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -53,7 +63,24 @@
         // Custom initialization
         self.view.backgroundColor = [UIColor blueColor];
         
+        gameOn = NO;
+        
+        UIView * frame = [[UIView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, 30)];
+        frame.backgroundColor = [UIColor blueColor];
+        [self.view addSubview:frame];
+        
+        startButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .85, 5, 50, 20)];
+        startButton.layer.cornerRadius = 5;
+        startButton.titleLabel.text = @"Start";
+        startButton.titleLabel.textColor = [UIColor whiteColor];
+        startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [startButton setTitle:@"START" forState:UIControlStateNormal];
+        startButton.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        [startButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+        [frame addSubview:startButton];
+        
         songList = [@[] mutableCopy];
+        tempSongNotesArray = [@[]mutableCopy];
 
         notes = @[@"cNote", @"dNote", @"eNote", @"fNote", @"gNote", @"aNote", @"bNote", @"c2Note", @"csNote", @"dsNote", @"fsNote", @"gsNote", @"asNote", @"cs2Note"];
         
@@ -72,24 +99,35 @@
 ////////////////////////////////////////////////////////////////////////////////
         
         rewardSequenceArray = @{
-                            @"tempo":@[@100, @400, @500, @600, @700, @800],
+                            @"tempo":@[@50, @300, @400, @500, @600, @700],
                             @"notes":@[@7, @1, @2, @4, @7, @0]
                             };
         [songList addObject:rewardSequenceArray];
         
+        endGameSequenceArray = @{
+                                @"tempo":@[@50, @60, @275, @280, @500, @800, @900, @1000, @1100, @1400, @1700],
+                                @"notes":@[@0, @8,   @0,   @8,   @12,  @5,  @11,  @4,   @10,    @9,    @0]
+                                };
+        
         twinkleTwinkleArray = @{
-                            @"tempo":@[@0, @300, @600, @900, @1200, @1500, @1800, @2400, @2700, @3000, @3300, @3600, @3900, @4200],
+                            @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700, @4000, @4300],
                             @"notes":@[@0,   @0,   @4,  @4,    @5,    @5,    @4,   @3,    @3,    @2,    @2,    @1,    @1,   @0]
                             };
         [songList addObject:twinkleTwinkleArray];
         
         maryHadALittleLambArray = @{
-                            @"tempo":@[@0, @300, @600, @900, @1200, @1500, @1800, @2400, @2700, @3000, @3600, @3900, @4200],
+                            @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3700, @4000, @4300],
                             @"notes":@[@2, @1,   @0,   @1,   @2,   @2,    @2,    @1,    @1,   @1,    @2,    @4,    @4]
                                };
         [songList addObject:maryHadALittleLambArray];
+        
+        oldMacDonaldArray = @{
+                              @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700],
+                              @"notes":@[@3,   @3,   @3,  @0,    @1,    @1,    @0,   @5,    @5,    @4,    @4,   @3]
+                              };
+        [songList addObject:oldMacDonaldArray];
 
-        [self playSong:2];
+        [self introSong];
 
     }
     return self;
@@ -98,9 +136,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     glowKeys = [@[] mutableCopy];
     
-    // Do any additional setup after loading the view.
     cKey = [[UIButton alloc]initWithFrame:CGRectMake(0, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
     cKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     cKey.layer.cornerRadius = 15;
@@ -116,6 +154,7 @@
     dKey.layer.cornerRadius = 15;
     dKey.tag = 1;
     [dKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    
 //    [dKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:dKey];
@@ -181,7 +220,7 @@
     [self.view addSubview:c2Key];
     [glowKeys addObject:c2Key];
     
-    csKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    csKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     csKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     csKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     csKey.tag = 8;
@@ -191,7 +230,7 @@
     [self.view addSubview:csKey];
     [glowKeys addObject:csKey];
     
-    dsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    dsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     dsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     dsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     dsKey.tag = 9;
@@ -201,7 +240,7 @@
     [self.view addSubview:dsKey];
     [glowKeys addObject:dsKey];
     
-    fsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    fsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     fsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     fsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     fsKey.tag = 10;
@@ -211,7 +250,7 @@
     [self.view addSubview:fsKey];
     [glowKeys addObject:fsKey];
     
-    gsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    gsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     gsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     gsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     gsKey.tag = 11;
@@ -221,23 +260,21 @@
     [self.view addSubview:gsKey];
     [glowKeys addObject:gsKey];
     
-    asKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    asKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     asKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     asKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     asKey.tag = 12;
     [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDragEnter];
 //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:asKey];
     [glowKeys addObject:asKey];
     
-    cs2Key = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*8-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
+    cs2Key = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*8-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
     cs2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     cs2Key.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     cs2Key.tag = 13;
     [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDragEnter];
     //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:cs2Key];
@@ -248,21 +285,102 @@
 ///////////// SONGS PLAYER /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-- (void)playSong:(int)indexOfSonglist
+-(void)introSong
 {
-    NSDictionary *currentSong = songList[indexOfSonglist];
-    
-    for (int i = 0 ; i < [currentSong[@"notes"]count]; i++) {
-        int y = [currentSong[@"tempo"][i] intValue];
+    for (int i = 0 ; i < [rewardSequenceArray[@"notes"]count]; i++) {
+        int y = [rewardSequenceArray[@"tempo"][i] intValue];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            int x = [currentSong[@"notes"][i] intValue];
+            int x = [rewardSequenceArray[@"notes"][i] intValue];
             [player playSoundWithName:notes[x]];
             [self glowKey:x];
         });
     }
 }
 
+-(void)endGame
+{
+    for (int i = 0 ; i < [endGameSequenceArray[@"notes"]count]; i++) {
+        int y = [endGameSequenceArray[@"tempo"][i] intValue];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            int x = [endGameSequenceArray[@"notes"][i] intValue];
+            [player playSoundWithName:notes[x]];
+            [self glowKey:x];
+        });
+    }
+}
+
+
+- (void)playSong:(int)indexOfSonglist
+{
+    NSDictionary *currentSong = songList[indexOfSonglist];
+    self.playlength++;
+    NSLog(@"%d", self.playlength);
+    
+    for (int i = 0 ; i < ([currentSong[@"notes"]count]-[currentSong[@"notes"]count])+self.playlength; i++) {
+        int y = [currentSong[@"tempo"][i] intValue];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            int x = [currentSong[@"notes"][i] intValue];
+            [player playSoundWithName:notes[x]];
+            [tempSongNotesArray addObject:notes[x]];
+            [self glowKey:x];
+        });
+    }
+}
 ///////////////////////////////////////////////////////////////////////////////
+
+-(void)startGame
+{
+    self.playlength = 0;
+    NSLog(@"%@", tempSongNotesArray);
+    [tempSongNotesArray removeAllObjects];
+    NSLog(@"%@", tempSongNotesArray);
+
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        [self playSong:1];
+    });
+    
+    [self resetButtons];
+}
+
+- (void)playGame:(UIButton *)sender
+{
+    if (notes[sender.tag] == tempSongNotesArray[noteCount])
+    {
+        if (noteCount < [tempSongNotesArray count])
+        {
+            noteCount++;
+            if (noteCount == [tempSongNotesArray count])
+                {
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                    [self playSong:1];
+                });
+            }
+        }
+    }else{
+        [self endGame];
+        return;
+    }
+}
+
+- (void) resetButtons
+{
+    [cKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+    [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+}
+
 
 - (void)glowKey:(int)indexOfKeyView
 {
@@ -287,43 +405,7 @@
     
     NSString * key = keys[sender.tag];
     NSLog(@"key %@", key);
-    
-//    if (sender.tag < 8) {
-//        whiteKeyGlow.frame = CGRectMake(sender.tag * SCREEN_WIDTH/8-1, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100);
-//        [self.view insertSubview:whiteKeyGlow atIndex:0];
-//        
-//        whiteKeyGlow.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-//        
-//    }else{
-//        if (sender.tag == 8 || sender.tag == 9) {
-//            blackKeyGlow.frame = CGRectMake(SCREEN_WIDTH/8*(sender.tag-7)-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100);
-//        }else{
-//            blackKeyGlow.frame = CGRectMake(SCREEN_WIDTH/8*(sender.tag-6)-(SCREEN_WIDTH/13)/2, -100, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100);
-//        }
-//        [self.view insertSubview:blackKeyGlow atIndex:0];
-//        
-//        blackKeyGlow.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.8];
-//        [UIView animateWithDuration:0.4 delay:0.0 options: UIViewAnimationOptionCurveEaseOut animations:^{
-//            blackKeyGlow.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
-//        } completion:nil];
-//    }
 }
-
-//-(void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    NSLog(@"cancelled");
-//    [UIView animateWithDuration:0.4 delay:0.0 options: UIViewAnimationOptionCurveEaseOut animations:^{
-//        whiteKeyGlow.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
-//    } completion:nil];
-//}
-//
-//-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    [UIView animateWithDuration:0.4 delay:0.0 options: UIViewAnimationOptionCurveEaseOut animations:^{
-//        whiteKeyGlow.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
-//    } completion:nil];
-//    NSLog(@"ended");
-//}
 
 - (void)didReceiveMemoryWarning
 {

@@ -8,10 +8,12 @@
 
 #import "PSSPianoViewController.h"
 #import "PSSPlayer.h"
+#import "PSSTableView.h"
 
-@interface PSSPianoViewController ()
+@interface PSSPianoViewController () 
 
 @property (nonatomic) int playlength;
+@property (nonatomic) BOOL gameOn;
 
 @end
 
@@ -32,6 +34,8 @@
     UIButton * c2Key;
     UIButton * cs2Key;
     UIButton * startButton;
+    UIButton * songButton;
+
     
     int noteCount;
     
@@ -43,11 +47,10 @@
     NSMutableArray * glowKeys;
     NSMutableArray * songList;
     NSMutableArray * tempSongNotesArray;
+    NSArray * fullSongs;
     
     PSSPlayer * player;
     
-    BOOL gameOn;
-
 //SONGS
     NSDictionary * rewardSequenceArray;
     NSDictionary * endGameSequenceArray;
@@ -61,9 +64,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.view.backgroundColor = [UIColor blueColor];
+
+        fullSongs = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald"];
+
+        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        tableView.dataSource = self;
+        tableView.delegate = self;
+        [self.view addSubview:tableView];
         
-        gameOn = NO;
+        self.view.backgroundColor = [UIColor blueColor];
+        self.gameOn = NO;
         
         UIView * frame = [[UIView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, 30)];
         frame.backgroundColor = [UIColor blueColor];
@@ -71,13 +81,21 @@
         
         startButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .85, 5, 50, 20)];
         startButton.layer.cornerRadius = 5;
-        startButton.titleLabel.text = @"Start";
         startButton.titleLabel.textColor = [UIColor whiteColor];
         startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
         [startButton setTitle:@"START" forState:UIControlStateNormal];
         startButton.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
         [startButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
         [frame addSubview:startButton];
+        
+        songButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20)];
+        songButton.layer.cornerRadius = 5;
+        songButton.titleLabel.textColor = [UIColor whiteColor];
+        songButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [songButton setTitle:@"SONGS" forState:UIControlStateNormal];
+        songButton.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        [songButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
+        [frame addSubview:songButton];
         
         songList = [@[] mutableCopy];
         tempSongNotesArray = [@[]mutableCopy];
@@ -105,9 +123,11 @@
         [songList addObject:rewardSequenceArray];
         
         endGameSequenceArray = @{
-                                @"tempo":@[@50, @60, @275, @280, @500, @800, @900, @1000, @1100, @1400, @1700],
-                                @"notes":@[@0, @8,   @0,   @8,   @12,  @5,  @11,  @4,   @10,    @9,    @0]
+                                @"tempo":@[@50, @400, @500, @600, @700, @1000, @1300],
+                                @"notes":@[@12,  @5,  @11,  @4,   @10,  @9,   @0]
                                 };
+        [songList addObject:endGameSequenceArray];
+
         
         twinkleTwinkleArray = @{
                             @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700, @4000, @4300],
@@ -127,10 +147,21 @@
                               };
         [songList addObject:oldMacDonaldArray];
 
-        [self introSong];
+        [self playSong:0];
 
     }
     return self;
+}
+
+
+-(void)viewDidAppear:(BOOL)animated
+{
+//    [self.tableView setFrame:CGRectMake(x, y, w, h)];
+}
+
+-(void)openSongList
+{
+    
 }
 
 - (void)viewDidLoad
@@ -144,6 +175,7 @@
     cKey.layer.cornerRadius = 15;
     cKey.tag = 0;
     [cKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [cKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [cKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [cKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:cKey];
@@ -154,7 +186,7 @@
     dKey.layer.cornerRadius = 15;
     dKey.tag = 1;
     [dKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    
+    [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:dKey];
@@ -165,6 +197,7 @@
     eKey.layer.cornerRadius = 15;
     eKey.tag = 2;
     [eKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [eKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [eKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:eKey];
@@ -175,6 +208,7 @@
     fKey.layer.cornerRadius = 15;
     fKey.tag = 3;
     [fKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:fKey];
@@ -185,6 +219,7 @@
     gKey.layer.cornerRadius = 15;
     gKey.tag = 4;
     [gKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:gKey];
@@ -195,6 +230,7 @@
     aKey.layer.cornerRadius = 15;
     aKey.tag = 5;
     [aKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [aKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [aKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:aKey];
@@ -205,6 +241,7 @@
     bKey.layer.cornerRadius = 15;
     bKey.tag = 6;
     [bKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [bKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [bKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:bKey];
@@ -215,6 +252,7 @@
     c2Key.layer.cornerRadius = 15;
     c2Key.tag = 7;
     [c2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [c2Key addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [c2Key addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:c2Key];
@@ -225,6 +263,7 @@
     csKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     csKey.tag = 8;
     [csKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [csKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [csKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:csKey];
@@ -235,6 +274,7 @@
     dsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     dsKey.tag = 9;
     [dsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:dsKey];
@@ -245,6 +285,7 @@
     fsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     fsKey.tag = 10;
     [fsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:fsKey];
@@ -255,6 +296,7 @@
     gsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     gsKey.tag = 11;
     [gsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:gsKey];
@@ -265,6 +307,7 @@
     asKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     asKey.tag = 12;
     [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:asKey];
@@ -275,6 +318,7 @@
     cs2Key.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
     cs2Key.tag = 13;
     [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+    [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
     //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self.view addSubview:cs2Key];
@@ -285,33 +329,26 @@
 ///////////// SONGS PLAYER /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
--(void)introSong
-{
-    for (int i = 0 ; i < [rewardSequenceArray[@"notes"]count]; i++) {
-        int y = [rewardSequenceArray[@"tempo"][i] intValue];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            int x = [rewardSequenceArray[@"notes"][i] intValue];
-            [player playSoundWithName:notes[x]];
-            [self glowKey:x];
-        });
-    }
-}
-
--(void)endGame
-{
-    for (int i = 0 ; i < [endGameSequenceArray[@"notes"]count]; i++) {
-        int y = [endGameSequenceArray[@"tempo"][i] intValue];
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            int x = [endGameSequenceArray[@"notes"][i] intValue];
-            [player playSoundWithName:notes[x]];
-            [self glowKey:x];
-        });
-    }
-}
-
-
 - (void)playSong:(int)indexOfSonglist
 {
+    NSLog(@"playSong");
+
+    NSDictionary *currentSong = songList[indexOfSonglist];
+    
+    for (int i = 0 ; i < [currentSong[@"notes"]count]; i++) {
+        int y = [currentSong[@"tempo"][i] intValue];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            int x = [currentSong[@"notes"][i] intValue];
+            [player playSoundWithName:notes[x]];
+            [self glowKey:x];
+        });
+    }
+}
+
+- (void)playSongGame:(int)indexOfSonglist
+{
+    NSLog(@"playSongGame");
+
     NSDictionary *currentSong = songList[indexOfSonglist];
     self.playlength++;
     NSLog(@"%d", self.playlength);
@@ -327,60 +364,54 @@
     }
 }
 ///////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
+
 
 -(void)startGame
 {
-    self.playlength = 0;
-    NSLog(@"%@", tempSongNotesArray);
-    [tempSongNotesArray removeAllObjects];
-    NSLog(@"%@", tempSongNotesArray);
+    NSLog(@"startGame");
+    self.gameOn = YES;
 
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        [self playSong:1];
+    self.playlength = 0;
+    [tempSongNotesArray removeAllObjects];
+    noteCount = 0;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        [self playSongGame:2];
     });
-    
-    [self resetButtons];
 }
 
 - (void)playGame:(UIButton *)sender
 {
-    if (notes[sender.tag] == tempSongNotesArray[noteCount])
-    {
-        if (noteCount < [tempSongNotesArray count])
+    if (self.gameOn) {
+        
+        NSLog(@"playGame");
+
+        if (notes[sender.tag] == tempSongNotesArray[noteCount])
         {
-            noteCount++;
             if (noteCount == [tempSongNotesArray count])
-                {
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                    [self playSong:1];
-                });
+            {
+                [self playSong:0];
+                self.gameOn = NO;
+                return;
+            }else if (noteCount < [tempSongNotesArray count])
+            {
+                noteCount++;
+                if (noteCount == [tempSongNotesArray count])
+                    {
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                        [self playSongGame:2];
+                    });
+                }
             }
+            
+        }else{
+            [self playSong:1];
+            self.gameOn = NO;
+            return;
         }
-    }else{
-        [self endGame];
-        return;
     }
 }
-
-- (void) resetButtons
-{
-    [cKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-    [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
-}
-
 
 - (void)glowKey:(int)indexOfKeyView
 {
@@ -411,6 +442,25 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark UITableViewDelegate
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    
+    return [fullSongs count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    
+    // Configure the cell...
+    
+    return cell;
 }
 
 - (BOOL)prefersStatusBarHidden {return YES;}

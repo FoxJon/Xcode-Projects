@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Jon Fox. All rights reserved.
 //
 
+#include "PSSTableView.h"
+
 #import <UIKit/UIKit.h>
 
-@interface PSSPianoViewController : UIViewController
-
-@property (nonatomic) NSTimer * timer;
+@interface PSSPianoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @end

@@ -8,7 +8,7 @@
 
 #import "PSSPianoViewController.h"
 #import "PSSPlayer.h"
-#import "PSSTableView.h"
+#import "PSSPianoTableView.h"
 
 @interface PSSPianoViewController () 
 
@@ -64,12 +64,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+       
 
         fullSongs = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald"];
 
         UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         tableView.dataSource = self;
         tableView.delegate = self;
+        tableView.rowHeight = 20;
+        tableView.backgroundColor = [UIColor blueColor];
+        tableView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 200, SCREEN_HEIGHT);
         [self.view addSubview:tableView];
         
         self.view.backgroundColor = [UIColor blueColor];
@@ -459,6 +463,11 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     // Configure the cell...
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    }
+    
+    cell.backgroundColor =[UIColor clearColor];
     
     return cell;
 }

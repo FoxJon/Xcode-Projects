@@ -1,25 +1,24 @@
 //
-//  PSSTableView.m
+//  PSSPianoTableView.m
 //  Piano Simon Says
 //
-//  Created by Jonathan Fox on 5/29/14.
+//  Created by Jonathan Fox on 5/30/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.
 //
 
-#import "PSSTableView.h"
+#import "PSSPianoTableView.h"
 
-@interface PSSTableView ()
+@interface PSSPianoTableView ()
 
 @end
 
+@implementation PSSPianoTableView
 
-@implementation PSSTableView
-
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    if (self = [super initWithNibName:nil bundle:nil])
-    {
-
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
     }
     return self;
 }
@@ -29,9 +28,7 @@
     [super viewDidLoad];
     
     
-//    self.tableView.rowHeight = 20;
-//    self.tableView.backgroundColor = [UIColor blueColor];
-//    self.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 100, SCREEN_HEIGHT);
+        
     
 }
 
@@ -56,12 +53,6 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
     // Configure the cell...
-    
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
-    }
-    
-    cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
     
     return cell;
 }
@@ -117,6 +108,5 @@
  */
 
 -(BOOL)prefersStatusBarHidden{return YES;}
-
 
 @end

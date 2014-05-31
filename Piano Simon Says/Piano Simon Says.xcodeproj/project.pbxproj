@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B0133DD01938AFBE007DB236 /* PSSPianoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */; };
+		B0523627193A18350068F67D /* PSSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSSettingsView.m */; };
+		B052362A193A29A40068F67D /* PSSxView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523629193A29A40068F67D /* PSSxView.m */; };
 		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
 		B0FBA5E11931FBD800AF1C08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E01931FBD800AF1C08 /* Foundation.framework */; };
 		B0FBA5E31931FBD800AF1C08 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */; };
@@ -51,6 +53,10 @@
 /* Begin PBXFileReference section */
 		B0133DCE1938AFBE007DB236 /* PSSPianoTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSPianoTableView.h; sourceTree = "<group>"; };
 		B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPianoTableView.m; sourceTree = "<group>"; };
+		B0523625193A18350068F67D /* PSSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSSettingsView.h; sourceTree = "<group>"; };
+		B0523626193A18350068F67D /* PSSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSSettingsView.m; sourceTree = "<group>"; };
+		B0523628193A29920068F67D /* PSSxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSxView.h; sourceTree = "<group>"; };
+		B0523629193A29A40068F67D /* PSSxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSxView.m; sourceTree = "<group>"; };
 		B06F54EF19357046006B1D72 /* cs2Note.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Note.mp3; sourceTree = "<group>"; };
 		B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piano Simon Says.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FBA5E01931FBD800AF1C08 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -161,6 +167,10 @@
 		B0FBA5E71931FBD800AF1C08 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B0523625193A18350068F67D /* PSSSettingsView.h */,
+				B0523626193A18350068F67D /* PSSSettingsView.m */,
+				B0523628193A29920068F67D /* PSSxView.h */,
+				B0523629193A29A40068F67D /* PSSxView.m */,
 				B0FBA5E81931FBD800AF1C08 /* Piano Simon Says-Info.plist */,
 				B0FBA5E91931FBD800AF1C08 /* InfoPlist.strings */,
 				B0FBA5EC1931FBD800AF1C08 /* main.m */,
@@ -340,7 +350,9 @@
 			files = (
 				B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */,
 				B0FBA5ED1931FBD800AF1C08 /* main.m in Sources */,
+				B0523627193A18350068F67D /* PSSSettingsView.m in Sources */,
 				B0FBA5F11931FBD800AF1C08 /* PSSAppDelegate.m in Sources */,
+				B052362A193A29A40068F67D /* PSSxView.m in Sources */,
 				B0133DD01938AFBE007DB236 /* PSSPianoTableView.m in Sources */,
 				B0FBA6351932277000AF1C08 /* PSSPlayer.m in Sources */,
 			);

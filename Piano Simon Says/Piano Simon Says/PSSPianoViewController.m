@@ -51,6 +51,7 @@
     
     NSArray * notes;
     NSArray * keys;
+    NSArray * fullSongsTitles;
     NSMutableArray * glowKeys;
     NSMutableArray * gameSongsList;
     NSMutableArray * fullSongsList;
@@ -177,6 +178,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 ///////////// SONGS ARRAYS /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
+        
+        fullSongsTitles = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald"];
         
         rewardSequenceArray = @{
                             @"tempo":@[@50, @300, @400, @500, @600, @700],
@@ -616,37 +619,37 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
 
-    cell.textLabel.text = fullSongsList[indexPath.row];
-//    cell.textLabel.textColor = [UIColor whiteColor];
-//    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-//    cell.textLabel.highlightedTextColor = [UIColor blueColor];
-//    
-//    
-//    UIView *selectionColor = [[UIView alloc] init];
-//    selectionColor.backgroundColor = [UIColor clearColor];
-//    cell.selectedBackgroundView = selectionColor;
-//    
-//
-//    cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
-//    cell.layer.cornerRadius = 5;
-//    cell.imageView.frame = CGRectMake(10, 10, 200, 20);
+    cell.textLabel.text = fullSongsTitles[indexPath.row];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+    cell.textLabel.highlightedTextColor = [UIColor blueColor];
+    
+    
+    UIView *selectionColor = [[UIView alloc] init];
+    selectionColor.backgroundColor = [UIColor clearColor];
+    cell.selectedBackgroundView = selectionColor;
+    
+
+    cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
+    cell.layer.cornerRadius = 5;
+    cell.imageView.frame = CGRectMake(10, 10, 200, 20);
     
     return cell;
 }
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//    
-//    int selectedSong = (int)indexPath.row;
-//
-//    [self closeSongTableView];
-//    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-//        [self playFullSong:selectedSong];
-//    });
-//    
-//}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    
+    int selectedSong = (int)indexPath.row;
+
+    [self closeSongTableView];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        [self playFullSong:selectedSong];
+    });
+    
+}
 
 - (BOOL)prefersStatusBarHidden {return YES;}
 

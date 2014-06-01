@@ -22,22 +22,27 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [[UIColor colorWithWhite:1.0 alpha:0.6] set];
-    //[[UIColor whiteColor] set];
+    // X
+    [[UIColor colorWithWhite:1.0 alpha:0.4] set];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 2.0);
     
     CGContextClearRect(context, rect);
     
-    //[self.tintColor set];
+    
+    CGContextMoveToPoint(context, 6.5, 13);
+    CGContextAddLineToPoint(context, 22.5, 27);
+    
+    CGContextMoveToPoint(context, 6.5, 27);
+    CGContextAddLineToPoint(context, 22.5, 13);
+    
+    CGContextStrokePath(context);
     
     
-    CGContextMoveToPoint(context, 4, 13);
-    CGContextAddLineToPoint(context, 25, 30);
-    
-    CGContextMoveToPoint(context, 4, 30);
-    CGContextAddLineToPoint(context, 25, 13);
+    // circle
+    [[UIColor colorWithWhite:1.0 alpha:0.2] set];
+    CGContextFillEllipseInRect(context, CGRectMake(2, 7.5, 25, 25));
     
     CGContextStrokePath(context);
     

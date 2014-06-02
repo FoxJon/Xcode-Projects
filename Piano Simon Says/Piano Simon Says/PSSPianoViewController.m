@@ -56,6 +56,7 @@
     int noteCount;
     int score;
     
+    NSNumber * sn;  //sixteenth note
     NSNumber * en; //eighth note
     NSNumber * qn; //quarter note
     NSNumber * dqn; //dotted quarter note
@@ -220,36 +221,37 @@
 ////////////////////////////////////////////////////////////////////////////////
 ///////////// SONGS ARRAYS /////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-        
-        en = @150;
-        qn = @300;
-        dqn = @450;
-        hn = @600;
-        dhn = @750;
+
+        dhn = @875;
+        hn = @700;
+        dqn = @525;
+        qn = @350;
+        en = @175;
+        sn = @87.5;
         
         fullSongsTitles = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald", @"Row, Row, Row"];
         
         rewardSequenceArray = @{
-                            @"tempo":@[qn, qn, en, en, en, en],
+                            @"tempo":@[qn, en, sn, sn, sn, sn],
                             @"notes":@[@7, @1, @2, @4, @7, @0]
                             };
         [rewardSongsList addObject:rewardSequenceArray];
         
         endGameSequenceArray = @{
-                                @"tempo":@[qn, dqn, en, en, en, dqn, dqn],
-                                @"notes":@[@12,  @5,  @11,  @4,   @10,  @9,   @0]
+                                @"tempo":@[qn, qn, sn, sn, sn, qn, qn],
+                                @"notes":@[@12, @5, @11, @4, @10, @9, @0]
                                 };
         [rewardSongsList addObject:endGameSequenceArray];
 
         
         twinkleTwinkleGameArray = @{
-                            @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700, @4000, @4300],
-                            @"notes":@[@0,   @0,   @4, @4,    @5,    @5,    @4,   @3,    @3,    @2,    @2,    @1,    @1,   @0]
-                            };
+                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
+                                    @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0]
+                                    };
         [gameSongsList addObject:twinkleTwinkleGameArray];
         
         twinkleTwinkleFullArray = @{
-                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, dhn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
+                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
                                     @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0, @4, @4,@3, @3, @2, @2, @1, @4, @4, @3, @3, @2, @2, @1, @0, @0, @4, @4, @5, @5,   @4, @3, @3, @2, @2, @1, @1, @0]
                                     };
         [fullSongsList addObject:twinkleTwinkleFullArray];
@@ -257,38 +259,38 @@
         
         
         maryHadALittleLambGameArray = @{
-                                        @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3700, @4000, @4300],
-                            @"notes":@[@2, @1,   @0,  @1,   @2,   @2,    @2,    @1,    @1,   @1,    @2,    @4,    @4]
-                               };
+                                        @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn],
+                                        @"notes":@[@2, @1, @0, @1, @2, @2, @2, @1, @1, @1, @2, @4, @4]
+                                        };
         [gameSongsList addObject:maryHadALittleLambGameArray];
         
         maryHadALittleLambFullArray = @{
-                                        @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3700, @4000, @4300],
-                                        @"notes":@[@2, @1,   @0,   @1,   @2,   @2,    @2,    @1,    @1,   @1,    @2,    @4,    @4]
+                                        @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn, hn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn],
+                                        @"notes":@[@2, @1, @0, @1, @2, @2, @2, @1, @1, @1, @2, @4, @4, @2, @1,  @0, @1, @2, @2, @2, @2, @1, @1, @2, @1, @0]
                                         };
         [fullSongsList addObject:maryHadALittleLambFullArray];
         
         oldMacDonaldGameArray = @{
-                              @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700],
-                              @"notes":@[@3,   @3,   @3,  @0,    @1,    @1,    @0,   @5,    @5,    @4,    @4,   @3]
+                              @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
+                              @"notes":@[@3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3]
                               };
         [gameSongsList addObject:oldMacDonaldGameArray];
         
         oldMacDonaldFullArray = @{
-                                  @"tempo":@[@50, @400, @700, @1000, @1300, @1600, @1900, @2500, @2800, @3100, @3400, @3700],
-                                  @"notes":@[@3,   @3,   @3,  @0,    @1,    @1,    @0,   @5,    @5,    @4,    @4,   @3]
+                                  @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, en, en, qn, qn, qn, en, en, qn, qn, hn, en, en, qn, en, en, qn, en, en, en, en, qn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
+                                  @"notes":@[@3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3, @0, @3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3, @0, @0, @3, @3, @3, @0, @0, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3]
                                   };
         [fullSongsList addObject:oldMacDonaldFullArray];
         
         rowRowRowGameArray = @{
-                                  @"tempo":@[@50, @400, @700, @900, @1000, @1300, @1500, @1600, @1800, @1900],
-                                  @"notes":@[@0,   @0,   @0,  @1,   @2,    @2,    @1,   @2,    @3,    @4]
+                                  @"tempo":@[qn, dqn, dqn, dqn, en, dqn, dqn, en, dqn, dqn, dhn, en, en, en, en, en, en, en, en, en, en, en, en, dqn, en, dqn, en],
+                                  @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4]
                                   };
         [gameSongsList addObject:rowRowRowGameArray];
         
         rowRowRowFullArray = @{
-                               @"tempo":@[@50, @400, @700, @900, @1000, @1300, @1500, @1600, @1800, @1900],
-                               @"notes":@[@0,   @0,   @0,  @1,   @2,    @2,    @1,   @2,    @3,    @4]
+                               @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en, dhn, en, en, en, en, en, en, en, en, en, en, en, en, qn, en, qn, en],
+                               @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4, @7, @7, @7, @4, @4, @4, @2, @2, @2, @0, @0, @0, @4, @3, @2, @1, @0, ]
                                };
         [fullSongsList addObject:rowRowRowFullArray];
         
@@ -677,10 +679,8 @@
 -(void)startGame
 {
     [self closeSongTableView];
-    //NSLog(@"startGame");
     self.gameOn = YES;
     self.randomMode = NO;
-    
     
     [headerFrame addSubview:displayWindow];
 
@@ -728,7 +728,6 @@
                             [self playSongGame:self.songSelector];
                         }
                     });
-                        
                 }
             }
         }else{

@@ -108,7 +108,9 @@
     NSDictionary * oldMacDonaldFullArray;
     NSDictionary * rowRowRowFullArray;
     
-    UISegmentedControl *keyLabelSegmentedControl;
+    UISegmentedControl * keyLabelSegmentedControl;
+    UISegmentedControl * randomModeSegmentedControl;
+
     
 }
 
@@ -116,7 +118,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.currentTempo = 1.0;
+        self.currentTempo = 0.9;
 
         self.view.backgroundColor = [UIColor blueColor];
         self.gameOn = NO;
@@ -196,12 +198,17 @@
         displayWindow.textAlignment = 1;
         displayWindow.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
         
-        //Create the segmented control
-        NSArray *itemArray = @[@"Note Names", @"Solfege"];
-        keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:itemArray];
-        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.1, 175, 40);
+        NSArray * labelArray = @[@"Note Names", @"Solfege"];
+        keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:labelArray];
+        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.1, 185, 40);
         keyLabelSegmentedControl.selectedSegmentIndex = 1;
         [keyLabelSegmentedControl addTarget:self action:@selector(labelKeys:)forControlEvents:UIControlEventValueChanged];
+        
+        NSArray * gameModeArray = @[@"Songs", @"Random Notes"];
+        randomModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:gameModeArray];
+        randomModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.3, 185, 40);
+        randomModeSegmentedControl.selectedSegmentIndex = 1;
+        [randomModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
         
         rewardSongsList = [@[] mutableCopy];
         gameSongsList = [@[] mutableCopy];
@@ -225,7 +232,7 @@
 //                          LOAD SONGS                                        //
 ////////////////////////////////////////////////////////////////////////////////
         
-        float tempoMultiplier = 1.0;
+        float tempoMultiplier = 0.9;
 
         dhn = [NSNumber numberWithFloat:875 * tempoMultiplier];
         hn = [NSNumber numberWithFloat:700 * tempoMultiplier];
@@ -234,7 +241,7 @@
         en = [NSNumber numberWithFloat:175 * tempoMultiplier];
         sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
         
-        [self setGameSongTempos:1.0];
+        [self setGameSongTempos:0.9];
         
         fullSongsTitles = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald", @"Row, Row, Row"];
         
@@ -331,7 +338,6 @@
     [gameSongsList addObject:rowRowRowGameArray];
     
     [randomNotesDict setObject:qn forKey:@"tempo"];
-    NSLog(@"update tempo: %@", randomNotesDict);
 }
 
 - (void)viewDidLoad
@@ -621,7 +627,7 @@
     
     if (self.playlength > [currentSong[@"notes"]count])
     {
-        [self setGameSongTempos:1.0];
+        [self setGameSongTempos:0.9];
         [self playRewardSong:0];
         [self rewardDisplay];
         [displayWindow removeFromSuperview];
@@ -656,14 +662,15 @@
     NSMutableArray* currentNotes = randomNotesDict[@"notes"];
     currentNotes[[currentNotes count]] = randomNumber;
     
-    NSLog(@"randomNotesDict: %@", randomNotesDict);
-    
     score = 0;
     NSDictionary *currentSong = randomNotesDict;
     
     self.playlength++;
 
-    self.currentTempo = self.currentTempo - 0.05;
+    if (self.currentTempo > 0.3) {
+        self.currentTempo = self.currentTempo - 0.05;
+    }
+    NSLog(@"%f", self.currentTempo);
 
     [self setGameSongTempos:self.currentTempo];
 
@@ -673,9 +680,7 @@
 
 - (void)playRandomNoteGame:(NSDictionary *)currentSong withNote:(int)note
 {
-    NSLog(@"currentSong: %@", currentSong);
     int y = [currentSong[@"tempo"] intValue];
-    NSLog(@"y: %d", y);
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         int x = [currentSong[@"notes"][note] intValue];
@@ -696,15 +701,15 @@
 {
     [self closeSongTableView];
     self.gameOn = YES;
-    self.randomMode = YES;
+   // self.randomMode = YES;
     randomNotesDict = [@{
                          @"tempo":@[],
                          @"notes":[@[] mutableCopy]
                          }mutableCopy];
     
     [headerFrame addSubview:displayWindow];
-    displayWindow.text = [NSString stringWithFormat:@"0"];    
-    self.currentTempo = 1.0;
+    displayWindow.text = [NSString stringWithFormat:@"0"];
+    self.currentTempo = 0.9;
 
     self.playlength = 0;
     [tempSongNotesArray removeAllObjects];
@@ -805,6 +810,8 @@
         [self.view addSubview:xView];
         [self.view addSubview:xButton];
         [settingsPage addSubview:keyLabelSegmentedControl];
+        [settingsPage addSubview:randomModeSegmentedControl];
+
         
     }];
 }
@@ -887,6 +894,17 @@
         [self addSolfegeLabels];
     }else{
         [self addkeyNameLabels];
+    }
+}
+
+-(void) setGameMode:(id)sender{
+    UISegmentedControl *control = (UISegmentedControl *)sender;
+    NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
+    if ([label  isEqual: @"Random Notes"]) {
+        self.randomMode = YES;
+        NSLog(@"RANDOM");
+    }else{
+        self.randomMode = NO;
     }
 }
 

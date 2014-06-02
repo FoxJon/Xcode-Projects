@@ -28,16 +28,13 @@
     player.delegate = self;
     
     [self.players addObject:player];
-    
-    //player.numberOfLoops = 0;
-    
+        
     [player play];
 }
 
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     [self.players removeObjectIdenticalTo:player];
-   // NSLog(@"number of players %d", (int)[self.players count]);
 }
 
 @end

@@ -20,6 +20,9 @@
 @property (nonatomic) BOOL gameOn;
 @property (nonatomic) BOOL randomMode;
 
+@property (nonatomic) float currentTempo;
+
+
 @end
 
 @implementation PSSPianoViewController
@@ -57,10 +60,10 @@
     int score;
     
     NSNumber * sn;  //sixteenth note
-    NSNumber * en; //eighth note
-    NSNumber * qn; //quarter note
+    NSNumber * en;  //eighth note
+    NSNumber * qn;  //quarter note
     NSNumber * dqn; //dotted quarter note
-    NSNumber * hn; // half note
+    NSNumber * hn;  // half note
     NSNumber * dhn; //dotted half note
     
     UIView * whiteKeyGlow;
@@ -98,7 +101,7 @@
     NSDictionary * maryHadALittleLambGameArray;
     NSDictionary * oldMacDonaldGameArray;
     NSDictionary * rowRowRowGameArray;
-    NSMutableDictionary * randomNotesArray;
+    NSMutableDictionary * randomNotesDict;
 
     NSDictionary * twinkleTwinkleFullArray;
     NSDictionary * maryHadALittleLambFullArray;
@@ -113,6 +116,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        self.currentTempo = 1.0;
 
         self.view.backgroundColor = [UIColor blueColor];
         self.gameOn = NO;
@@ -204,8 +208,7 @@
         fullSongsList = [@[] mutableCopy];
 
         tempSongNotesArray = [@[]mutableCopy];
-
-
+        
         notes = @[@"cNote", @"dNote", @"eNote", @"fNote", @"gNote", @"aNote", @"bNote", @"c2Note", @"csNote", @"dsNote", @"fsNote", @"gsNote", @"asNote", @"cs2Note"];
         
         keys = @[@"cKey", @"dKey", @"eKey", @"fKey", @"gKey", @"aKey", @"bKey", @"c2Key", @"csKey", @"dsKey", @"fsKey", @"gsKey", @"asKey", @"cs2Key"];
@@ -217,38 +220,37 @@
 
         blackKeyGlow= [[UIButton alloc]initWithFrame:CGRectMake(0, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
         blackKeyGlow.layer.cornerRadius = 15;
-
+        
 ////////////////////////////////////////////////////////////////////////////////
-///////////// SONGS ARRAYS /////////////////////////////////////////////////////
+//                          LOAD SONGS                                        //
 ////////////////////////////////////////////////////////////////////////////////
+        
+        float tempoMultiplier = 1.0;
 
-        dhn = @875;
-        hn = @700;
-        dqn = @525;
-        qn = @350;
-        en = @175;
-        sn = @87.5;
+        dhn = [NSNumber numberWithFloat:875 * tempoMultiplier];
+        hn = [NSNumber numberWithFloat:700 * tempoMultiplier];
+        dqn = [NSNumber numberWithFloat:525 * tempoMultiplier];
+        qn = [NSNumber numberWithFloat:350 * tempoMultiplier];
+        en = [NSNumber numberWithFloat:175 * tempoMultiplier];
+        sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
+        
+        [self setGameSongTempos:1.0];
         
         fullSongsTitles = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald", @"Row, Row, Row"];
         
         rewardSequenceArray = @{
-                            @"tempo":@[qn, en, sn, sn, sn, sn],
-                            @"notes":@[@7, @1, @2, @4, @7, @0]
-                            };
+                                @"tempo":@[qn, en, sn, sn, sn, sn],
+                                @"notes":@[@7, @1, @2, @4, @7, @0]
+                                };
         [rewardSongsList addObject:rewardSequenceArray];
         
         endGameSequenceArray = @{
-                                @"tempo":@[qn, qn, sn, sn, sn, qn, qn],
-                                @"notes":@[@12, @5, @11, @4, @10, @9, @0]
-                                };
+                                 @"tempo":@[qn, qn, sn, sn, sn, qn, qn],
+                                 @"notes":@[@12, @5, @11, @4, @10, @9, @0]
+                                 };
         [rewardSongsList addObject:endGameSequenceArray];
-
         
-        twinkleTwinkleGameArray = @{
-                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
-                                    @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0]
-                                    };
-        [gameSongsList addObject:twinkleTwinkleGameArray];
+        
         
         twinkleTwinkleFullArray = @{
                                     @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
@@ -258,23 +260,13 @@
         
         
         
-        maryHadALittleLambGameArray = @{
-                                        @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn],
-                                        @"notes":@[@2, @1, @0, @1, @2, @2, @2, @1, @1, @1, @2, @4, @4]
-                                        };
-        [gameSongsList addObject:maryHadALittleLambGameArray];
-        
         maryHadALittleLambFullArray = @{
                                         @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn, hn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn],
                                         @"notes":@[@2, @1, @0, @1, @2, @2, @2, @1, @1, @1, @2, @4, @4, @2, @1,  @0, @1, @2, @2, @2, @2, @1, @1, @2, @1, @0]
                                         };
         [fullSongsList addObject:maryHadALittleLambFullArray];
         
-        oldMacDonaldGameArray = @{
-                              @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
-                              @"notes":@[@3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3]
-                              };
-        [gameSongsList addObject:oldMacDonaldGameArray];
+        
         
         oldMacDonaldFullArray = @{
                                   @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, en, en, qn, qn, qn, en, en, qn, qn, hn, en, en, qn, en, en, qn, en, en, en, en, qn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
@@ -282,11 +274,6 @@
                                   };
         [fullSongsList addObject:oldMacDonaldFullArray];
         
-        rowRowRowGameArray = @{
-                                  @"tempo":@[qn, dqn, dqn, dqn, en, dqn, dqn, en, dqn, dqn, dhn, en, en, en, en, en, en, en, en, en, en, en, en, dqn, en, dqn, en],
-                                  @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4]
-                                  };
-        [gameSongsList addObject:rowRowRowGameArray];
         
         rowRowRowFullArray = @{
                                @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en, dhn, en, en, en, en, en, en, en, en, en, en, en, en, qn, en, qn, en],
@@ -294,61 +281,62 @@
                                };
         [fullSongsList addObject:rowRowRowFullArray];
         
-        randomNotesArray = [@{
-                               @"tempo":@[],
-                               @"notes":@[]
-                               }mutableCopy];
+        randomNotesDict = [@{
+                             @"tempo":@[],
+                             @"notes":[@[] mutableCopy]
+                             }mutableCopy];
 
         [self playRewardSong:0];
     }
     return self;
 }
 
+- (void)setGameSongTempos:(float)tempo
+{
+    [gameSongsList removeAllObjects];
+    
+    float tempoMultiplier = tempo;
+    
+    dhn = [NSNumber numberWithFloat:875 * tempoMultiplier];
+    hn = [NSNumber numberWithFloat:700 * tempoMultiplier];
+    dqn = [NSNumber numberWithFloat:525 * tempoMultiplier];
+    qn = [NSNumber numberWithFloat:350 * tempoMultiplier];
+    en = [NSNumber numberWithFloat:175 * tempoMultiplier];
+    sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
+    
+    twinkleTwinkleGameArray = @{
+                                @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
+                                @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0]
+                                };
+    [gameSongsList addObject:twinkleTwinkleGameArray];
+    
+    maryHadALittleLambGameArray = @{
+                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn],
+                                    @"notes":@[@2, @1, @0, @1, @2, @2, @2, @1, @1, @1, @2, @4, @4]
+                                    };
+    [gameSongsList addObject:maryHadALittleLambGameArray];
+    
+    
+    oldMacDonaldGameArray = @{
+                              @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
+                              @"notes":@[@3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3]
+                              };
+    [gameSongsList addObject:oldMacDonaldGameArray];
+
+    
+    rowRowRowGameArray = @{
+                           @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en],
+                           @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4]
+                           };
+    [gameSongsList addObject:rowRowRowGameArray];
+    
+    [randomNotesDict setObject:qn forKey:@"tempo"];
+    NSLog(@"update tempo: %@", randomNotesDict);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-//    for (int i = 0 ; i < 10; i++) {
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            
-//        });
-//        NSLog(@"DISPATCH");
-//    }
-    
-//    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, DISPATCH_QUEUE_PRIORITY_DEFAULT);
-//    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC, 5 * NSEC_PER_SEC);
-//    dispatch_source_set_event_handler(timer, ^{
-//        NSLog(@"DISPATCH");
-//    });
-//    
-//    dispatch_resume(timer);
-    
-    
-//    NSDictionary *currentSong = fullSongsList[1];
-//    
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_async(queue, ^{
-//        dispatch_apply([currentSong[@"notes"]count], queue, ^(size_t index){
-//            NSLog(@"dispatch1");
-//        });
-//        NSLog(@"dispatch2");
-//    });
-    
-    //dispatch_queue_t queue = dispatch_get_global_queue(0,0);
-    //
-    //dispatch_apply(queue, count, ^(size_t idx){
-    //    do_something_with_data(data,idx);
-    //});
-    
-//    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-//    dispatch_group_t group = dispatch_group_create();
-//    for(id obj in fullSongsList)
-//    dispatch_group_async(group, queue, ^{
-//        NSLog(@"dispatch %@", obj);
-//    });
-//    dispatch_group_wait(group, DISPATCH_TIME_FOREVER);
-//    
-//    NSLog(@"dispatch2");
     
     glowKeys = [@[] mutableCopy];
     
@@ -621,14 +609,19 @@
     });
 }
 
-- (void)playSongGame:(int)indexOfGameSongslist
+-(void)prePlaySongGame:(int)indexOfGameSongslist
 {
     score = 0;
-
     NSDictionary *currentSong = gameSongsList[indexOfGameSongslist];
     self.playlength++;
+    
+    self.currentTempo = self.currentTempo - 0.05;
+    
+    [self setGameSongTempos:self.currentTempo];
+    
     if (self.playlength > [currentSong[@"notes"]count])
     {
+        [self setGameSongTempos:1.0];
         [self playRewardSong:0];
         [self rewardDisplay];
         [displayWindow removeFromSuperview];
@@ -636,42 +629,65 @@
         self.gameOn = NO;
         return;
     }
-    for (int i = 0 ; i < ([currentSong[@"notes"]count]-[currentSong[@"notes"]count])+self.playlength; i++) {
-        int y = [currentSong[@"tempo"][i] intValue];
+    [self playSongGame:(NSDictionary *)currentSong withNote:0];
+}
+
+- (void)playSongGame:(NSDictionary *)currentSong withNote:(int)note
+{
+    int y = [currentSong[@"tempo"][note] intValue];
+    
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            int x = [currentSong[@"notes"][i] intValue];
+            int x = [currentSong[@"notes"][note] intValue];
             [player playSoundWithName:notes[x]];
             [tempSongNotesArray addObject:notes[x]];
             [self glowKey:x];
-        });
-    }
+            
+        if(note < self.playlength-1)
+        {
+            [self playSongGame:currentSong withNote:note + 1];
+        }
+    });
 }
 
-- (void)playRandomNoteGame
+-(void)prePlayRandomNoteGame
 {
+    NSNumber * randomNumber = [NSNumber numberWithInt:arc4random_uniform(7)];
+    
+    NSMutableArray* currentNotes = randomNotesDict[@"notes"];
+    currentNotes[[currentNotes count]] = randomNumber;
+    
+    NSLog(@"randomNotesDict: %@", randomNotesDict);
+    
     score = 0;
-    
-//    NSDictionary *currentSong = randomNotesArray;
-
-    int randomNumber = arc4random_uniform(7);
-    
-    [randomNotesArray setObject:@[@(randomNumber)] forKey:@"notes"];
-    [randomNotesArray setObject:@[@400] forKey:@"tempo"];
-    
-    NSLog(@"notes key: %@", randomNotesArray[@"notes"]);
-
+    NSDictionary *currentSong = randomNotesDict;
     
     self.playlength++;
 
-//    for (int i = 0 ; i < ([currentSong[@"notes"]count]-[currentSong[@"notes"]count])+self.playlength; i++) {
-//        int y = [currentSong[@"tempo"][i] intValue];
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-//            int x = [currentSong[@"notes"][i] intValue];
-//            [player playSoundWithName:notes[x]];
-//            [tempSongNotesArray addObject:notes[x]];
-//            [self glowKey:x];
-//        });
-//    }
+    self.currentTempo = self.currentTempo - 0.05;
+
+    [self setGameSongTempos:self.currentTempo];
+
+
+    [self playRandomNoteGame:(NSDictionary *)currentSong withNote:0];
+}
+
+- (void)playRandomNoteGame:(NSDictionary *)currentSong withNote:(int)note
+{
+    NSLog(@"currentSong: %@", currentSong);
+    int y = [currentSong[@"tempo"] intValue];
+    NSLog(@"y: %d", y);
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        int x = [currentSong[@"notes"][note] intValue];
+        [player playSoundWithName:notes[x]];
+        [tempSongNotesArray addObject:notes[x]];
+        [self glowKey:x];
+
+        if(note < self.playlength-1)
+        {
+            [self playRandomNoteGame:currentSong withNote:note + 1];
+        }
+    });
 }
 ///////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
@@ -680,9 +696,15 @@
 {
     [self closeSongTableView];
     self.gameOn = YES;
-    self.randomMode = NO;
+    self.randomMode = YES;
+    randomNotesDict = [@{
+                         @"tempo":@[],
+                         @"notes":[@[] mutableCopy]
+                         }mutableCopy];
     
     [headerFrame addSubview:displayWindow];
+    displayWindow.text = [NSString stringWithFormat:@"0"];    
+    self.currentTempo = 1.0;
 
     self.playlength = 0;
     [tempSongNotesArray removeAllObjects];
@@ -691,14 +713,14 @@
     if (self.randomMode) {
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [self playRandomNoteGame];
+            [self prePlayRandomNoteGame];
         });
     }else{
         int songNumber = (int)[gameSongsList count];
         self.songSelector = arc4random_uniform(songNumber);
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [self playSongGame:self.songSelector];
+            [self prePlaySongGame:self.songSelector];
         });
     }
 }
@@ -721,11 +743,9 @@
                 if (noteCount == [tempSongNotesArray count]){
                     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                         if (self.randomMode) {
-                            NSLog(@"Random");
-                            [self playRandomNoteGame];
+                            [self prePlayRandomNoteGame];
                         }else{
-                            NSLog(@"NOPE!!!");
-                            [self playSongGame:self.songSelector];
+                            [self prePlaySongGame:self.songSelector];
                         }
                     });
                 }
@@ -772,7 +792,6 @@
 
 -(void)openSettingsPage
 {
-    NSLog(@"open");
     [self closeSongTableView];
     [UIView animateWithDuration:0.4 animations:^{
         [startButton removeFromSuperview];
@@ -890,8 +909,8 @@
     }completion:^(BOOL finished) {
         [rewardDisplayView removeFromSuperview];
     }];
-    
 }
+
 
 #pragma mark UITableViewDelegate
 

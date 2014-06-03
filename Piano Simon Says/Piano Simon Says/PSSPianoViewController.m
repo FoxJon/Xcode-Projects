@@ -94,25 +94,43 @@
     PSSxView * xView;
     UIButton * xButton;
     
+    UISegmentedControl * keyLabelSegmentedControl;
+    UISegmentedControl * randomModeSegmentedControl;
+    
 //SONGS
     NSDictionary * rewardSequenceArray;
     NSDictionary * endGameSequenceArray;
     
-    NSDictionary * twinkleTwinkleGameArray;
+    NSDictionary * aTisketATasketGameArray;
+    NSDictionary * goodMorningToYouGameArray;
+    NSDictionary * hickoryDickoryDockGameArray;
+    NSDictionary * itsRainingItsPouringGameArray;
+    NSDictionary * lightlyRowGameArray;
+    NSDictionary * londonBridgeGameArray;
     NSDictionary * maryHadALittleLambGameArray;
+    NSDictionary * muffinManGameArray;
     NSDictionary * oldMacDonaldGameArray;
+    NSDictionary * ringAroundTheRosyGameArray;
     NSDictionary * rowRowRowGameArray;
+    NSDictionary * thisOldManGameArray;
+    NSDictionary * threeBlindMiceGameArray;
+    NSDictionary * twinkleTwinkleGameArray;
     NSMutableDictionary * randomNotesDict;
-
-    NSDictionary * twinkleTwinkleFullArray;
+    
+    NSDictionary * aTisketATasketFullArray;
+    NSDictionary * goodMorningToYouFullArray;
+    NSDictionary * hickoryDickoryDockFullArray;
+    NSDictionary * itsRainingItsPouringFullArray;
+    NSDictionary * lightlyRowFullArray;
+    NSDictionary * londonBridgeFullArray;
     NSDictionary * maryHadALittleLambFullArray;
+    NSDictionary * muffinManFullArray;
     NSDictionary * oldMacDonaldFullArray;
+    NSDictionary * ringAroundTheRosyFullArray;
     NSDictionary * rowRowRowFullArray;
-    
-    UISegmentedControl * keyLabelSegmentedControl;
-    UISegmentedControl * randomModeSegmentedControl;
-
-    
+    NSDictionary * thisOldManFullArray;
+    NSDictionary * threeBlindMiceFullArray;
+    NSDictionary * twinkleTwinkleFullArray;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -244,7 +262,20 @@
         
         [self setGameSongTempos:0.9];
         
-        fullSongsTitles = @[@"Twinkle Twinkle", @"Mary Had A Little Lamb", @"Old MacDonald", @"Row, Row, Row"];
+        fullSongsTitles = @[@"A-Tisket A-Tasket",
+                            @"Good Morning To You",
+                            @"Hickory Dickory Dock",
+                            @"It’s Raining It’s Pouring",
+                            @"Lightly Row",
+                            @"London Bridge",
+                            @"Mary Had A Little Lamb",
+                            @"Muffin Man",
+                            @"Old MacDonald",
+                            @"Ring Around the Rosy",
+                            @"Row, Row, Row Your Boat",
+                            @"This Old Man",
+                            @"Three Blind Mice",
+                            @"Twinkle Twinkle"];
         
         rewardSequenceArray = @{
                                 @"tempo":@[qn, en, sn, sn, sn, sn],
@@ -259,14 +290,41 @@
         [rewardSongsList addObject:endGameSequenceArray];
         
         
-        
-        twinkleTwinkleFullArray = @{
-                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
-                                    @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0, @4, @4,@3, @3, @2, @2, @1, @4, @4, @3, @3, @2, @2, @1, @0, @0, @4, @4, @5, @5,   @4, @3, @3, @2, @2, @1, @1, @0]
+        aTisketATasketFullArray = @{
+                                    @"tempo":@[qn],
+                                    @"notes":@[@5,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2,@2,@3,@3,@1,@1,@3,@3,@1,@1,@4,@3,@2,@1,@2,@0]
                                     };
-        [fullSongsList addObject:twinkleTwinkleFullArray];
+        [fullSongsList addObject:aTisketATasketFullArray];
         
+        goodMorningToYouFullArray = @{
+                                      @"tempo":@[qn],
+                                      @"notes":@[@0]
+                                    };
+        [fullSongsList addObject:goodMorningToYouFullArray];
         
+        hickoryDickoryDockFullArray = @{
+                                        @"tempo":@[qn],
+                                        @"notes":@[@0]
+                                      };
+        [fullSongsList addObject:hickoryDickoryDockFullArray];
+        
+        itsRainingItsPouringFullArray = @{
+                                          @"tempo":@[qn],
+                                          @"notes":@[@0]
+                                        };
+        [fullSongsList addObject:itsRainingItsPouringFullArray];
+        
+        lightlyRowFullArray = @{
+                                @"tempo":@[qn],
+                                @"notes":@[@0]
+                                };
+        [fullSongsList addObject:lightlyRowFullArray];
+        
+        londonBridgeFullArray = @{
+                                               @"tempo":@[qn],
+                                               @"notes":@[@0]
+                                               };
+        [fullSongsList addObject:londonBridgeFullArray];
         
         maryHadALittleLambFullArray = @{
                                         @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn, hn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn, qn],
@@ -274,7 +332,11 @@
                                         };
         [fullSongsList addObject:maryHadALittleLambFullArray];
         
-        
+        muffinManFullArray = @{
+                               @"tempo":@[qn],
+                               @"notes":@[@0]
+                               };
+        [fullSongsList addObject:muffinManFullArray];
         
         oldMacDonaldFullArray = @{
                                   @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, dhn, en, en, qn, qn, qn, en, en, qn, qn, hn, en, en, qn, en, en, qn, en, en, en, en, qn, qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
@@ -282,12 +344,35 @@
                                   };
         [fullSongsList addObject:oldMacDonaldFullArray];
         
+        ringAroundTheRosyFullArray = @{
+                                       @"tempo":@[qn],
+                                       @"notes":@[@0]
+                                       };
+        [fullSongsList addObject:ringAroundTheRosyFullArray];
         
         rowRowRowFullArray = @{
                                @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en, dhn, en, en, en, en, en, en, en, en, en, en, en, en, qn, en, qn, en],
                                @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4, @7, @7, @7, @4, @4, @4, @2, @2, @2, @0, @0, @0, @4, @3, @2, @1, @0, ]
                                };
         [fullSongsList addObject:rowRowRowFullArray];
+        
+        thisOldManFullArray = @{
+                                @"tempo":@[qn],
+                                @"notes":@[@0]
+                                };
+        [fullSongsList addObject:thisOldManFullArray];
+        
+        threeBlindMiceFullArray = @{
+                                    @"tempo":@[qn],
+                                    @"notes":@[@0]
+                                    };
+        [fullSongsList addObject:threeBlindMiceFullArray];
+        
+        twinkleTwinkleFullArray = @{
+                                    @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
+                                    @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0, @4, @4,@3, @3, @2, @2, @1, @4, @4, @3, @3, @2, @2, @1, @0, @0, @4, @4, @5, @5,   @4, @3, @3, @2, @2, @1, @1, @0]
+                                    };
+        [fullSongsList addObject:twinkleTwinkleFullArray];
         
         randomNotesDict = [@{
                              @"tempo":@[],
@@ -770,6 +855,25 @@
             [self playRewardSong:1];
             [displayWindow removeFromSuperview];
             self.gameOn = NO;
+            
+            UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
+            rewardDisplayView.backgroundColor = [UIColor clearColor];
+            [self.view addSubview:rewardDisplayView];
+            
+            UILabel * rewardDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, rewardDisplayView.frame.size.height)];
+            rewardDisplayLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
+            rewardDisplayLabel.text = @"Try Again!";
+            rewardDisplayLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+            rewardDisplayLabel.textAlignment = 1;
+            [rewardDisplayView addSubview:rewardDisplayLabel];
+           
+            [UIView animateWithDuration:2.5 animations:^{
+                rewardDisplayView.frame = CGRectMake(0, SCREEN_HEIGHT/2-125, SCREEN_WIDTH, 100);
+                rewardDisplayView.alpha = 0;
+            }completion:^(BOOL finished) {
+                [rewardDisplayView removeFromSuperview];
+            }];
+            
             return;
         }
     }
@@ -785,7 +889,7 @@
         tableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 200, 25);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{
-            songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, SCREEN_HEIGHT);
+            songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, SCREEN_HEIGHT-40);
         }completion:^(BOOL finished) {
         }];
     }];
@@ -880,7 +984,7 @@
     dLabel.text = @"RE";
     eLabel.text = @"MI";
     fLabel.text = @"FA";
-    gLabel.text = @"SA";
+    gLabel.text = @"SO";
     aLabel.text = @"LA";
     bLabel.text = @"TI";
     c2Label.text = @"DO";

@@ -58,6 +58,7 @@
     
     int noteCount;
     int score;
+    int maxScore;
     
     NSNumber * sn;  //sixteenth note
     NSNumber * en;  //eighth note
@@ -198,7 +199,7 @@
         displayWindow.textAlignment = 1;
         displayWindow.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
         
-        NSArray * labelArray = @[@"Note Names", @"Solfege"];
+        NSArray * labelArray = @[@"Note Names", @"Do-Re-Mi"];
         keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:labelArray];
         keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.1, 185, 40);
         keyLabelSegmentedControl.selectedSegmentIndex = 1;
@@ -629,9 +630,9 @@
     {
         [self setGameSongTempos:0.9];
         [self playRewardSong:0];
-        [self rewardDisplay];
+        [self rewardDisplay:0];
         [displayWindow removeFromSuperview];
-        [self rewardDisplay];
+        [self rewardDisplay:0];
         self.gameOn = NO;
         return;
     }
@@ -701,7 +702,6 @@
 {
     [self closeSongTableView];
     self.gameOn = YES;
-   // self.randomMode = YES;
     randomNotesDict = [@{
                          @"tempo":@[],
                          @"notes":[@[] mutableCopy]
@@ -716,7 +716,7 @@
     noteCount = 0;
     
     if (self.randomMode) {
-        
+        maxScore = 0;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             [self prePlayRandomNoteGame];
         });
@@ -741,7 +741,12 @@
         if (notes[sender.tag] == tempSongNotesArray[noteCount]){
             score++;
             displayWindow.text = [NSString stringWithFormat:@"%d", score];
-            
+            NSLog(@"score: %d", score);
+            NSLog(@"BF max score: %d", maxScore);
+            if (score > maxScore) {
+                maxScore = score;
+                NSLog(@"max score: %d", maxScore);
+            }
             if (noteCount < [tempSongNotesArray count]){
                 noteCount++;
                 
@@ -756,6 +761,12 @@
                 }
             }
         }else{
+            if (self.randomMode) {
+                displayWindow.text = @"0";
+                [self rewardDisplay:maxScore];
+                [self playRewardSong:0];
+                return;
+            }
             [self playRewardSong:1];
             [displayWindow removeFromSuperview];
             self.gameOn = NO;
@@ -890,7 +901,7 @@
 -(void) labelKeys:(id)sender{
     UISegmentedControl *control = (UISegmentedControl *)sender;
     NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
-    if ([label  isEqual: @"Solfege"]) {
+    if ([label  isEqual: @"Do-Re-Mi"]) {
         [self addSolfegeLabels];
     }else{
         [self addkeyNameLabels];
@@ -902,31 +913,48 @@
     NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
     if ([label  isEqual: @"Random Notes"]) {
         self.randomMode = YES;
-        NSLog(@"RANDOM");
     }else{
         self.randomMode = NO;
     }
 }
 
--(void)rewardDisplay
+-(void)rewardDisplay:(int)totalScore
 {
-    UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-50, 200, 100)];
+    UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
     rewardDisplayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:rewardDisplayView];
     
-    UILabel * rewardDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, rewardDisplayView.frame.size.width, rewardDisplayView.frame.size.height)];
-    rewardDisplayLabel.text = @"PERFECT!";
+    UILabel * rewardDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, rewardDisplayView.frame.size.height)];
     rewardDisplayLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     rewardDisplayLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.7];
     rewardDisplayLabel.textAlignment = 1;
     [rewardDisplayView addSubview:rewardDisplayLabel];
+    if (self.randomMode) {
+        NSArray * phrase;
+        int random = arc4random_uniform(3);
+        if (totalScore <=3) {
+            rewardDisplayLabel.text = [NSString stringWithFormat:@"%d in a row.", totalScore];
+        }else if (totalScore <=7) {
+            phrase = @[@"TERRIFIC!", @"GOOD JOB!", @"WAY TO GO!"];
+            rewardDisplayLabel.text = [NSString stringWithFormat:@"%d in a row! %@", totalScore, phrase[random]];
+        }else if (totalScore <=15){
+            phrase = @[@"FANTASTIC!", @"EXCELLENT!", @"OUTSTANDING!"];
+            rewardDisplayLabel.text = [NSString stringWithFormat:@"%d in a row! %@", totalScore, phrase[random]];
+        }else if (totalScore >15){
+            phrase = @[@"DYNAMITE!", @"AMAZING!", @"INCREDIBLE!"];
+            rewardDisplayLabel.text = [NSString stringWithFormat:@"%d in a row! %@", totalScore, phrase[random]];
+        }
+    }else{
+    rewardDisplayLabel.text = @"PERFECT!";
+    }
     
-    [UIView animateWithDuration:2.0 animations:^{
-        rewardDisplayView.frame = CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-125, 200, 100);
+    [UIView animateWithDuration:2.5 animations:^{
+        rewardDisplayView.frame = CGRectMake(0, SCREEN_HEIGHT/2-125, SCREEN_WIDTH, 100);
         rewardDisplayView.alpha = 0;
     }completion:^(BOOL finished) {
         [rewardDisplayView removeFromSuperview];
     }];
+    self.gameOn = NO;
 }
 
 

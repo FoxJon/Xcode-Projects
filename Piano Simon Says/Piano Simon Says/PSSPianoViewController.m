@@ -19,9 +19,11 @@
 
 @property (nonatomic) BOOL gameOn;
 @property (nonatomic) BOOL randomMode;
+@property (nonatomic) BOOL expertMode;
+@property (nonatomic) BOOL stopPlaying;
+@property (nonatomic) BOOL isPlaying;
 
 @property (nonatomic) float currentTempo;
-
 
 @end
 
@@ -42,6 +44,7 @@
     UIButton * c2Key;
     UIButton * cs2Key;
     UIButton * startButton;
+    UIButton * stopButton;
     UIButton * songsButton;
     UIButton * closeButton;
     
@@ -96,6 +99,7 @@
     
     UISegmentedControl * keyLabelSegmentedControl;
     UISegmentedControl * randomModeSegmentedControl;
+    UISegmentedControl * expertModeSegmentedControl;
     
 //SONGS
     NSDictionary * rewardSequenceArray;
@@ -137,6 +141,9 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
         self.currentTempo = 0.9;
 
         self.view.backgroundColor = [UIColor blueColor];
@@ -201,6 +208,14 @@
         songsButton.backgroundColor = [UIColor clearColor];
         [songsButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
         [headerFrame addSubview:songsButton];
+
+        stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
+        stopButton.layer.cornerRadius = 5;
+        stopButton.titleLabel.textColor = [UIColor whiteColor];
+        stopButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [stopButton setTitle:@"STOP" forState:UIControlStateNormal];
+        stopButton.backgroundColor = [UIColor clearColor];
+        [stopButton addTarget:self action:@selector(stopSong) forControlEvents:UIControlEventTouchUpInside];
         
         startButton = [[UIButton alloc]initWithFrame:CGRectMake(-14,-10, 80, 40)];
         startButton.layer.cornerRadius = 5;
@@ -219,15 +234,42 @@
         
         NSArray * labelArray = @[@"Note Names", @"Do-Re-Mi"];
         keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:labelArray];
-        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.1, 185, 40);
-        keyLabelSegmentedControl.selectedSegmentIndex = 1;
+        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.2, 185, 40);
+        keyLabelSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"keyLabel"] intValue];
         [keyLabelSegmentedControl addTarget:self action:@selector(labelKeys:)forControlEvents:UIControlEventValueChanged];
+        [self labelKeys:keyLabelSegmentedControl];
         
+        UILabel * labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
+        labelTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
+        labelTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        labelTitle.text = @"Labels";
+        [keyLabelSegmentedControl addSubview:labelTitle];
+        
+        NSArray * expertModeArray = @[@"Off", @"On"];
+        expertModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:expertModeArray];
+        expertModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.8, 185, 40);
+        expertModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"expertMode"] intValue];;
+        [expertModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
+        [self setGameMode:expertModeSegmentedControl];
+        
+        UILabel * expertModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
+        expertModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
+        expertModeTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        expertModeTitle.text = @"Expert Mode - Labels off. All keys in random notes mode.";
+        [expertModeSegmentedControl addSubview:expertModeTitle];
+
         NSArray * gameModeArray = @[@"Songs", @"Random Notes"];
         randomModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:gameModeArray];
-        randomModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.3, 185, 40);
-        randomModeSegmentedControl.selectedSegmentIndex = 1;
+        randomModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.5, 185, 40);
+        randomModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"randomMode"] intValue];
         [randomModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
+        [self setGameMode:randomModeSegmentedControl];
+        
+        UILabel * gameModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
+        gameModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
+        gameModeTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        gameModeTitle.text = @"Game Mode";
+        [randomModeSegmentedControl addSubview:gameModeTitle];
         
         rewardSongsList = [@[] mutableCopy];
         gameSongsList = [@[] mutableCopy];
@@ -291,39 +333,39 @@
         
         
         aTisketATasketFullArray = @{
-                                    @"tempo":@[qn],
+                                    @"tempo":@[qn,en,dqn,qn,en,dqn,qn,en,qn,en,qn,en,dqn,qn,en,qn,en,qn,en,qn,en,qn,en,qn,en,qn,en,dqn],
                                     @"notes":@[@5,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2,@2,@3,@3,@1,@1,@3,@3,@1,@1,@4,@3,@2,@1,@2,@0]
                                     };
         [fullSongsList addObject:aTisketATasketFullArray];
         
         goodMorningToYouFullArray = @{
-                                      @"tempo":@[qn],
-                                      @"notes":@[@0]
+                                      @"tempo":@[qn,qn,qn,qn,qn,hn,qn,qn,qn,qn,hn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn],
+                                      @"notes":@[@0,@1,@0,@3,@2,@0,@1,@0,@4,@3,@0,@7,@5,@3,@2,@1,@12,@5,@3,@4,@3]
                                     };
         [fullSongsList addObject:goodMorningToYouFullArray];
         
         hickoryDickoryDockFullArray = @{
-                                        @"tempo":@[qn],
-                                        @"notes":@[@0]
+                                        @"tempo":@[qn,en,en,en,en,en,en,dhn,en,qn,en,qn,en,dhn,en,qn,en,qn,en,qn,en,dqn,en,en,en,en,en,en],
+                                        @"notes":@[@2,@3,@4,@3,@2,@1,@2,@2,@2,@4,@3,@1,@2,@2,@2,@2,@4,@4,@3,@3,@5,@4,@5,@4,@3,@2,@1,@0]
                                       };
         [fullSongsList addObject:hickoryDickoryDockFullArray];
         
         itsRainingItsPouringFullArray = @{
-                                          @"tempo":@[qn],
-                                          @"notes":@[@0]
+                                          @"tempo":@[qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn,hn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn,qn,hn],
+                                          @"notes":@[@5,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2,@2,@3,@3,@1,@1,@3,@3,@1,@1,@4,@3,@2,@1,@2,@0]
                                         };
         [fullSongsList addObject:itsRainingItsPouringFullArray];
         
         lightlyRowFullArray = @{
-                                @"tempo":@[qn],
-                                @"notes":@[@0]
+                                @"tempo":@[qn,qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn,hn,qn,qn,hn,qn,qn,hn,qn,qn,qn,qn],
+                                @"notes":@[@4,@2,@2,@3,@1,@1,@0,@1,@2,@3,@4,@4,@4,@4,@2,@2,@3,@1,@1,@0,@2,@4,@4,@2]
                                 };
         [fullSongsList addObject:lightlyRowFullArray];
         
         londonBridgeFullArray = @{
-                                               @"tempo":@[qn],
-                                               @"notes":@[@0]
-                                               };
+                               @"tempo":@[qn,dqn,en,qn,qn,qn,qn,hn,qn,qn,hn,qn,qn,hn,dqn,en,qn,qn,qn,qn,hn,hn,hn,qn],
+                               @"notes":@[@4,@5,@4,@3,@2,@3,@4,@1,@2,@3,@2,@3,@4,@4,@5,@4,@3,@2,@3,@4,@1,@4,@2,@0]
+                               };
         [fullSongsList addObject:londonBridgeFullArray];
         
         maryHadALittleLambFullArray = @{
@@ -333,8 +375,8 @@
         [fullSongsList addObject:maryHadALittleLambFullArray];
         
         muffinManFullArray = @{
-                               @"tempo":@[qn],
-                               @"notes":@[@0]
+                               @"tempo":@[qn,qn,qn,dqn,en,qn,qn,dqn,en,qn,qn,dqn,en,qn,qn,hn,qn,qn,dqn,en,qn,qn,qn,qn,qn,qn,qn,qn],
+                               @"notes":@[@0,@3,@3,@4,@5,@3,@3,@2,@1,@4,@4,@3,@2,@0,@0,@0,@3,@3,@4,@5,@3,@3,@3,@4,@4,@0,@0,@3]
                                };
         [fullSongsList addObject:muffinManFullArray];
         
@@ -345,26 +387,26 @@
         [fullSongsList addObject:oldMacDonaldFullArray];
         
         ringAroundTheRosyFullArray = @{
-                                       @"tempo":@[qn],
-                                       @"notes":@[@0]
+                                       @"tempo":@[qn,qn,en,qn,en,dqn,qn,en,qn,en,qn,en,dqn,dqn,dqn,dqn,dqn,qn,en,dqn,dqn],
+                                       @"notes":@[@4,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2,@3,@1,@3,@1,@1,@4,@4,@0]
                                        };
         [fullSongsList addObject:ringAroundTheRosyFullArray];
         
         rowRowRowFullArray = @{
                                @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en, dhn, en, en, en, en, en, en, en, en, en, en, en, en, qn, en, qn, en],
-                               @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4, @7, @7, @7, @4, @4, @4, @2, @2, @2, @0, @0, @0, @4, @3, @2, @1, @0, ]
+                               @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4, @7, @7, @7, @4, @4, @4, @2, @2, @2, @0, @0, @0, @4, @3, @2, @1, @0]
                                };
         [fullSongsList addObject:rowRowRowFullArray];
         
         thisOldManFullArray = @{
-                                @"tempo":@[qn],
-                                @"notes":@[@0]
+                                @"tempo":@[qn,qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn,qn,en,en,qn,qn,en,en,qn,en,en,en,en,hn,qn,qn,qn,qn,qn,qn],
+                                @"notes":@[@4,@2,@4,@4,@2,@4,@5,@4,@3,@2,@1,@2,@3,@2,@3,@4,@0,@0,@0,@0,@0,@1,@2,@3,@4,@4,@1,@1,@3,@2,@1,@0]
                                 };
         [fullSongsList addObject:thisOldManFullArray];
         
         threeBlindMiceFullArray = @{
-                                    @"tempo":@[qn],
-                                    @"notes":@[@0]
+                                    @"tempo":@[qn,dqn,dqn,dhn,dqn,dqn,dhn,dqn,qn,en,dhn,dqn,qn,en,dhn,en,qn,en,en,en,en,qn,en,qn,en,qn,en,en,en,en,qn,en,qn,en,qn,en,en,en,en,qn,en,qn,en,dqn,dqn,dhn,dqn,dqn],
+                                    @"notes":@[@2,@1,@0,@2,@1,@0,@4,@3,@3,@2,@4,@3,@3,@2,@4,@7,@7,@6,@5,@6,@7,@4,@4,@4,@7,@7,@6,@5,@6,@7,@4,@4,@4,@7,@7,@6,@5,@6,@7,@4,@4,@3,@2,@1,@0,@2,@1,@0]
                                     };
         [fullSongsList addObject:threeBlindMiceFullArray];
         
@@ -397,11 +439,41 @@
     en = [NSNumber numberWithFloat:175 * tempoMultiplier];
     sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
     
-    twinkleTwinkleGameArray = @{
-                                @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
-                                @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0]
+    aTisketATasketGameArray = @{
+                                @"tempo":@[qn,en,dqn,qn,en,dqn,qn,en,qn,en,qn,en,dqn],
+                                @"notes":@[@5,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2]
                                 };
-    [gameSongsList addObject:twinkleTwinkleGameArray];
+    [gameSongsList addObject:aTisketATasketGameArray];
+    
+    goodMorningToYouGameArray = @{
+                                  @"tempo":@[qn,qn,qn,qn,qn,hn,qn,qn,qn,qn],
+                                  @"notes":@[@0,@1,@0,@3,@2,@0,@1,@0,@4,@3]
+                                  };
+    [gameSongsList addObject:goodMorningToYouGameArray];
+    
+    hickoryDickoryDockGameArray = @{
+                                    @"tempo":@[qn,en,en,en,en,en,en,dhn,en,qn,en,qn,en],
+                                    @"notes":@[@2,@3,@4,@3,@2,@1,@2,@2,@2,@4,@3,@1,@2]
+                                    };
+    [gameSongsList addObject:hickoryDickoryDockGameArray];
+    
+    itsRainingItsPouringGameArray = @{
+                                      @"tempo":@[qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn,hn],
+                                      @"notes":@[@5,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2]
+                                      };
+    [gameSongsList addObject:itsRainingItsPouringGameArray];
+    
+    lightlyRowGameArray = @{
+                            @"tempo":@[qn,qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn],
+                            @"notes":@[@4,@2,@2,@3,@1,@1,@0,@1,@2,@3,@4,@4,@4]
+                            };
+    [gameSongsList addObject:lightlyRowGameArray];
+    
+    londonBridgeGameArray = @{
+                              @"tempo":@[qn,dqn,en,qn,qn,qn,qn,hn,qn,qn,hn,qn,qn],
+                              @"notes":@[@4,@5,@4,@3,@2,@3,@4,@1,@2,@3,@2,@3,@4]
+                              };
+    [gameSongsList addObject:londonBridgeGameArray];
     
     maryHadALittleLambGameArray = @{
                                     @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, hn, qn, qn],
@@ -409,19 +481,47 @@
                                     };
     [gameSongsList addObject:maryHadALittleLambGameArray];
     
+    muffinManGameArray = @{
+                           @"tempo":@[qn,qn,qn,dqn,en,qn,qn,dqn,en,qn,qn,dqn,en,qn,qn],
+                           @"notes":@[@0,@3,@3,@4,@5,@3,@3,@2,@1,@4,@4,@3,@2,@0,@0]
+                           };
+    [gameSongsList addObject:muffinManGameArray];
     
     oldMacDonaldGameArray = @{
                               @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn],
                               @"notes":@[@3, @3, @3, @0, @1, @1, @0, @5, @5, @4, @4, @3]
                               };
     [gameSongsList addObject:oldMacDonaldGameArray];
-
+    
+    ringAroundTheRosyGameArray = @{
+                                   @"tempo":@[qn,qn,en,qn,en,dqn,qn,en,qn,en,qn,en,dqn],
+                                   @"notes":@[@4,@4,@2,@5,@4,@2,@3,@4,@4,@2,@5,@4,@2]
+                                   };
+    [gameSongsList addObject:ringAroundTheRosyGameArray];
     
     rowRowRowGameArray = @{
                            @"tempo":@[qn, dqn, dqn, qn, en, dqn, qn, en, qn, en],
                            @"notes":@[@0, @0, @0, @1, @2, @2, @1, @2, @3, @4]
                            };
     [gameSongsList addObject:rowRowRowGameArray];
+    
+    thisOldManGameArray = @{
+                            @"tempo":@[qn,qn,qn,hn,qn,qn,hn,qn,qn,qn,qn,qn,qn],
+                            @"notes":@[@4,@2,@4,@4,@2,@4,@5,@4,@3,@2,@1,@2,@3]
+                            };
+    [gameSongsList addObject:thisOldManGameArray];
+    
+    threeBlindMiceGameArray = @{
+                                @"tempo":@[qn,dqn,dqn,dhn,dqn,dqn,dhn,dqn,qn,en,dhn,dqn,qn,en],
+                                @"notes":@[@2,@1,@0,@2,@1,@0,@4,@3,@3,@2,@4,@3,@3,@2]
+                                };
+    [gameSongsList addObject:threeBlindMiceGameArray];
+    
+    twinkleTwinkleGameArray = @{
+                                @"tempo":@[qn, qn, qn, qn, qn, qn, qn, hn, qn, qn, qn, qn, qn, qn],
+                                @"notes":@[@0, @0, @4, @4, @5, @5, @4, @3, @3, @2, @2, @1, @1, @0]
+                                };
+    [gameSongsList addObject:twinkleTwinkleGameArray];
     
     [randomNotesDict setObject:qn forKey:@"tempo"];
 }
@@ -591,7 +691,7 @@
     cLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     cLabel.layer.cornerRadius = circleWidth/2;
     cLabel.layer.masksToBounds = YES;
-    cLabel.text = @"DO";
+//    cLabel.text = @"DO";
     cLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     cLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     cLabel.textAlignment = 1;
@@ -601,7 +701,7 @@
     dLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     dLabel.layer.cornerRadius = circleWidth/2;
     dLabel.layer.masksToBounds = YES;
-    dLabel.text = @"RE";
+//    dLabel.text = @"RE";
     dLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     dLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     dLabel.textAlignment = 1;
@@ -611,7 +711,7 @@
     eLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     eLabel.layer.cornerRadius = circleWidth/2;
     eLabel.layer.masksToBounds = YES;
-    eLabel.text = @"MI";
+//    eLabel.text = @"MI";
     eLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     eLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     eLabel.textAlignment = 1;
@@ -621,7 +721,7 @@
     fLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*3+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     fLabel.layer.cornerRadius = circleWidth/2;
     fLabel.layer.masksToBounds = YES;
-    fLabel.text = @"FA";
+//    fLabel.text = @"FA";
     fLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     fLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     fLabel.textAlignment = 1;
@@ -631,7 +731,7 @@
     gLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     gLabel.layer.cornerRadius = circleWidth/2;
     gLabel.layer.masksToBounds = YES;
-    gLabel.text = @"SO";
+//    gLabel.text = @"SO";
     gLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     gLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     gLabel.textAlignment = 1;
@@ -641,7 +741,7 @@
     aLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     aLabel.layer.cornerRadius = circleWidth/2;
     aLabel.layer.masksToBounds = YES;
-    aLabel.text = @"LA";
+//    aLabel.text = @"LA";
     aLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     aLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     aLabel.textAlignment = 1;
@@ -651,7 +751,7 @@
     bLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     bLabel.layer.cornerRadius = circleWidth/2;
     bLabel.layer.masksToBounds = YES;
-    bLabel.text = @"TI";
+//    bLabel.text = @"TI";
     bLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     bLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     bLabel.textAlignment = 1;
@@ -661,7 +761,7 @@
     c2Label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*7+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
     c2Label.layer.cornerRadius = circleWidth/2;
     c2Label.layer.masksToBounds = YES;
-    c2Label.text = @"DO";
+//    c2Label.text = @"DO";
     c2Label.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
     c2Label.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
     c2Label.textAlignment = 1;
@@ -675,6 +775,11 @@
 
 - (void)playFullSong:(int)indexOfFullSongslist
 {
+    if (self.gameOn) {
+        [stopButton removeFromSuperview];
+        [tableHeaderView removeFromSuperview];
+        return;
+    }
     NSDictionary *currentSong = fullSongsList[indexOfFullSongslist];
     
     [self playSong:currentSong withNote:0];
@@ -689,36 +794,61 @@
 
 - (void)playSong:(NSDictionary *)currentSong withNote:(int)note
 {
-    int y = [currentSong[@"tempo"][note] intValue];
+    self.isPlaying = YES;
+    if (self.stopPlaying) {
+        return;
+    }
+    if (self.gameOn) {
+        [stopButton removeFromSuperview];
+        [tableHeaderView removeFromSuperview];
+        return;
+    }else{
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        int y = [currentSong[@"tempo"][note] intValue];
         
-        int x = [currentSong[@"notes"][note] intValue];
-        [player playSoundWithName:notes[x]];
-        [self glowKey:x];
-        
-        if([currentSong[@"notes"] count] - 1 > note) [self playSong:currentSong withNote:note + 1];
-    });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+            int x = [currentSong[@"notes"][note] intValue];
+            [player playSoundWithName:notes[x]];
+            [self glowKey:x];
+            
+            if([currentSong[@"notes"] count] - 1 > note)
+            {
+                [self playSong:currentSong withNote:note + 1];
+            }else{
+                [stopButton removeFromSuperview];
+                [headerFrame addSubview:tableHeaderView];
+                [headerFrame addSubview:songsButton];
+                self.isPlaying = NO;
+            }
+        });
+    }
 }
 
 -(void)prePlaySongGame:(int)indexOfGameSongslist
 {
+    if (self.gameOn == NO) {
+        return;
+    }
     score = 0;
     NSDictionary *currentSong = gameSongsList[indexOfGameSongslist];
     self.playlength++;
     
-    self.currentTempo = self.currentTempo - 0.05;
-    
+ //   self.currentTempo = self.currentTempo - 0.049;
+    if (self.currentTempo > 0.2) {
+        self.currentTempo = self.currentTempo - 0.049;
+    }
     [self setGameSongTempos:self.currentTempo];
     
     if (self.playlength > [currentSong[@"notes"]count])
     {
+        self.gameOn = NO;
         [self setGameSongTempos:0.9];
         [self playRewardSong:0];
-        [self rewardDisplay:0];
         [displayWindow removeFromSuperview];
         [self rewardDisplay:0];
-        self.gameOn = NO;
+        [headerFrame addSubview:settingsView];
+        [headerFrame addSubview:settingsButton];
+        
         return;
     }
     [self playSongGame:(NSDictionary *)currentSong withNote:0];
@@ -726,6 +856,9 @@
 
 - (void)playSongGame:(NSDictionary *)currentSong withNote:(int)note
 {
+    if (self.gameOn == NO) {
+        return;
+    }
     int y = [currentSong[@"tempo"][note] intValue];
     
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
@@ -743,7 +876,15 @@
 
 -(void)prePlayRandomNoteGame
 {
-    NSNumber * randomNumber = [NSNumber numberWithInt:arc4random_uniform(7)];
+    if (self.gameOn == NO) {
+        return;
+    }
+    NSNumber * randomNumber;
+    if (self.expertMode) {
+         randomNumber = [NSNumber numberWithInt:arc4random_uniform(13)];
+    }else{
+        randomNumber = [NSNumber numberWithInt:arc4random_uniform(7)];
+    }
     
     NSMutableArray* currentNotes = randomNotesDict[@"notes"];
     currentNotes[[currentNotes count]] = randomNumber;
@@ -753,8 +894,8 @@
     
     self.playlength++;
 
-    if (self.currentTempo > 0.3) {
-        self.currentTempo = self.currentTempo - 0.05;
+    if (self.currentTempo > 0.2) {
+        self.currentTempo = self.currentTempo - 0.06;
     }
     NSLog(@"%f", self.currentTempo);
 
@@ -766,6 +907,9 @@
 
 - (void)playRandomNoteGame:(NSDictionary *)currentSong withNote:(int)note
 {
+    if (self.gameOn == NO) {
+        return;
+    }
     int y = [currentSong[@"tempo"] intValue];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
@@ -785,98 +929,141 @@
 
 -(void)startGame
 {
-    [self closeSongTableView];
-    self.gameOn = YES;
-    randomNotesDict = [@{
-                         @"tempo":@[],
-                         @"notes":[@[] mutableCopy]
-                         }mutableCopy];
-    
-    [headerFrame addSubview:displayWindow];
-    displayWindow.text = [NSString stringWithFormat:@"0"];
-    self.currentTempo = 0.9;
-
-    self.playlength = 0;
-    [tempSongNotesArray removeAllObjects];
-    noteCount = 0;
-    
-    if (self.randomMode) {
-        maxScore = 0;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [self prePlayRandomNoteGame];
-        });
-    }else{
-        int songNumber = (int)[gameSongsList count];
-        self.songSelector = arc4random_uniform(songNumber);
+    //if song is playing..
+    if (self.isPlaying) {
         
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-            [self prePlaySongGame:self.songSelector];
-        });
+        //stop playing and run this method again.
+        if (self.isPlaying) {
+            self.isPlaying = NO;
+            self.gameOn = YES;
+            [songsButton removeFromSuperview];
+            [stopButton removeFromSuperview];
+            [tableHeaderView removeFromSuperview];
+            [settingsButton removeFromSuperview];
+            [settingsView removeFromSuperview];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 600 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [self startGame];
+                });
+            }
+            //self.isPlaying = NO;
+        
+        }else{
+            
+            // if song table is open, close it
+            if (songTableView.frame.size.height > 100) {
+                [self closeSongTableView];
+                }
+            self.gameOn = YES;
+            randomNotesDict = [@{
+                                 @"tempo":@[],
+                                 @"notes":[@[] mutableCopy]
+                                 }mutableCopy];
+            
+            [headerFrame addSubview:displayWindow];
+            displayWindow.text = [NSString stringWithFormat:@"0"];
+            
+            [songsButton removeFromSuperview];
+            [stopButton removeFromSuperview];
+            [tableHeaderView removeFromSuperview];
+            [settingsButton removeFromSuperview];
+            [settingsView removeFromSuperview];
+            
+            self.currentTempo = 0.9;
+
+            self.playlength = 0;
+            [tempSongNotesArray removeAllObjects];
+            noteCount = 0;
+        
+            // if game is in random mode
+        if (self.randomMode) {
+            maxScore = 0;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [self prePlayRandomNoteGame];
+            });
+        }else{
+            
+            //if game is in song mode
+            int songNumber = (int)[gameSongsList count];
+            self.songSelector = arc4random_uniform(songNumber);
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [self prePlaySongGame:self.songSelector];
+            });
+        }
     }
 }
 
 - (void)playGame:(UIButton *)sender
 {
     if (self.gameOn){
-        
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-//                    CRASHES HERE IF YOU PRESS TOO MANY NOTES
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!//
-
-        if (notes[sender.tag] == tempSongNotesArray[noteCount]){
-            score++;
-            displayWindow.text = [NSString stringWithFormat:@"%d", score];
-            NSLog(@"score: %d", score);
-            NSLog(@"BF max score: %d", maxScore);
-            if (score > maxScore) {
-                maxScore = score;
-                NSLog(@"max score: %d", maxScore);
-            }
-            if (noteCount < [tempSongNotesArray count]){
-                noteCount++;
-                
-                if (noteCount == [tempSongNotesArray count]){
-                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-                        if (self.randomMode) {
-                            [self prePlayRandomNoteGame];
-                        }else{
-                            [self prePlaySongGame:self.songSelector];
-                        }
-                    });
-                }
-            }
-        }else{
-            if (self.randomMode) {
-                displayWindow.text = @"0";
-                [self rewardDisplay:maxScore];
-                [self playRewardSong:0];
-                return;
-            }
-            [self playRewardSong:1];
-            [displayWindow removeFromSuperview];
+        if (noteCount == [tempSongNotesArray count]) {
             self.gameOn = NO;
-            
-            UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
-            rewardDisplayView.backgroundColor = [UIColor clearColor];
-            [self.view addSubview:rewardDisplayView];
-            
-            UILabel * rewardDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, rewardDisplayView.frame.size.height)];
-            rewardDisplayLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-            rewardDisplayLabel.text = @"Try Again!";
-            rewardDisplayLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.7];
-            rewardDisplayLabel.textAlignment = 1;
-            [rewardDisplayView addSubview:rewardDisplayLabel];
-           
-            [UIView animateWithDuration:2.5 animations:^{
-                rewardDisplayView.frame = CGRectMake(0, SCREEN_HEIGHT/2-125, SCREEN_WIDTH, 100);
-                rewardDisplayView.alpha = 0;
-            }completion:^(BOOL finished) {
-                [rewardDisplayView removeFromSuperview];
-            }];
-            
+            [self endGame];
+            NSLog(@"END");
             return;
+            }else{
+            if (notes[sender.tag] == tempSongNotesArray[noteCount]){
+                score++;
+                displayWindow.text = [NSString stringWithFormat:@"%d", score];
+                if (score > maxScore) {
+                    maxScore = score;
+                }
+                if (noteCount < [tempSongNotesArray count]){
+                    noteCount++;
+                    
+                    if (noteCount == [tempSongNotesArray count]){
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1000 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                            if (self.randomMode) {
+                                [self prePlayRandomNoteGame];
+                            }else{
+                                [self prePlaySongGame:self.songSelector];
+                            }
+                        });
+                    }
+                }
+            }else{
+                [self endGame];
+            }
         }
     }
+}
+-(void)endGame
+{
+    if (self.randomMode) {
+        displayWindow.text = @"0";
+        [self rewardDisplay:maxScore];
+        [self playRewardSong:0];
+        [headerFrame addSubview:settingsView];
+        [headerFrame addSubview:settingsButton];
+        return;
+    }
+    self.gameOn = NO;
+    [self playRewardSong:1];
+    [displayWindow removeFromSuperview];
+    [headerFrame addSubview:tableHeaderView];
+    [headerFrame addSubview:songsButton];
+    [headerFrame addSubview:settingsView];
+    [headerFrame addSubview:settingsButton];
+    
+    UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
+    rewardDisplayView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:rewardDisplayView];
+    
+    UILabel * rewardDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, rewardDisplayView.frame.size.height)];
+    rewardDisplayLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
+    rewardDisplayLabel.text = @"Try Again!";
+    rewardDisplayLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    rewardDisplayLabel.textAlignment = 1;
+    [rewardDisplayView addSubview:rewardDisplayLabel];
+    
+    [UIView animateWithDuration:2.5 animations:^{
+        rewardDisplayView.frame = CGRectMake(0, SCREEN_HEIGHT/2-125, SCREEN_WIDTH, 100);
+        rewardDisplayView.alpha = 0;
+    }completion:^(BOOL finished) {
+        [rewardDisplayView removeFromSuperview];
+    }];
+    
+    return;
 }
 
 -(void)openSongList
@@ -897,8 +1084,14 @@
 
 -(void)closeSongTableView
 {
+    self.stopPlaying = NO;
     [closeButton removeFromSuperview];
-    [self.view addSubview:songsButton];
+    if (songTableView.frame.size.height > 100 && self.isPlaying) {
+        [headerFrame addSubview:stopButton];
+    }else{
+        [headerFrame addSubview:tableHeaderView];
+        [headerFrame addSubview:songsButton];
+    }
     [UIView animateWithDuration:0.2 animations:^{
         songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
     }completion:^(BOOL finished) {
@@ -913,10 +1106,14 @@
 -(void)openSettingsPage
 {
     [self closeSongTableView];
+    [songsButton removeFromSuperview];
+    [stopButton removeFromSuperview];
+
     [UIView animateWithDuration:0.4 animations:^{
         [startButton removeFromSuperview];
         [startButtonFrame removeFromSuperview];
         [tableHeaderView removeFromSuperview];
+        [displayWindow removeFromSuperview];
         [songsButton removeFromSuperview];
         settingsPage.frame =  CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
@@ -926,8 +1123,7 @@
         [self.view addSubview:xButton];
         [settingsPage addSubview:keyLabelSegmentedControl];
         [settingsPage addSubview:randomModeSegmentedControl];
-
-        
+        [settingsPage addSubview:expertModeSegmentedControl];
     }];
 }
 
@@ -944,7 +1140,24 @@
         [headerFrame addSubview:settingsButton];
         [headerFrame addSubview:songsButton];
         [startButtonFrame addSubview:startButton];
+        if (self.gameOn) {
+            [headerFrame addSubview:displayWindow];
+            [stopButton removeFromSuperview];
+            [songsButton removeFromSuperview];
+            [tableHeaderView removeFromSuperview];
+        }
     }];
+}
+
+-(void)stopSong
+{
+    self.stopPlaying = YES;
+    [stopButton removeFromSuperview];
+    [self.view addSubview:songsButton];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 800 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        self.stopPlaying = NO;
+        NSLog(@"PLAYON");
+    });
 }
 
 - (void)glowKey:(int)indexOfKeyView
@@ -980,6 +1193,15 @@
 
 -(void)addSolfegeLabels
 {
+    [cLabel setAlpha:1.0];
+    [dLabel setAlpha:1.0];
+    [eLabel setAlpha:1.0];
+    [fLabel setAlpha:1.0];
+    [gLabel setAlpha:1.0];
+    [aLabel setAlpha:1.0];
+    [bLabel setAlpha:1.0];
+    [c2Label setAlpha:1.0];
+    
     cLabel.text = @"DO";
     dLabel.text = @"RE";
     eLabel.text = @"MI";
@@ -992,6 +1214,15 @@
 
 -(void)addkeyNameLabels
 {
+    [cLabel setAlpha:1.0];
+    [dLabel setAlpha:1.0];
+    [eLabel setAlpha:1.0];
+    [fLabel setAlpha:1.0];
+    [gLabel setAlpha:1.0];
+    [aLabel setAlpha:1.0];
+    [bLabel setAlpha:1.0];
+    [c2Label setAlpha:1.0];
+    
     cLabel.text = @"C";
     dLabel.text = @"D";
     eLabel.text = @"E";
@@ -1002,14 +1233,32 @@
     c2Label.text = @"C";
 }
 
+-(void)removeLabels
+{
+    [cLabel setAlpha:0.0];
+    [dLabel setAlpha:0.0];
+    [eLabel setAlpha:0.0];
+    [fLabel setAlpha:0.0];
+    [gLabel setAlpha:0.0];
+    [aLabel setAlpha:0.0];
+    [bLabel setAlpha:0.0];
+    [c2Label setAlpha:0.0];
+}
+
 -(void) labelKeys:(id)sender{
-    UISegmentedControl *control = (UISegmentedControl *)sender;
-    NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
-    if ([label  isEqual: @"Do-Re-Mi"]) {
-        [self addSolfegeLabels];
-    }else{
-        [self addkeyNameLabels];
+    if (self.expertMode == NO) {
+        UISegmentedControl *control = (UISegmentedControl *)sender;
+        NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
+        if ([label  isEqual: @"Do-Re-Mi"]) {
+            [self addSolfegeLabels];
+        }else{
+            [self addkeyNameLabels];
+        }
     }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:[NSNumber numberWithInteger:[keyLabelSegmentedControl selectedSegmentIndex]] forKey:@"keyLabel"];
+	[defaults synchronize];
 }
 
 -(void) setGameMode:(id)sender{
@@ -1017,13 +1266,30 @@
     NSString * label = [control titleForSegmentAtIndex: [control selectedSegmentIndex]];
     if ([label  isEqual: @"Random Notes"]) {
         self.randomMode = YES;
-    }else{
+    }else if ([label  isEqual: @"Songs"]){
         self.randomMode = NO;
     }
+    if ([label  isEqual: @"On"]) {
+        self.expertMode = YES;
+        [self removeLabels];
+    }else if([label  isEqual: @"Off"]){
+        self.expertMode = NO;
+        [self labelKeys:keyLabelSegmentedControl];
+        
+    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:[NSNumber numberWithInteger:[randomModeSegmentedControl selectedSegmentIndex]] forKey:@"randomMode"];
+    [defaults setObject:[NSNumber numberWithInteger:[expertModeSegmentedControl selectedSegmentIndex]] forKey:@"expertMode"];
+    
+	[defaults synchronize];
 }
 
 -(void)rewardDisplay:(int)totalScore
 {
+    [headerFrame addSubview:tableHeaderView];
+    [headerFrame addSubview:songsButton];
+    self.gameOn = NO;
+    
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
     rewardDisplayView.backgroundColor = [UIColor clearColor];
     [self.view addSubview:rewardDisplayView];
@@ -1058,7 +1324,6 @@
     }completion:^(BOOL finished) {
         [rewardDisplayView removeFromSuperview];
     }];
-    self.gameOn = NO;
 }
 
 
@@ -1101,7 +1366,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    self.isPlaying = YES;
     
     int selectedSong = (int)indexPath.row;
 

@@ -55,6 +55,7 @@
 
 - (void)setUpArchitecture
 {
+    
     colorDictionary1 = [@{
                     @"yellow": @"image1",
                     @"yellow": @"image2"

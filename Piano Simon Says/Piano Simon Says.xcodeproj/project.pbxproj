@@ -8,6 +8,77 @@
 
 /* Begin PBXBuildFile section */
 		B0133DD01938AFBE007DB236 /* PSSPianoTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */; };
+		B03E97D41940A30500DE10D6 /* aMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E978E1940A30500DE10D6 /* aMarimba.mp3 */; };
+		B03E97D51940A30500DE10D6 /* aPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E978F1940A30500DE10D6 /* aPiano3.mp3 */; };
+		B03E97D61940A30500DE10D6 /* aPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97901940A30500DE10D6 /* aPiano4.mp3 */; };
+		B03E97D71940A30500DE10D6 /* aPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97911940A30500DE10D6 /* aPiano5.mp3 */; };
+		B03E97D81940A30500DE10D6 /* asMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97921940A30500DE10D6 /* asMarimba.mp3 */; };
+		B03E97D91940A30500DE10D6 /* asPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97931940A30500DE10D6 /* asPiano3.mp3 */; };
+		B03E97DA1940A30500DE10D6 /* asPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97941940A30500DE10D6 /* asPiano4.mp3 */; };
+		B03E97DB1940A30500DE10D6 /* asPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97951940A30500DE10D6 /* asPiano5.mp3 */; };
+		B03E97DC1940A30500DE10D6 /* asXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97961940A30500DE10D6 /* asXylo.mp3 */; };
+		B03E97DD1940A30500DE10D6 /* aXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97971940A30500DE10D6 /* aXylo.mp3 */; };
+		B03E97DE1940A30500DE10D6 /* bMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97981940A30500DE10D6 /* bMarimba.mp3 */; };
+		B03E97DF1940A30500DE10D6 /* bPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97991940A30500DE10D6 /* bPiano3.mp3 */; };
+		B03E97E01940A30500DE10D6 /* bPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979A1940A30500DE10D6 /* bPiano4.mp3 */; };
+		B03E97E11940A30500DE10D6 /* bPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979B1940A30500DE10D6 /* bPiano5.mp3 */; };
+		B03E97E21940A30500DE10D6 /* bXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979C1940A30500DE10D6 /* bXylo.mp3 */; };
+		B03E97E31940A30500DE10D6 /* c2Marimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979D1940A30500DE10D6 /* c2Marimba.mp3 */; };
+		B03E97E41940A30500DE10D6 /* c2Piano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979E1940A30500DE10D6 /* c2Piano3.mp3 */; };
+		B03E97E51940A30500DE10D6 /* c2Piano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E979F1940A30500DE10D6 /* c2Piano4.mp3 */; };
+		B03E97E61940A30500DE10D6 /* c2Piano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A01940A30500DE10D6 /* c2Piano5.mp3 */; };
+		B03E97E71940A30500DE10D6 /* c2Xylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A11940A30500DE10D6 /* c2Xylo.mp3 */; };
+		B03E97E81940A30500DE10D6 /* cMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A21940A30500DE10D6 /* cMarimba.mp3 */; };
+		B03E97E91940A30500DE10D6 /* cPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A31940A30500DE10D6 /* cPiano3.mp3 */; };
+		B03E97EA1940A30500DE10D6 /* cPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A41940A30500DE10D6 /* cPiano4.mp3 */; };
+		B03E97EB1940A30500DE10D6 /* cPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A51940A30500DE10D6 /* cPiano5.mp3 */; };
+		B03E97EC1940A30500DE10D6 /* cs2Piano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A61940A30500DE10D6 /* cs2Piano5.mp3 */; };
+		B03E97ED1940A30500DE10D6 /* cs2Marimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A71940A30500DE10D6 /* cs2Marimba.mp3 */; };
+		B03E97EE1940A30500DE10D6 /* cs2Piano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A81940A30500DE10D6 /* cs2Piano3.mp3 */; };
+		B03E97EF1940A30500DE10D6 /* cs2Piano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97A91940A30500DE10D6 /* cs2Piano4.mp3 */; };
+		B03E97F01940A30500DE10D6 /* cs2Xylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AA1940A30500DE10D6 /* cs2Xylo.mp3 */; };
+		B03E97F11940A30500DE10D6 /* csMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AB1940A30500DE10D6 /* csMarimba.mp3 */; };
+		B03E97F21940A30500DE10D6 /* csPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AC1940A30500DE10D6 /* csPiano3.mp3 */; };
+		B03E97F31940A30500DE10D6 /* csPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AD1940A30500DE10D6 /* csPiano4.mp3 */; };
+		B03E97F41940A30500DE10D6 /* csPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AE1940A30500DE10D6 /* csPiano5.mp3 */; };
+		B03E97F51940A30500DE10D6 /* csXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97AF1940A30500DE10D6 /* csXylo.mp3 */; };
+		B03E97F61940A30500DE10D6 /* cXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B01940A30500DE10D6 /* cXylo.mp3 */; };
+		B03E97F71940A30500DE10D6 /* dMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B11940A30500DE10D6 /* dMarimba.mp3 */; };
+		B03E97F81940A30500DE10D6 /* dPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B21940A30500DE10D6 /* dPiano3.mp3 */; };
+		B03E97F91940A30500DE10D6 /* dPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B31940A30500DE10D6 /* dPiano4.mp3 */; };
+		B03E97FA1940A30500DE10D6 /* dPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B41940A30500DE10D6 /* dPiano5.mp3 */; };
+		B03E97FB1940A30500DE10D6 /* dsMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B51940A30500DE10D6 /* dsMarimba.mp3 */; };
+		B03E97FC1940A30500DE10D6 /* dsPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B61940A30500DE10D6 /* dsPiano3.mp3 */; };
+		B03E97FD1940A30500DE10D6 /* dsPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B71940A30500DE10D6 /* dsPiano4.mp3 */; };
+		B03E97FE1940A30500DE10D6 /* dsPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B81940A30500DE10D6 /* dsPiano5.mp3 */; };
+		B03E97FF1940A30500DE10D6 /* dsXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97B91940A30500DE10D6 /* dsXylo.mp3 */; };
+		B03E98001940A30500DE10D6 /* dXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BA1940A30500DE10D6 /* dXylo.mp3 */; };
+		B03E98011940A30500DE10D6 /* eMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BB1940A30500DE10D6 /* eMarimba.mp3 */; };
+		B03E98021940A30500DE10D6 /* ePiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BC1940A30500DE10D6 /* ePiano3.mp3 */; };
+		B03E98031940A30500DE10D6 /* ePiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BD1940A30500DE10D6 /* ePiano4.mp3 */; };
+		B03E98041940A30500DE10D6 /* ePiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BE1940A30500DE10D6 /* ePiano5.mp3 */; };
+		B03E98051940A30500DE10D6 /* eXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97BF1940A30500DE10D6 /* eXylo.mp3 */; };
+		B03E98061940A30500DE10D6 /* fMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C01940A30500DE10D6 /* fMarimba.mp3 */; };
+		B03E98071940A30500DE10D6 /* fPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C11940A30500DE10D6 /* fPiano3.mp3 */; };
+		B03E98081940A30500DE10D6 /* fPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C21940A30500DE10D6 /* fPiano4.mp3 */; };
+		B03E98091940A30500DE10D6 /* fPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C31940A30500DE10D6 /* fPiano5.mp3 */; };
+		B03E980A1940A30500DE10D6 /* fsMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C41940A30500DE10D6 /* fsMarimba.mp3 */; };
+		B03E980B1940A30500DE10D6 /* fsPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C51940A30500DE10D6 /* fsPiano3.mp3 */; };
+		B03E980C1940A30500DE10D6 /* fsPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C61940A30500DE10D6 /* fsPiano4.mp3 */; };
+		B03E980D1940A30500DE10D6 /* fsPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C71940A30500DE10D6 /* fsPiano5.mp3 */; };
+		B03E980E1940A30500DE10D6 /* fsXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C81940A30500DE10D6 /* fsXylo.mp3 */; };
+		B03E980F1940A30500DE10D6 /* fXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97C91940A30500DE10D6 /* fXylo.mp3 */; };
+		B03E98101940A30500DE10D6 /* gMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CA1940A30500DE10D6 /* gMarimba.mp3 */; };
+		B03E98111940A30500DE10D6 /* gPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CB1940A30500DE10D6 /* gPiano3.mp3 */; };
+		B03E98121940A30500DE10D6 /* gPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CC1940A30500DE10D6 /* gPiano4.mp3 */; };
+		B03E98131940A30500DE10D6 /* gPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CD1940A30500DE10D6 /* gPiano5.mp3 */; };
+		B03E98141940A30500DE10D6 /* gsMarimba.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CE1940A30500DE10D6 /* gsMarimba.mp3 */; };
+		B03E98151940A30500DE10D6 /* gsPiano3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97CF1940A30500DE10D6 /* gsPiano3.mp3 */; };
+		B03E98161940A30500DE10D6 /* gsPiano4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D01940A30500DE10D6 /* gsPiano4.mp3 */; };
+		B03E98171940A30500DE10D6 /* gsPiano5.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D11940A30500DE10D6 /* gsPiano5.mp3 */; };
+		B03E98181940A30500DE10D6 /* gsXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D21940A30500DE10D6 /* gsXylo.mp3 */; };
+		B03E98191940A30500DE10D6 /* gXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D31940A30500DE10D6 /* gXylo.mp3 */; };
+		B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E981B1940A57000DE10D6 /* PSSInstTableView.m */; };
 		B0523627193A18350068F67D /* PSSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSSettingsView.m */; };
 		B052362A193A29A40068F67D /* PSSxView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523629193A29A40068F67D /* PSSxView.m */; };
 		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
@@ -53,6 +124,78 @@
 /* Begin PBXFileReference section */
 		B0133DCE1938AFBE007DB236 /* PSSPianoTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSPianoTableView.h; sourceTree = "<group>"; };
 		B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSPianoTableView.m; sourceTree = "<group>"; };
+		B03E978E1940A30500DE10D6 /* aMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aMarimba.mp3; sourceTree = "<group>"; };
+		B03E978F1940A30500DE10D6 /* aPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aPiano3.mp3; sourceTree = "<group>"; };
+		B03E97901940A30500DE10D6 /* aPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aPiano4.mp3; sourceTree = "<group>"; };
+		B03E97911940A30500DE10D6 /* aPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aPiano5.mp3; sourceTree = "<group>"; };
+		B03E97921940A30500DE10D6 /* asMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asMarimba.mp3; sourceTree = "<group>"; };
+		B03E97931940A30500DE10D6 /* asPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asPiano3.mp3; sourceTree = "<group>"; };
+		B03E97941940A30500DE10D6 /* asPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asPiano4.mp3; sourceTree = "<group>"; };
+		B03E97951940A30500DE10D6 /* asPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asPiano5.mp3; sourceTree = "<group>"; };
+		B03E97961940A30500DE10D6 /* asXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = asXylo.mp3; sourceTree = "<group>"; };
+		B03E97971940A30500DE10D6 /* aXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = aXylo.mp3; sourceTree = "<group>"; };
+		B03E97981940A30500DE10D6 /* bMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bMarimba.mp3; sourceTree = "<group>"; };
+		B03E97991940A30500DE10D6 /* bPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bPiano3.mp3; sourceTree = "<group>"; };
+		B03E979A1940A30500DE10D6 /* bPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bPiano4.mp3; sourceTree = "<group>"; };
+		B03E979B1940A30500DE10D6 /* bPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bPiano5.mp3; sourceTree = "<group>"; };
+		B03E979C1940A30500DE10D6 /* bXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bXylo.mp3; sourceTree = "<group>"; };
+		B03E979D1940A30500DE10D6 /* c2Marimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2Marimba.mp3; sourceTree = "<group>"; };
+		B03E979E1940A30500DE10D6 /* c2Piano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2Piano3.mp3; sourceTree = "<group>"; };
+		B03E979F1940A30500DE10D6 /* c2Piano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2Piano4.mp3; sourceTree = "<group>"; };
+		B03E97A01940A30500DE10D6 /* c2Piano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2Piano5.mp3; sourceTree = "<group>"; };
+		B03E97A11940A30500DE10D6 /* c2Xylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = c2Xylo.mp3; sourceTree = "<group>"; };
+		B03E97A21940A30500DE10D6 /* cMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cMarimba.mp3; sourceTree = "<group>"; };
+		B03E97A31940A30500DE10D6 /* cPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cPiano3.mp3; sourceTree = "<group>"; };
+		B03E97A41940A30500DE10D6 /* cPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cPiano4.mp3; sourceTree = "<group>"; };
+		B03E97A51940A30500DE10D6 /* cPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cPiano5.mp3; sourceTree = "<group>"; };
+		B03E97A61940A30500DE10D6 /* cs2Piano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Piano5.mp3; sourceTree = "<group>"; };
+		B03E97A71940A30500DE10D6 /* cs2Marimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Marimba.mp3; sourceTree = "<group>"; };
+		B03E97A81940A30500DE10D6 /* cs2Piano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Piano3.mp3; sourceTree = "<group>"; };
+		B03E97A91940A30500DE10D6 /* cs2Piano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Piano4.mp3; sourceTree = "<group>"; };
+		B03E97AA1940A30500DE10D6 /* cs2Xylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Xylo.mp3; sourceTree = "<group>"; };
+		B03E97AB1940A30500DE10D6 /* csMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = csMarimba.mp3; sourceTree = "<group>"; };
+		B03E97AC1940A30500DE10D6 /* csPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = csPiano3.mp3; sourceTree = "<group>"; };
+		B03E97AD1940A30500DE10D6 /* csPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = csPiano4.mp3; sourceTree = "<group>"; };
+		B03E97AE1940A30500DE10D6 /* csPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = csPiano5.mp3; sourceTree = "<group>"; };
+		B03E97AF1940A30500DE10D6 /* csXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = csXylo.mp3; sourceTree = "<group>"; };
+		B03E97B01940A30500DE10D6 /* cXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cXylo.mp3; sourceTree = "<group>"; };
+		B03E97B11940A30500DE10D6 /* dMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dMarimba.mp3; sourceTree = "<group>"; };
+		B03E97B21940A30500DE10D6 /* dPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dPiano3.mp3; sourceTree = "<group>"; };
+		B03E97B31940A30500DE10D6 /* dPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dPiano4.mp3; sourceTree = "<group>"; };
+		B03E97B41940A30500DE10D6 /* dPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dPiano5.mp3; sourceTree = "<group>"; };
+		B03E97B51940A30500DE10D6 /* dsMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dsMarimba.mp3; sourceTree = "<group>"; };
+		B03E97B61940A30500DE10D6 /* dsPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dsPiano3.mp3; sourceTree = "<group>"; };
+		B03E97B71940A30500DE10D6 /* dsPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dsPiano4.mp3; sourceTree = "<group>"; };
+		B03E97B81940A30500DE10D6 /* dsPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dsPiano5.mp3; sourceTree = "<group>"; };
+		B03E97B91940A30500DE10D6 /* dsXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dsXylo.mp3; sourceTree = "<group>"; };
+		B03E97BA1940A30500DE10D6 /* dXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dXylo.mp3; sourceTree = "<group>"; };
+		B03E97BB1940A30500DE10D6 /* eMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eMarimba.mp3; sourceTree = "<group>"; };
+		B03E97BC1940A30500DE10D6 /* ePiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ePiano3.mp3; sourceTree = "<group>"; };
+		B03E97BD1940A30500DE10D6 /* ePiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ePiano4.mp3; sourceTree = "<group>"; };
+		B03E97BE1940A30500DE10D6 /* ePiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = ePiano5.mp3; sourceTree = "<group>"; };
+		B03E97BF1940A30500DE10D6 /* eXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = eXylo.mp3; sourceTree = "<group>"; };
+		B03E97C01940A30500DE10D6 /* fMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fMarimba.mp3; sourceTree = "<group>"; };
+		B03E97C11940A30500DE10D6 /* fPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fPiano3.mp3; sourceTree = "<group>"; };
+		B03E97C21940A30500DE10D6 /* fPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fPiano4.mp3; sourceTree = "<group>"; };
+		B03E97C31940A30500DE10D6 /* fPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fPiano5.mp3; sourceTree = "<group>"; };
+		B03E97C41940A30500DE10D6 /* fsMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fsMarimba.mp3; sourceTree = "<group>"; };
+		B03E97C51940A30500DE10D6 /* fsPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fsPiano3.mp3; sourceTree = "<group>"; };
+		B03E97C61940A30500DE10D6 /* fsPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fsPiano4.mp3; sourceTree = "<group>"; };
+		B03E97C71940A30500DE10D6 /* fsPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fsPiano5.mp3; sourceTree = "<group>"; };
+		B03E97C81940A30500DE10D6 /* fsXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fsXylo.mp3; sourceTree = "<group>"; };
+		B03E97C91940A30500DE10D6 /* fXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fXylo.mp3; sourceTree = "<group>"; };
+		B03E97CA1940A30500DE10D6 /* gMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gMarimba.mp3; sourceTree = "<group>"; };
+		B03E97CB1940A30500DE10D6 /* gPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gPiano3.mp3; sourceTree = "<group>"; };
+		B03E97CC1940A30500DE10D6 /* gPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gPiano4.mp3; sourceTree = "<group>"; };
+		B03E97CD1940A30500DE10D6 /* gPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gPiano5.mp3; sourceTree = "<group>"; };
+		B03E97CE1940A30500DE10D6 /* gsMarimba.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gsMarimba.mp3; sourceTree = "<group>"; };
+		B03E97CF1940A30500DE10D6 /* gsPiano3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gsPiano3.mp3; sourceTree = "<group>"; };
+		B03E97D01940A30500DE10D6 /* gsPiano4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gsPiano4.mp3; sourceTree = "<group>"; };
+		B03E97D11940A30500DE10D6 /* gsPiano5.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gsPiano5.mp3; sourceTree = "<group>"; };
+		B03E97D21940A30500DE10D6 /* gsXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gsXylo.mp3; sourceTree = "<group>"; };
+		B03E97D31940A30500DE10D6 /* gXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gXylo.mp3; sourceTree = "<group>"; };
+		B03E981A1940A57000DE10D6 /* PSSInstTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSInstTableView.h; path = ../PSSInstTableView.h; sourceTree = "<group>"; };
+		B03E981B1940A57000DE10D6 /* PSSInstTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSSInstTableView.m; path = ../PSSInstTableView.m; sourceTree = "<group>"; };
 		B0523625193A18350068F67D /* PSSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSSettingsView.h; sourceTree = "<group>"; };
 		B0523626193A18350068F67D /* PSSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSSettingsView.m; sourceTree = "<group>"; };
 		B0523628193A29920068F67D /* PSSxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSxView.h; sourceTree = "<group>"; };
@@ -156,6 +299,8 @@
 				B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */,
 				B0133DCE1938AFBE007DB236 /* PSSPianoTableView.h */,
 				B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */,
+				B03E981A1940A57000DE10D6 /* PSSInstTableView.h */,
+				B03E981B1940A57000DE10D6 /* PSSInstTableView.m */,
 				B0FBA5EF1931FBD800AF1C08 /* PSSAppDelegate.h */,
 				B0FBA5F01931FBD800AF1C08 /* PSSAppDelegate.m */,
 				B0FBA5F21931FBD800AF1C08 /* Images.xcassets */,
@@ -217,6 +362,76 @@
 		B0FBA65B1932676D00AF1C08 /* mp3 */ = {
 			isa = PBXGroup;
 			children = (
+				B03E978E1940A30500DE10D6 /* aMarimba.mp3 */,
+				B03E978F1940A30500DE10D6 /* aPiano3.mp3 */,
+				B03E97901940A30500DE10D6 /* aPiano4.mp3 */,
+				B03E97911940A30500DE10D6 /* aPiano5.mp3 */,
+				B03E97921940A30500DE10D6 /* asMarimba.mp3 */,
+				B03E97931940A30500DE10D6 /* asPiano3.mp3 */,
+				B03E97941940A30500DE10D6 /* asPiano4.mp3 */,
+				B03E97951940A30500DE10D6 /* asPiano5.mp3 */,
+				B03E97961940A30500DE10D6 /* asXylo.mp3 */,
+				B03E97971940A30500DE10D6 /* aXylo.mp3 */,
+				B03E97981940A30500DE10D6 /* bMarimba.mp3 */,
+				B03E97991940A30500DE10D6 /* bPiano3.mp3 */,
+				B03E979A1940A30500DE10D6 /* bPiano4.mp3 */,
+				B03E979B1940A30500DE10D6 /* bPiano5.mp3 */,
+				B03E979C1940A30500DE10D6 /* bXylo.mp3 */,
+				B03E979D1940A30500DE10D6 /* c2Marimba.mp3 */,
+				B03E979E1940A30500DE10D6 /* c2Piano3.mp3 */,
+				B03E979F1940A30500DE10D6 /* c2Piano4.mp3 */,
+				B03E97A01940A30500DE10D6 /* c2Piano5.mp3 */,
+				B03E97A11940A30500DE10D6 /* c2Xylo.mp3 */,
+				B03E97A21940A30500DE10D6 /* cMarimba.mp3 */,
+				B03E97A31940A30500DE10D6 /* cPiano3.mp3 */,
+				B03E97A41940A30500DE10D6 /* cPiano4.mp3 */,
+				B03E97A51940A30500DE10D6 /* cPiano5.mp3 */,
+				B03E97A61940A30500DE10D6 /* cs2Piano5.mp3 */,
+				B03E97A71940A30500DE10D6 /* cs2Marimba.mp3 */,
+				B03E97A81940A30500DE10D6 /* cs2Piano3.mp3 */,
+				B03E97A91940A30500DE10D6 /* cs2Piano4.mp3 */,
+				B03E97AA1940A30500DE10D6 /* cs2Xylo.mp3 */,
+				B03E97AB1940A30500DE10D6 /* csMarimba.mp3 */,
+				B03E97AC1940A30500DE10D6 /* csPiano3.mp3 */,
+				B03E97AD1940A30500DE10D6 /* csPiano4.mp3 */,
+				B03E97AE1940A30500DE10D6 /* csPiano5.mp3 */,
+				B03E97AF1940A30500DE10D6 /* csXylo.mp3 */,
+				B03E97B01940A30500DE10D6 /* cXylo.mp3 */,
+				B03E97B11940A30500DE10D6 /* dMarimba.mp3 */,
+				B03E97B21940A30500DE10D6 /* dPiano3.mp3 */,
+				B03E97B31940A30500DE10D6 /* dPiano4.mp3 */,
+				B03E97B41940A30500DE10D6 /* dPiano5.mp3 */,
+				B03E97B51940A30500DE10D6 /* dsMarimba.mp3 */,
+				B03E97B61940A30500DE10D6 /* dsPiano3.mp3 */,
+				B03E97B71940A30500DE10D6 /* dsPiano4.mp3 */,
+				B03E97B81940A30500DE10D6 /* dsPiano5.mp3 */,
+				B03E97B91940A30500DE10D6 /* dsXylo.mp3 */,
+				B03E97BA1940A30500DE10D6 /* dXylo.mp3 */,
+				B03E97BB1940A30500DE10D6 /* eMarimba.mp3 */,
+				B03E97BC1940A30500DE10D6 /* ePiano3.mp3 */,
+				B03E97BD1940A30500DE10D6 /* ePiano4.mp3 */,
+				B03E97BE1940A30500DE10D6 /* ePiano5.mp3 */,
+				B03E97BF1940A30500DE10D6 /* eXylo.mp3 */,
+				B03E97C01940A30500DE10D6 /* fMarimba.mp3 */,
+				B03E97C11940A30500DE10D6 /* fPiano3.mp3 */,
+				B03E97C21940A30500DE10D6 /* fPiano4.mp3 */,
+				B03E97C31940A30500DE10D6 /* fPiano5.mp3 */,
+				B03E97C41940A30500DE10D6 /* fsMarimba.mp3 */,
+				B03E97C51940A30500DE10D6 /* fsPiano3.mp3 */,
+				B03E97C61940A30500DE10D6 /* fsPiano4.mp3 */,
+				B03E97C71940A30500DE10D6 /* fsPiano5.mp3 */,
+				B03E97C81940A30500DE10D6 /* fsXylo.mp3 */,
+				B03E97C91940A30500DE10D6 /* fXylo.mp3 */,
+				B03E97CA1940A30500DE10D6 /* gMarimba.mp3 */,
+				B03E97CB1940A30500DE10D6 /* gPiano3.mp3 */,
+				B03E97CC1940A30500DE10D6 /* gPiano4.mp3 */,
+				B03E97CD1940A30500DE10D6 /* gPiano5.mp3 */,
+				B03E97CE1940A30500DE10D6 /* gsMarimba.mp3 */,
+				B03E97CF1940A30500DE10D6 /* gsPiano3.mp3 */,
+				B03E97D01940A30500DE10D6 /* gsPiano4.mp3 */,
+				B03E97D11940A30500DE10D6 /* gsPiano5.mp3 */,
+				B03E97D21940A30500DE10D6 /* gsXylo.mp3 */,
+				B03E97D31940A30500DE10D6 /* gXylo.mp3 */,
 				B06F54EF19357046006B1D72 /* cs2Note.mp3 */,
 				B0FBA65D193267A600AF1C08 /* aNote.mp3 */,
 				B0FBA65E193267A600AF1C08 /* asNote.mp3 */,
@@ -314,22 +529,92 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B03E980A1940A30500DE10D6 /* fsMarimba.mp3 in Resources */,
+				B03E98031940A30500DE10D6 /* ePiano4.mp3 in Resources */,
+				B03E97FD1940A30500DE10D6 /* dsPiano4.mp3 in Resources */,
+				B03E97FC1940A30500DE10D6 /* dsPiano3.mp3 in Resources */,
+				B03E98091940A30500DE10D6 /* fPiano5.mp3 in Resources */,
+				B03E98061940A30500DE10D6 /* fMarimba.mp3 in Resources */,
+				B03E98131940A30500DE10D6 /* gPiano5.mp3 in Resources */,
 				B0FBA671193267A600AF1C08 /* dsNote.mp3 in Resources */,
+				B03E97D51940A30500DE10D6 /* aPiano3.mp3 in Resources */,
+				B03E97F01940A30500DE10D6 /* cs2Xylo.mp3 in Resources */,
+				B03E98121940A30500DE10D6 /* gPiano4.mp3 in Resources */,
+				B03E980F1940A30500DE10D6 /* fXylo.mp3 in Resources */,
 				B0FBA674193267A600AF1C08 /* fsNote.mp3 in Resources */,
+				B03E97E01940A30500DE10D6 /* bPiano4.mp3 in Resources */,
+				B03E98001940A30500DE10D6 /* dXylo.mp3 in Resources */,
+				B03E98161940A30500DE10D6 /* gsPiano4.mp3 in Resources */,
 				B0FBA670193267A600AF1C08 /* dNote.mp3 in Resources */,
+				B03E97D91940A30500DE10D6 /* asPiano3.mp3 in Resources */,
+				B03E97E81940A30500DE10D6 /* cMarimba.mp3 in Resources */,
+				B03E97F71940A30500DE10D6 /* dMarimba.mp3 in Resources */,
+				B03E97FE1940A30500DE10D6 /* dsPiano5.mp3 in Resources */,
+				B03E97FB1940A30500DE10D6 /* dsMarimba.mp3 in Resources */,
 				B0FBA66B193267A600AF1C08 /* asNote.mp3 in Resources */,
+				B03E97F21940A30500DE10D6 /* csPiano3.mp3 in Resources */,
+				B03E98151940A30500DE10D6 /* gsPiano3.mp3 in Resources */,
+				B03E97DA1940A30500DE10D6 /* asPiano4.mp3 in Resources */,
+				B03E97EE1940A30500DE10D6 /* cs2Piano3.mp3 in Resources */,
+				B03E97DE1940A30500DE10D6 /* bMarimba.mp3 in Resources */,
 				B0FBA66E193267A600AF1C08 /* cNote.mp3 in Resources */,
+				B03E97F11940A30500DE10D6 /* csMarimba.mp3 in Resources */,
 				B0FBA675193267A600AF1C08 /* gNote.mp3 in Resources */,
+				B03E97E71940A30500DE10D6 /* c2Xylo.mp3 in Resources */,
+				B03E97EC1940A30500DE10D6 /* cs2Piano5.mp3 in Resources */,
+				B03E97ED1940A30500DE10D6 /* cs2Marimba.mp3 in Resources */,
 				B0FBA5EB1931FBD800AF1C08 /* InfoPlist.strings in Resources */,
+				B03E97F61940A30500DE10D6 /* cXylo.mp3 in Resources */,
+				B03E98071940A30500DE10D6 /* fPiano3.mp3 in Resources */,
+				B03E97D61940A30500DE10D6 /* aPiano4.mp3 in Resources */,
 				B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */,
+				B03E97EA1940A30500DE10D6 /* cPiano4.mp3 in Resources */,
+				B03E97DC1940A30500DE10D6 /* asXylo.mp3 in Resources */,
+				B03E980D1940A30500DE10D6 /* fsPiano5.mp3 in Resources */,
 				B0FBA66C193267A600AF1C08 /* bNote.mp3 in Resources */,
+				B03E98051940A30500DE10D6 /* eXylo.mp3 in Resources */,
+				B03E97EB1940A30500DE10D6 /* cPiano5.mp3 in Resources */,
+				B03E98141940A30500DE10D6 /* gsMarimba.mp3 in Resources */,
 				B0FBA676193267A600AF1C08 /* gsNote.mp3 in Resources */,
+				B03E97DB1940A30500DE10D6 /* asPiano5.mp3 in Resources */,
 				B0FBA66D193267A600AF1C08 /* c2Note.mp3 in Resources */,
+				B03E97D71940A30500DE10D6 /* aPiano5.mp3 in Resources */,
+				B03E97E11940A30500DE10D6 /* bPiano5.mp3 in Resources */,
+				B03E980C1940A30500DE10D6 /* fsPiano4.mp3 in Resources */,
+				B03E97E91940A30500DE10D6 /* cPiano3.mp3 in Resources */,
+				B03E97D41940A30500DE10D6 /* aMarimba.mp3 in Resources */,
+				B03E97DD1940A30500DE10D6 /* aXylo.mp3 in Resources */,
+				B03E97F51940A30500DE10D6 /* csXylo.mp3 in Resources */,
+				B03E97E61940A30500DE10D6 /* c2Piano5.mp3 in Resources */,
+				B03E98111940A30500DE10D6 /* gPiano3.mp3 in Resources */,
+				B03E98011940A30500DE10D6 /* eMarimba.mp3 in Resources */,
+				B03E97F81940A30500DE10D6 /* dPiano3.mp3 in Resources */,
+				B03E98191940A30500DE10D6 /* gXylo.mp3 in Resources */,
+				B03E97D81940A30500DE10D6 /* asMarimba.mp3 in Resources */,
+				B03E97EF1940A30500DE10D6 /* cs2Piano4.mp3 in Resources */,
+				B03E97FA1940A30500DE10D6 /* dPiano5.mp3 in Resources */,
+				B03E98171940A30500DE10D6 /* gsPiano5.mp3 in Resources */,
+				B03E98041940A30500DE10D6 /* ePiano5.mp3 in Resources */,
+				B03E98081940A30500DE10D6 /* fPiano4.mp3 in Resources */,
+				B03E97DF1940A30500DE10D6 /* bPiano3.mp3 in Resources */,
+				B03E97E41940A30500DE10D6 /* c2Piano3.mp3 in Resources */,
+				B03E97E51940A30500DE10D6 /* c2Piano4.mp3 in Resources */,
 				B0FBA673193267A600AF1C08 /* fNote.mp3 in Resources */,
+				B03E97E21940A30500DE10D6 /* bXylo.mp3 in Resources */,
 				B0FBA672193267A600AF1C08 /* eNote.mp3 in Resources */,
+				B03E980B1940A30500DE10D6 /* fsPiano3.mp3 in Resources */,
+				B03E98101940A30500DE10D6 /* gMarimba.mp3 in Resources */,
+				B03E98181940A30500DE10D6 /* gsXylo.mp3 in Resources */,
+				B03E980E1940A30500DE10D6 /* fsXylo.mp3 in Resources */,
+				B03E97F91940A30500DE10D6 /* dPiano4.mp3 in Resources */,
+				B03E97FF1940A30500DE10D6 /* dsXylo.mp3 in Resources */,
 				B0FBA66F193267A600AF1C08 /* csNote.mp3 in Resources */,
+				B03E97F41940A30500DE10D6 /* csPiano5.mp3 in Resources */,
 				B0FBA66A193267A600AF1C08 /* aNote.mp3 in Resources */,
 				B0FBA5F31931FBD800AF1C08 /* Images.xcassets in Resources */,
+				B03E97E31940A30500DE10D6 /* c2Marimba.mp3 in Resources */,
+				B03E98021940A30500DE10D6 /* ePiano3.mp3 in Resources */,
+				B03E97F31940A30500DE10D6 /* csPiano4.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +637,7 @@
 				B0FBA5ED1931FBD800AF1C08 /* main.m in Sources */,
 				B0523627193A18350068F67D /* PSSSettingsView.m in Sources */,
 				B0FBA5F11931FBD800AF1C08 /* PSSAppDelegate.m in Sources */,
+				B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */,
 				B052362A193A29A40068F67D /* PSSxView.m in Sources */,
 				B0133DD01938AFBE007DB236 /* PSSPianoTableView.m in Sources */,
 				B0FBA6351932277000AF1C08 /* PSSPlayer.m in Sources */,

@@ -9,6 +9,7 @@
 #import "PSSPianoViewController.h"
 #import "PSSPlayer.h"
 #import "PSSPianoTableView.h"
+#import "PSSInstTableView.h"
 #import "PSSSettingsView.h"
 #import "PSSxView.h"
 
@@ -46,8 +47,10 @@
     UIButton * startButton;
     UIButton * stopButton;
     UIButton * songsButton;
-    UIButton * closeButton;
-    
+    UIButton * instButton;
+    UIButton * closeSongTableButton;
+    UIButton * closeInstTableButton;
+
     UILabel * keyLabel;
     UILabel * cLabel;
     UILabel * dLabel;
@@ -72,14 +75,15 @@
     
     UIView * whiteKeyGlow;
     UIView * blackKeyGlow;
-    UIView * tableHeaderView;
+    UIView * songsTableHeaderView;
+    UIView * instTableHeaderView;
     UIView * settingsPage;
     UIView * headerFrame;
     UIView * startButtonFrame;
     
-    NSArray * notes;
     NSArray * keys;
     NSArray * fullSongsTitles;
+    NSArray * instrumentList;
     NSArray * keyNameLabels;
     NSArray * solfegeLabels;
 
@@ -91,11 +95,14 @@
     
     PSSPlayer * player;
     UITableView *songTableView;
+    UITableView *instTableView;
     
     PSSSettingsView * settingsView;
     UIButton * settingsButton;
     PSSxView * xView;
     UIButton * xButton;
+    
+    NSString * instrument;
     
     UISegmentedControl * keyLabelSegmentedControl;
     UISegmentedControl * randomModeSegmentedControl;
@@ -105,6 +112,7 @@
     NSDictionary * rewardSequenceArray;
     NSDictionary * endGameSequenceArray;
     
+    NSDictionary * notes;
     NSDictionary * aTisketATasketGameArray;
     NSDictionary * goodMorningToYouGameArray;
     NSDictionary * hickoryDickoryDockGameArray;
@@ -167,22 +175,43 @@
         songTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
         [self.view addSubview:songTableView];
         
-        tableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20)];
-        tableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-        tableHeaderView.layer.cornerRadius = 5;
-        [headerFrame addSubview:tableHeaderView];
+        songsTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20)];
+        songsTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        songsTableHeaderView.layer.cornerRadius = 5;
+        [headerFrame addSubview:songsTableHeaderView];
+        
+        instTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        instTableView.dataSource = self;
+        instTableView.delegate = self;
+        instTableView.rowHeight = 40;
+        instTableView.backgroundColor = [UIColor blueColor];
+        instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
+        instTableView.SeparatorColor = [UIColor blueColor];
+        instTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        [self.view addSubview:instTableView];
+        
+        instTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-55, 5, 110, 20)];
+        instTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        instTableHeaderView.layer.cornerRadius = 5;
+        [headerFrame addSubview:instTableHeaderView];
         
         startButtonFrame = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .80+2, 5, 53, 20)];
         startButtonFrame.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
         startButtonFrame.layer.cornerRadius = 5;
         [headerFrame addSubview:startButtonFrame];
         
-        closeButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
-        closeButton.layer.cornerRadius = 5;
+        closeSongTableButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
+        closeSongTableButton.layer.cornerRadius = 5;
         //closeButton.titleLabel.textColor = [UIColor whiteColor];
-        closeButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        [closeButton setTitle:@"CLOSE" forState:UIControlStateNormal];
-        [closeButton addTarget:self action:@selector(closeSongTableView) forControlEvents:UIControlEventTouchUpInside];
+        closeSongTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [closeSongTableButton setTitle:@"CLOSE" forState:UIControlStateNormal];
+        [closeSongTableButton addTarget:self action:@selector(closeSongTableView) forControlEvents:UIControlEventTouchUpInside];
+        
+        closeInstTableButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-64, -5, 80, 40)];
+        closeInstTableButton.layer.cornerRadius = 5;
+        closeInstTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [closeInstTableButton setTitle:@"CLOSE" forState:UIControlStateNormal];
+        [closeInstTableButton addTarget:self action:@selector(closeInstTableView) forControlEvents:UIControlEventTouchUpInside];
         
         settingsView = [[PSSSettingsView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .93, -5, 40, 40)];
         settingsView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
@@ -208,6 +237,15 @@
         songsButton.backgroundColor = [UIColor clearColor];
         [songsButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
         [headerFrame addSubview:songsButton];
+        
+        instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-55, -5, 110, 40)];
+        instButton.layer.cornerRadius = 5;
+        instButton.titleLabel.textColor = [UIColor whiteColor];
+        instButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [instButton setTitle:@"INSTRUMENTS" forState:UIControlStateNormal];
+        instButton.backgroundColor = [UIColor clearColor];
+        [instButton addTarget:self action:@selector(openInstList) forControlEvents:UIControlEventTouchUpInside];
+        [headerFrame addSubview:instButton];
 
         stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
         stopButton.layer.cornerRadius = 5;
@@ -274,10 +312,9 @@
         rewardSongsList = [@[] mutableCopy];
         gameSongsList = [@[] mutableCopy];
         fullSongsList = [@[] mutableCopy];
+        instrumentList = [@[] mutableCopy];
 
         tempSongNotesArray = [@[]mutableCopy];
-        
-        notes = @[@"cNote", @"dNote", @"eNote", @"fNote", @"gNote", @"aNote", @"bNote", @"c2Note", @"csNote", @"dsNote", @"fsNote", @"gsNote", @"asNote", @"cs2Note"];
         
         keys = @[@"cKey", @"dKey", @"eKey", @"fKey", @"gKey", @"aKey", @"bKey", @"c2Key", @"csKey", @"dsKey", @"fsKey", @"gsKey", @"asKey", @"cs2Key"];
         
@@ -318,6 +355,10 @@
                             @"This Old Man",
                             @"Three Blind Mice",
                             @"Twinkle Twinkle"];
+        
+        instrumentList = @[@"Piano1",@"Piano2",@"Piano3",@"Piano4",@"Marimba",@"Xylophone"];
+        
+        [self loadInst:0];
         
         rewardSequenceArray = @{
                                 @"tempo":@[qn, en, sn, sn, sn, sn],
@@ -777,7 +818,8 @@
 {
     if (self.gameOn) {
         [stopButton removeFromSuperview];
-        [tableHeaderView removeFromSuperview];
+        [songsTableHeaderView removeFromSuperview];
+        [instTableHeaderView removeFromSuperview];
         return;
     }
     NSDictionary *currentSong = fullSongsList[indexOfFullSongslist];
@@ -800,7 +842,7 @@
     }
     if (self.gameOn) {
         [stopButton removeFromSuperview];
-        [tableHeaderView removeFromSuperview];
+        [songsTableHeaderView removeFromSuperview];
         return;
     }else{
     
@@ -808,7 +850,7 @@
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             int x = [currentSong[@"notes"][note] intValue];
-            [player playSoundWithName:notes[x]];
+            [player playSoundWithName:notes[instrument][x]];
             [self glowKey:x];
             
             if([currentSong[@"notes"] count] - 1 > note)
@@ -816,8 +858,10 @@
                 [self playSong:currentSong withNote:note + 1];
             }else{
                 [stopButton removeFromSuperview];
-                [headerFrame addSubview:tableHeaderView];
+                [headerFrame addSubview:songsTableHeaderView];
                 [headerFrame addSubview:songsButton];
+                [headerFrame addSubview:instTableHeaderView];
+                [headerFrame addSubview:instButton];
                 self.isPlaying = NO;
             }
         });
@@ -863,8 +907,8 @@
     
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
             int x = [currentSong[@"notes"][note] intValue];
-            [player playSoundWithName:notes[x]];
-            [tempSongNotesArray addObject:notes[x]];
+            [player playSoundWithName:notes[instrument][x]];
+            [tempSongNotesArray addObject:notes[instrument][x]];
             [self glowKey:x];
             
         if(note < self.playlength-1)
@@ -914,8 +958,8 @@
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, y * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         int x = [currentSong[@"notes"][note] intValue];
-        [player playSoundWithName:notes[x]];
-        [tempSongNotesArray addObject:notes[x]];
+        [player playSoundWithName:notes[instrument][x]];
+        [tempSongNotesArray addObject:notes[instrument][x]];
         [self glowKey:x];
 
         if(note < self.playlength-1)
@@ -938,7 +982,9 @@
             self.gameOn = YES;
             [songsButton removeFromSuperview];
             [stopButton removeFromSuperview];
-            [tableHeaderView removeFromSuperview];
+            [songsTableHeaderView removeFromSuperview];
+            [instButton removeFromSuperview];
+            [instTableHeaderView removeFromSuperview];
             [settingsButton removeFromSuperview];
             [settingsView removeFromSuperview];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 600 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
@@ -964,7 +1010,9 @@
             
             [songsButton removeFromSuperview];
             [stopButton removeFromSuperview];
-            [tableHeaderView removeFromSuperview];
+            [songsTableHeaderView removeFromSuperview];
+            [instButton removeFromSuperview];
+            [instTableHeaderView removeFromSuperview];
             [settingsButton removeFromSuperview];
             [settingsView removeFromSuperview];
             
@@ -1002,7 +1050,7 @@
             NSLog(@"END");
             return;
             }else{
-            if (notes[sender.tag] == tempSongNotesArray[noteCount]){
+            if (notes[instrument][sender.tag] == tempSongNotesArray[noteCount]){
                 score++;
                 displayWindow.text = [NSString stringWithFormat:@"%d", score];
                 if (score > maxScore) {
@@ -1040,8 +1088,10 @@
     self.gameOn = NO;
     [self playRewardSong:1];
     [displayWindow removeFromSuperview];
-    [headerFrame addSubview:tableHeaderView];
+    [headerFrame addSubview:songsTableHeaderView];
     [headerFrame addSubview:songsButton];
+    [headerFrame addSubview:instTableHeaderView];
+    [headerFrame addSubview:instButton];
     [headerFrame addSubview:settingsView];
     [headerFrame addSubview:settingsButton];
     
@@ -1066,14 +1116,45 @@
     return;
 }
 
+- (void)loadInst:(int)indexOfInstlist
+{
+    instrument = instrumentList[indexOfInstlist];
+    
+    if (indexOfInstlist == 0) {
+        notes = @{
+                  instrument:@[@"cNote", @"dNote", @"eNote", @"fNote", @"gNote", @"aNote", @"bNote", @"c2Note", @"csNote", @"dsNote", @"fsNote", @"gsNote", @"asNote", @"cs2Note"]
+                  };
+    }else if (indexOfInstlist == 1) {
+        notes = @{
+                  instrument:@[@"cPiano3", @"dPiano3", @"ePiano3", @"fPiano3", @"gPiano3", @"aPiano3", @"bPiano3", @"c2Piano3", @"csPiano3", @"dsPiano3", @"fsPiano3", @"gsPiano3", @"asPiano3", @"cs2Piano3"]
+                  };
+    }else if (indexOfInstlist == 2) {
+        notes = @{
+                  instrument:@[@"cPiano4", @"dPiano4", @"ePiano4", @"fPiano4", @"gPiano4", @"aPiano4", @"bPiano4", @"c2Piano4", @"csPiano4", @"dsPiano4", @"fsPiano4", @"gsPiano4", @"asPiano4", @"cs2Piano4"]
+                  };
+    }else if (indexOfInstlist == 3) {
+        notes = @{
+                  instrument:@[@"cPiano5", @"dPiano5", @"ePiano5", @"fPiano5", @"gPiano5", @"aPiano5", @"bPiano5", @"c2Piano5", @"csPiano5", @"dsPiano5", @"fsPiano5", @"gsPiano5", @"asPiano5", @"cs2Piano5"]
+                  };
+    }else if (indexOfInstlist == 4) {
+        notes = @{
+                  instrument:@[@"cMarimba", @"dMarimba", @"eMarimba", @"fMarimba", @"gMarimba", @"aMarimba", @"bMarimba", @"c2Marimba", @"csMarimba", @"dsMarimba", @"fsMarimba", @"gsMarimba", @"asMarimba", @"cs2Marimba"]
+                  };
+    }else if (indexOfInstlist == 5) {
+        notes = @{
+                  instrument:@[@"cXylo", @"dXylo", @"eXylo", @"fXylo", @"gXylo", @"aXylo", @"bXylo", @"c2Xylo", @"csXylo", @"dsXylo", @"fsXylo", @"gsXylo", @"asXylo", @"cs2Xylo"]
+                  };
+    }
+}
+
 -(void)openSongList
 {
     [songsButton removeFromSuperview];
-    [self.view addSubview:closeButton];
+    [self.view addSubview:closeSongTableButton];
     songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
     
     [UIView animateWithDuration:0.2 animations:^{
-        tableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 200, 25);
+        songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 200, 25);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{
             songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, SCREEN_HEIGHT-40);
@@ -1082,22 +1163,53 @@
     }];
 }
 
+-(void)openInstList
+{
+    [instButton removeFromSuperview];
+    [self.view addSubview:closeInstTableButton];
+    songTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        instTableHeaderView.frame = CGRectMake(SCREEN_WIDTH/2-55, 5, 200, 25);
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.4 animations:^{
+            instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 240);
+        }completion:^(BOOL finished) {
+        }];
+    }];
+}
+
 -(void)closeSongTableView
 {
     self.stopPlaying = NO;
-    [closeButton removeFromSuperview];
+    [closeSongTableButton removeFromSuperview];
     if (songTableView.frame.size.height > 100 && self.isPlaying) {
         [headerFrame addSubview:stopButton];
     }else{
-        [headerFrame addSubview:tableHeaderView];
+        [headerFrame addSubview:songsTableHeaderView];
         [headerFrame addSubview:songsButton];
     }
     [UIView animateWithDuration:0.2 animations:^{
         songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2 animations:^{
-            tableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20);
-            // songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 0, 20);
+            songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20);
+        }completion:^(BOOL finished) {
+        }];
+    }];
+}
+
+-(void)closeInstTableView
+{
+    [closeInstTableButton removeFromSuperview];
+    [headerFrame addSubview:instTableHeaderView];
+    [headerFrame addSubview:instButton];
+    
+    [UIView animateWithDuration:0.2 animations:^{
+        instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
+    }completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.2 animations:^{
+            instTableHeaderView.frame = CGRectMake(SCREEN_WIDTH/2-55, 5, 110, 20);
         }completion:^(BOOL finished) {
         }];
     }];
@@ -1106,13 +1218,17 @@
 -(void)openSettingsPage
 {
     [self closeSongTableView];
+    [self closeInstTableView];
     [songsButton removeFromSuperview];
     [stopButton removeFromSuperview];
+    [instButton removeFromSuperview];
 
     [UIView animateWithDuration:0.4 animations:^{
         [startButton removeFromSuperview];
         [startButtonFrame removeFromSuperview];
-        [tableHeaderView removeFromSuperview];
+        [songsTableHeaderView removeFromSuperview];
+        [instButton removeFromSuperview];
+        [instTableHeaderView removeFromSuperview];
         [displayWindow removeFromSuperview];
         [songsButton removeFromSuperview];
         settingsPage.frame =  CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -1134,8 +1250,10 @@
     }completion:^(BOOL finished) {
         [xView removeFromSuperview];
         [xButton removeFromSuperview];
-        [headerFrame addSubview:tableHeaderView];
+        [headerFrame addSubview:songsTableHeaderView];
         [headerFrame addSubview:startButtonFrame];
+        [headerFrame addSubview:instTableHeaderView];
+        [headerFrame addSubview:instButton];
         [headerFrame addSubview:settingsView];
         [headerFrame addSubview:settingsButton];
         [headerFrame addSubview:songsButton];
@@ -1144,7 +1262,9 @@
             [headerFrame addSubview:displayWindow];
             [stopButton removeFromSuperview];
             [songsButton removeFromSuperview];
-            [tableHeaderView removeFromSuperview];
+            [songsTableHeaderView removeFromSuperview];
+            [instButton removeFromSuperview];
+            [instTableHeaderView removeFromSuperview];
         }
     }];
 }
@@ -1179,7 +1299,7 @@
     } completion:^(BOOL finished) {
     }];
     
-    [player playSoundWithName:notes[sender.tag]];
+    [player playSoundWithName:notes[instrument][sender.tag]];
     
     NSString * key = keys[sender.tag];
     NSLog(@"key %@", key);
@@ -1286,8 +1406,10 @@
 
 -(void)rewardDisplay:(int)totalScore
 {
-    [headerFrame addSubview:tableHeaderView];
+    [headerFrame addSubview:songsTableHeaderView];
     [headerFrame addSubview:songsButton];
+    [headerFrame addSubview:instTableHeaderView];
+    [headerFrame addSubview:instButton];
     self.gameOn = NO;
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
@@ -1329,43 +1451,85 @@
 
 #pragma mark UITableViewDelegate
 
+
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     
-    return [fullSongsList count];
+    if(tableView == songTableView)
+    {
+        return [fullSongsList count];
+    }else if(tableView == instTableView)
+    {
+        return 6;
+    }
+    else return 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    // Configure the cell...
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+    if(tableView == songTableView)
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+
+        cell.textLabel.text = fullSongsTitles[indexPath.row];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        cell.textLabel.highlightedTextColor = [UIColor blueColor];
+        
+        
+        UIView *selectionColor = [[UIView alloc] init];
+        selectionColor.backgroundColor = [UIColor clearColor];
+        cell.selectedBackgroundView = selectionColor;
+        
+
+        cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
+        cell.layer.cornerRadius = 5;
+        cell.imageView.frame = CGRectMake(10, 10, 200, 20);
+            
+        return cell;
+        
+    }else if(tableView == instTableView){
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        
+        // Configure the cell...
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+        }
+        
+        cell.textLabel.text = instrumentList[indexPath.row];
+        cell.textLabel.textColor = [UIColor whiteColor];
+        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        cell.textLabel.highlightedTextColor = [UIColor blueColor];
+        
+        
+        UIView *selectionColor = [[UIView alloc] init];
+        selectionColor.backgroundColor = [UIColor clearColor];
+        cell.selectedBackgroundView = selectionColor;
+        
+        
+        cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
+        cell.layer.cornerRadius = 5;
+        cell.imageView.frame = CGRectMake(10, 10, 200, 20);
+        
+        return cell;
+    }else{
+    return 0;
     }
-
-    cell.textLabel.text = fullSongsTitles[indexPath.row];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-    cell.textLabel.highlightedTextColor = [UIColor blueColor];
-    
-    
-    UIView *selectionColor = [[UIView alloc] init];
-    selectionColor.backgroundColor = [UIColor clearColor];
-    cell.selectedBackgroundView = selectionColor;
-    
-
-    cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
-    cell.layer.cornerRadius = 5;
-    cell.imageView.frame = CGRectMake(10, 10, 200, 20);
-    
-    return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(tableView == songTableView)
+    {
     self.isPlaying = YES;
     
     int selectedSong = (int)indexPath.row;
@@ -1375,7 +1539,17 @@
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self playFullSong:selectedSong];
     });
-    
+    }else if(tableView == instTableView)
+    {
+        self.isPlaying = YES;
+        
+        int selectedInst = (int)indexPath.row;
+        
+        [self loadInst:selectedInst];
+        
+        [self closeInstTableView];
+        
+    }
 }
 
 - (BOOL)prefersStatusBarHidden {return YES;}

@@ -10,4 +10,6 @@
 
 @interface PSSPianoViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic) NSMutableArray * titleItems;
+
 @end

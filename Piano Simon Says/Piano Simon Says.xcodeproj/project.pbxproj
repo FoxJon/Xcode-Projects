@@ -79,6 +79,8 @@
 		B03E98181940A30500DE10D6 /* gsXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D21940A30500DE10D6 /* gsXylo.mp3 */; };
 		B03E98191940A30500DE10D6 /* gXylo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B03E97D31940A30500DE10D6 /* gXylo.mp3 */; };
 		B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E981B1940A57000DE10D6 /* PSSInstTableView.m */; };
+		B03E986519414C2600DE10D6 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E986419414C2600DE10D6 /* lock.png */; };
+		B03E986E1941EF1400DE10D6 /* PSSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */; };
 		B0523627193A18350068F67D /* PSSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSSettingsView.m */; };
 		B052362A193A29A40068F67D /* PSSxView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523629193A29A40068F67D /* PSSxView.m */; };
 		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
@@ -196,6 +198,9 @@
 		B03E97D31940A30500DE10D6 /* gXylo.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gXylo.mp3; sourceTree = "<group>"; };
 		B03E981A1940A57000DE10D6 /* PSSInstTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSInstTableView.h; path = ../PSSInstTableView.h; sourceTree = "<group>"; };
 		B03E981B1940A57000DE10D6 /* PSSInstTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSSInstTableView.m; path = ../PSSInstTableView.m; sourceTree = "<group>"; };
+		B03E986419414C2600DE10D6 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
+		B03E986C1941EF1400DE10D6 /* PSSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSTableViewCell.h; path = ../PSSTableViewCell.h; sourceTree = "<group>"; };
+		B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSSTableViewCell.m; path = ../PSSTableViewCell.m; sourceTree = "<group>"; };
 		B0523625193A18350068F67D /* PSSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSSettingsView.h; sourceTree = "<group>"; };
 		B0523626193A18350068F67D /* PSSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSSettingsView.m; sourceTree = "<group>"; };
 		B0523628193A29920068F67D /* PSSxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSxView.h; sourceTree = "<group>"; };
@@ -299,6 +304,8 @@
 				B0FBA6101931FCB300AF1C08 /* PSSPianoViewController.m */,
 				B0133DCE1938AFBE007DB236 /* PSSPianoTableView.h */,
 				B0133DCF1938AFBE007DB236 /* PSSPianoTableView.m */,
+				B03E986C1941EF1400DE10D6 /* PSSTableViewCell.h */,
+				B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */,
 				B03E981A1940A57000DE10D6 /* PSSInstTableView.h */,
 				B03E981B1940A57000DE10D6 /* PSSInstTableView.m */,
 				B0FBA5EF1931FBD800AF1C08 /* PSSAppDelegate.h */,
@@ -312,6 +319,7 @@
 		B0FBA5E71931FBD800AF1C08 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B03E986419414C2600DE10D6 /* lock.png */,
 				B0523625193A18350068F67D /* PSSSettingsView.h */,
 				B0523626193A18350068F67D /* PSSSettingsView.m */,
 				B0523628193A29920068F67D /* PSSxView.h */,
@@ -567,6 +575,7 @@
 				B03E97F61940A30500DE10D6 /* cXylo.mp3 in Resources */,
 				B03E98071940A30500DE10D6 /* fPiano3.mp3 in Resources */,
 				B03E97D61940A30500DE10D6 /* aPiano4.mp3 in Resources */,
+				B03E986519414C2600DE10D6 /* lock.png in Resources */,
 				B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */,
 				B03E97EA1940A30500DE10D6 /* cPiano4.mp3 in Resources */,
 				B03E97DC1940A30500DE10D6 /* asXylo.mp3 in Resources */,
@@ -635,6 +644,7 @@
 			files = (
 				B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */,
 				B0FBA5ED1931FBD800AF1C08 /* main.m in Sources */,
+				B03E986E1941EF1400DE10D6 /* PSSTableViewCell.m in Sources */,
 				B0523627193A18350068F67D /* PSSSettingsView.m in Sources */,
 				B0FBA5F11931FBD800AF1C08 /* PSSAppDelegate.m in Sources */,
 				B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */,

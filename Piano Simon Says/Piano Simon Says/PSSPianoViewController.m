@@ -9,6 +9,7 @@
 #import "PSSPianoViewController.h"
 #import "PSSPlayer.h"
 #import "PSSPianoTableView.h"
+#import "PSSTableViewCell.h"
 #import "PSSInstTableView.h"
 #import "PSSSettingsView.h"
 #import "PSSxView.h"
@@ -340,25 +341,84 @@
         sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
         
         [self setGameSongTempos:0.9];
+    
+        self.titleItems = [
+                           @[
+                             [@{
+                                 @"title":@"A-Tisket A-Tasket",
+                                 @"locked":@"No"}mutableCopy],
+                             [@{
+                                 @"title":@"Good Morning To You",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Hickory Dickory Dock",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"It’s Raining It’s Pouring",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Lightly Row",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"London Bridge",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Mary Had A Little Lamb",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Muffin Man",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Old MacDonald",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Ring Around the Rosy",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Row, Row, Row Your Boat",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"This Old Man",
+                                 @"locked":@"Yes"}mutableCopy],
+
+                             [@{
+                                 @"title":@"Three Blind Mice",
+                                 @"locked":@"Yes"} mutableCopy],
+                             [@{
+                                 @"title":@"Twinkle Twinkle",
+                                 @"locked":@"Yes"} mutableCopy],
+                             ]mutableCopy];
         
-        fullSongsTitles = @[@"A-Tisket A-Tasket",
-                            @"Good Morning To You",
-                            @"Hickory Dickory Dock",
-                            @"It’s Raining It’s Pouring",
-                            @"Lightly Row",
-                            @"London Bridge",
-                            @"Mary Had A Little Lamb",
-                            @"Muffin Man",
-                            @"Old MacDonald",
-                            @"Ring Around the Rosy",
-                            @"Row, Row, Row Your Boat",
-                            @"This Old Man",
-                            @"Three Blind Mice",
-                            @"Twinkle Twinkle"];
+                
+        //NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
+       // NSLog(@"%@", self.titleItems);
         
-        instrumentList = @[@"Piano1",@"Piano2",@"Piano3",@"Piano4",@"Marimba",@"Xylophone"];
+        //[self.titleItems[1] setObject:@"No" forKey:@"locked"];
         
-        [self loadInst:0];
+        //NSLog(@"%@", self.titleItems);
+
+
+       // [self.titleItems[1] removeObjectForKey:@"locked"];
+
+//        NSLog(@"%@", self.titleItems);
+//        NSLog(@"%lu", (unsigned long)[self.titleItems count]);
+        
+        
+        instrumentList = @[@"Piano1",@"Piano2",@"Piano3",@"Marimba",@"Xylophone"];
+        
+        int userInstrument = [[defaults objectForKey:@"instrument"] intValue];
+        
+        [self loadInst:userInstrument];
         
         rewardSequenceArray = @{
                                 @"tempo":@[qn, en, sn, sn, sn, sn],
@@ -877,7 +937,6 @@
     NSDictionary *currentSong = gameSongsList[indexOfGameSongslist];
     self.playlength++;
     
- //   self.currentTempo = self.currentTempo - 0.049;
     if (self.currentTempo > 0.2) {
         self.currentTempo = self.currentTempo - 0.049;
     }
@@ -889,9 +948,15 @@
         [self setGameSongTempos:0.9];
         [self playRewardSong:0];
         [displayWindow removeFromSuperview];
-        [self rewardDisplay:0];
         [headerFrame addSubview:settingsView];
         [headerFrame addSubview:settingsButton];
+       // NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
+        if ([[self.titleItems[indexOfGameSongslist]objectForKey:@"locked"] isEqualToString: @"Yes"]) {
+            [self.titleItems[indexOfGameSongslist] removeObjectForKey:@"locked"];
+            [self rewardDisplay:1000 withIndex:indexOfGameSongslist];
+        }else{
+            [self rewardDisplay:0 withIndex:0];
+        }
         
         return;
     }
@@ -938,8 +1003,8 @@
     
     self.playlength++;
 
-    if (self.currentTempo > 0.2) {
-        self.currentTempo = self.currentTempo - 0.06;
+    if (self.currentTempo > 0.25) {
+        self.currentTempo = self.currentTempo - 0.049;
     }
     NSLog(@"%f", self.currentTempo);
 
@@ -985,6 +1050,7 @@
             [songsTableHeaderView removeFromSuperview];
             [instButton removeFromSuperview];
             [instTableHeaderView removeFromSuperview];
+            [self closeInstTableView];
             [settingsButton removeFromSuperview];
             [settingsView removeFromSuperview];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 600 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
@@ -1079,7 +1145,8 @@
 {
     if (self.randomMode) {
         displayWindow.text = @"0";
-        [self rewardDisplay:maxScore];
+        [displayWindow removeFromSuperview];
+        [self rewardDisplay:maxScore withIndex:0];
         [self playRewardSong:0];
         [headerFrame addSubview:settingsView];
         [headerFrame addSubview:settingsButton];
@@ -1106,7 +1173,7 @@
     rewardDisplayLabel.textAlignment = 1;
     [rewardDisplayView addSubview:rewardDisplayLabel];
     
-    [UIView animateWithDuration:2.5 animations:^{
+    [UIView animateWithDuration:3.0 animations:^{
         rewardDisplayView.frame = CGRectMake(0, SCREEN_HEIGHT/2-125, SCREEN_WIDTH, 100);
         rewardDisplayView.alpha = 0;
     }completion:^(BOOL finished) {
@@ -1116,35 +1183,35 @@
     return;
 }
 
-- (void)loadInst:(int)indexOfInstlist
+- (void)loadInst:(int)indexOfInstList
 {
-    instrument = instrumentList[indexOfInstlist];
+    instrument = instrumentList[indexOfInstList];
     
-    if (indexOfInstlist == 0) {
+    if (indexOfInstList == 0) {
         notes = @{
                   instrument:@[@"cNote", @"dNote", @"eNote", @"fNote", @"gNote", @"aNote", @"bNote", @"c2Note", @"csNote", @"dsNote", @"fsNote", @"gsNote", @"asNote", @"cs2Note"]
                   };
-    }else if (indexOfInstlist == 1) {
-        notes = @{
-                  instrument:@[@"cPiano3", @"dPiano3", @"ePiano3", @"fPiano3", @"gPiano3", @"aPiano3", @"bPiano3", @"c2Piano3", @"csPiano3", @"dsPiano3", @"fsPiano3", @"gsPiano3", @"asPiano3", @"cs2Piano3"]
-                  };
-    }else if (indexOfInstlist == 2) {
+    }else if (indexOfInstList == 1) {
         notes = @{
                   instrument:@[@"cPiano4", @"dPiano4", @"ePiano4", @"fPiano4", @"gPiano4", @"aPiano4", @"bPiano4", @"c2Piano4", @"csPiano4", @"dsPiano4", @"fsPiano4", @"gsPiano4", @"asPiano4", @"cs2Piano4"]
                   };
-    }else if (indexOfInstlist == 3) {
+    }else if (indexOfInstList == 2) {
         notes = @{
                   instrument:@[@"cPiano5", @"dPiano5", @"ePiano5", @"fPiano5", @"gPiano5", @"aPiano5", @"bPiano5", @"c2Piano5", @"csPiano5", @"dsPiano5", @"fsPiano5", @"gsPiano5", @"asPiano5", @"cs2Piano5"]
                   };
-    }else if (indexOfInstlist == 4) {
+    }else if (indexOfInstList == 3) {
         notes = @{
                   instrument:@[@"cMarimba", @"dMarimba", @"eMarimba", @"fMarimba", @"gMarimba", @"aMarimba", @"bMarimba", @"c2Marimba", @"csMarimba", @"dsMarimba", @"fsMarimba", @"gsMarimba", @"asMarimba", @"cs2Marimba"]
                   };
-    }else if (indexOfInstlist == 5) {
+    }else if (indexOfInstList == 4) {
         notes = @{
                   instrument:@[@"cXylo", @"dXylo", @"eXylo", @"fXylo", @"gXylo", @"aXylo", @"bXylo", @"c2Xylo", @"csXylo", @"dsXylo", @"fsXylo", @"gsXylo", @"asXylo", @"cs2Xylo"]
                   };
     }
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setObject:[NSNumber numberWithInteger:indexOfInstList] forKey:@"instrument"];
+	[defaults synchronize];
 }
 
 -(void)openSongList
@@ -1167,13 +1234,13 @@
 {
     [instButton removeFromSuperview];
     [self.view addSubview:closeInstTableButton];
-    songTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
+  //  songTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
     
     [UIView animateWithDuration:0.2 animations:^{
         instTableHeaderView.frame = CGRectMake(SCREEN_WIDTH/2-55, 5, 200, 25);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{
-            instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 240);
+            instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 200);
         }completion:^(BOOL finished) {
         }];
     }];
@@ -1202,8 +1269,10 @@
 -(void)closeInstTableView
 {
     [closeInstTableButton removeFromSuperview];
-    [headerFrame addSubview:instTableHeaderView];
-    [headerFrame addSubview:instButton];
+    if (self.gameOn == NO) {
+        [headerFrame addSubview:instTableHeaderView];
+        [headerFrame addSubview:instButton];
+    }
     
     [UIView animateWithDuration:0.2 animations:^{
         instTableView.frame = CGRectMake(SCREEN_WIDTH/2-55, 30, 200, 0);
@@ -1398,13 +1467,12 @@
         
     }
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSNumber numberWithInteger:[randomModeSegmentedControl selectedSegmentIndex]] forKey:@"randomMode"];
     [defaults setObject:[NSNumber numberWithInteger:[expertModeSegmentedControl selectedSegmentIndex]] forKey:@"expertMode"];
-    
+	[defaults setObject:[NSNumber numberWithInteger:[randomModeSegmentedControl selectedSegmentIndex]] forKey:@"randomMode"];
 	[defaults synchronize];
 }
 
--(void)rewardDisplay:(int)totalScore
+-(void)rewardDisplay:(int)totalScore withIndex:(int)indexOfGameSongslist
 {
     [headerFrame addSubview:songsTableHeaderView];
     [headerFrame addSubview:songsButton];
@@ -1436,8 +1504,12 @@
             phrase = @[@"DYNAMITE!", @"AMAZING!", @"INCREDIBLE!"];
             rewardDisplayLabel.text = [NSString stringWithFormat:@"%d in a row! %@", totalScore, phrase[random]];
         }
+    }else if (totalScore == 1000)
+    {
+        rewardDisplayLabel.text = @"YOU'VE UNLOCKED A NEW SONG!";
+        [self.titleItems[indexOfGameSongslist] setObject:@"No" forKey:@"locked"];
     }else{
-    rewardDisplayLabel.text = @"PERFECT!";
+        rewardDisplayLabel.text = @"PERFECT!";
     }
     
     [UIView animateWithDuration:2.5 animations:^{
@@ -1455,14 +1527,13 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
-    
     if(tableView == songTableView)
     {
-        return [fullSongsList count];
+        return [self.titleItems count];
+
     }else if(tableView == instTableView)
     {
-        return 6;
+        return 5;
     }
     else return 0;
 }
@@ -1473,28 +1544,23 @@
     
     if(tableView == songTableView)
     {
-        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+        PSSTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
         
         // Configure the cell...
         if (cell == nil) {
-            cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
+            cell = [[PSSTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
-
-        cell.textLabel.text = fullSongsTitles[indexPath.row];
-        cell.textLabel.textColor = [UIColor whiteColor];
-        cell.textLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        cell.textLabel.highlightedTextColor = [UIColor blueColor];
-        
         
         UIView *selectionColor = [[UIView alloc] init];
         selectionColor.backgroundColor = [UIColor clearColor];
         cell.selectedBackgroundView = selectionColor;
-        
 
         cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
         cell.layer.cornerRadius = 5;
         cell.imageView.frame = CGRectMake(10, 10, 200, 20);
-            
+        
+        cell.songInfo = self.titleItems[indexPath.row];
+        
         return cell;
         
     }else if(tableView == instTableView){

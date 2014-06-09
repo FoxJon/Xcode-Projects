@@ -341,8 +341,12 @@
         sn = [NSNumber numberWithFloat:87.5 * tempoMultiplier];
         
         [self setGameSongTempos:0.9];
+        
+        [self loadListItems];
     
-        self.titleItems = [
+        if (self.titleItems == nil) {
+            NSLog(@"NIL");
+            self.titleItems = [
                            @[
                              [@{
                                  @"title":@"A-Tisket A-Tasket",
@@ -398,7 +402,7 @@
                                  @"title":@"Twinkle Twinkle",
                                  @"locked":@"Yes"} mutableCopy],
                              ]mutableCopy];
-        
+        }
                 
         //NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
        // NSLog(@"%@", self.titleItems);
@@ -1065,6 +1069,9 @@
             if (songTableView.frame.size.height > 100) {
                 [self closeSongTableView];
                 }
+            if (instTableView.frame.size.height > 100) {
+                [self closeInstTableView];
+            }
             self.gameOn = YES;
             randomNotesDict = [@{
                                  @"tempo":@[],
@@ -1508,6 +1515,7 @@
     {
         rewardDisplayLabel.text = @"YOU'VE UNLOCKED A NEW SONG!";
         [self.titleItems[indexOfGameSongslist] setObject:@"No" forKey:@"locked"];
+        [self saveData];
     }else{
         rewardDisplayLabel.text = @"PERFECT!";
     }
@@ -1596,15 +1604,20 @@
 {
     if(tableView == songTableView)
     {
-    self.isPlaying = YES;
-    
-    int selectedSong = (int)indexPath.row;
+        if([self.titleItems[indexPath.row][@"locked"] isEqual: @"No"])
+        {
+            self.isPlaying = YES;
+            
+            int selectedSong = (int)indexPath.row;
 
-    [self closeSongTableView];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        [self playFullSong:selectedSong];
-    });
+            [self closeSongTableView];
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+                [self playFullSong:selectedSong];
+            });
+        }else{
+            return;
+        }
     }else if(tableView == instTableView)
     {
         self.isPlaying = YES;
@@ -1615,6 +1628,25 @@
         
         [self closeInstTableView];
         
+    }
+}
+
+- (void)saveData{
+    NSString * path = [self listArchivePath];
+    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:self.titleItems];
+    [data writeToFile:path options:NSDataWritingAtomic error:nil];
+}
+
+-(NSString *)listArchivePath{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentDirectory = documentDirectories[0];
+    return [documentDirectory stringByAppendingPathComponent:@"listdata.data"];
+}
+
+- (void) loadListItems{
+    NSString * path = [self listArchivePath];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+        self.titleItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
 }
 

@@ -81,6 +81,7 @@
 		B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E981B1940A57000DE10D6 /* PSSInstTableView.m */; };
 		B03E986519414C2600DE10D6 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E986419414C2600DE10D6 /* lock.png */; };
 		B03E986E1941EF1400DE10D6 /* PSSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */; };
+		B04D19CD1946333200A0C470 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04D19CC1946333200A0C470 /* Crashlytics.framework */; };
 		B0523627193A18350068F67D /* PSSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSSettingsView.m */; };
 		B052362A193A29A40068F67D /* PSSxView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523629193A29A40068F67D /* PSSxView.m */; };
 		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
@@ -201,6 +202,7 @@
 		B03E986419414C2600DE10D6 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		B03E986C1941EF1400DE10D6 /* PSSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSTableViewCell.h; path = ../PSSTableViewCell.h; sourceTree = "<group>"; };
 		B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSSTableViewCell.m; path = ../PSSTableViewCell.m; sourceTree = "<group>"; };
+		B04D19CC1946333200A0C470 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B0523625193A18350068F67D /* PSSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSSettingsView.h; sourceTree = "<group>"; };
 		B0523626193A18350068F67D /* PSSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSSettingsView.m; sourceTree = "<group>"; };
 		B0523628193A29920068F67D /* PSSxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSxView.h; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 			files = (
 				B0FBA5E31931FBD800AF1C08 /* CoreGraphics.framework in Frameworks */,
 				B0FBA5E51931FBD800AF1C08 /* UIKit.framework in Frameworks */,
+				B04D19CD1946333200A0C470 /* Crashlytics.framework in Frameworks */,
 				B0FBA5E11931FBD800AF1C08 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -269,7 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				B0FBA640193257D400AF1C08 /* Samples */,
-				B0FBA61519321E9200AF1C08 /* Players */,
+				B0FBA61519321E9200AF1C08 /* Player */,
 				B0FBA5E61931FBD800AF1C08 /* Piano Simon Says */,
 				B0FBA5FF1931FBD800AF1C08 /* Piano Simon SaysTests */,
 				B0FBA5DF1931FBD800AF1C08 /* Frameworks */,
@@ -289,6 +292,7 @@
 		B0FBA5DF1931FBD800AF1C08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B04D19CC1946333200A0C470 /* Crashlytics.framework */,
 				B0FBA5E01931FBD800AF1C08 /* Foundation.framework */,
 				B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */,
 				B0FBA5E41931FBD800AF1C08 /* UIKit.framework */,
@@ -350,13 +354,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B0FBA61519321E9200AF1C08 /* Players */ = {
+		B0FBA61519321E9200AF1C08 /* Player */ = {
 			isa = PBXGroup;
 			children = (
 				B0FBA61F1932276F00AF1C08 /* PSSPlayer.h */,
 				B0FBA6201932276F00AF1C08 /* PSSPlayer.m */,
 			);
-			name = Players;
+			name = Player;
 			sourceTree = "<group>";
 		};
 		B0FBA640193257D400AF1C08 /* Samples */ = {
@@ -468,6 +472,7 @@
 				B0FBA5D91931FBD800AF1C08 /* Sources */,
 				B0FBA5DA1931FBD800AF1C08 /* Frameworks */,
 				B0FBA5DB1931FBD800AF1C08 /* Resources */,
+				B0FB027419462B7100833769 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -637,6 +642,22 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B0FB027419462B7100833769 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run 2c2ac9b6d199975f980841731c09425383869f9c 6675a2d0a64428a1b21b76256716a3b739a5e699bd47214674c06edf6b0bdf5a";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B0FBA5D91931FBD800AF1C08 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -770,6 +791,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";
@@ -784,6 +809,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";

@@ -8,11 +8,15 @@
 
 #import "PSSAppDelegate.h"
 #import "PSSPianoViewController.h"
+#import <Crashlytics/Crashlytics.h>
 
 @implementation PSSAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Crashlytics startWithAPIKey:@"2c2ac9b6d199975f980841731c09425383869f9c"];
+    
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.rootViewController = [[PSSPianoViewController alloc]initWithNibName:nil bundle:nil];

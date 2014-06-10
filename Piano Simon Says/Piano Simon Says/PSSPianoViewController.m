@@ -13,6 +13,7 @@
 #import "PSSInstTableView.h"
 #import "PSSSettingsView.h"
 #import "PSSxView.h"
+#import <Crashlytics/Crashlytics.h>
 
 @interface PSSPianoViewController () 
 
@@ -345,7 +346,6 @@
         [self loadListItems];
     
         if (self.titleItems == nil) {
-            NSLog(@"NIL");
             self.titleItems = [
                            @[
                              [@{
@@ -403,20 +403,6 @@
                                  @"locked":@"Yes"} mutableCopy],
                              ]mutableCopy];
         }
-                
-        //NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
-       // NSLog(@"%@", self.titleItems);
-        
-        //[self.titleItems[1] setObject:@"No" forKey:@"locked"];
-        
-        //NSLog(@"%@", self.titleItems);
-
-
-       // [self.titleItems[1] removeObjectForKey:@"locked"];
-
-//        NSLog(@"%@", self.titleItems);
-//        NSLog(@"%lu", (unsigned long)[self.titleItems count]);
-        
         
         instrumentList = @[@"Piano1",@"Piano2",@"Piano3",@"Marimba",@"Xylophone"];
         
@@ -634,6 +620,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    [[Crashlytics sharedInstance] crash];       // Force a crash!!
+
     
     glowKeys = [@[] mutableCopy];
     

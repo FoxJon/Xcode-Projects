@@ -11,9 +11,10 @@
 #import "PSSPianoTableView.h"
 #import "PSSTableViewCell.h"
 #import "PSSInstTableView.h"
-#import "PSSSettingsView.h"
+#import "PSSBlackDot.h"
 #import "PSSxView.h"
 #import <Crashlytics/Crashlytics.h>
+#import <Accelerate/Accelerate.h>
 
 @interface PSSPianoViewController () 
 
@@ -80,8 +81,8 @@
     UIView * songsTableHeaderView;
     UIView * instTableHeaderView;
     UIView * settingsPage;
-    UIView * headerFrame;
-    UIView * startButtonFrame;
+ //   UIView * headerFrame;
+ //   UIView * startButtonFrame;
     
     NSArray * keys;
     NSArray * fullSongsTitles;
@@ -99,7 +100,12 @@
     UITableView *songTableView;
     UITableView *instTableView;
     
-    PSSSettingsView * settingsView;
+    PSSBlackDot * blackDot1;
+    PSSBlackDot * blackDot2;
+    PSSBlackDot * blackDot3;
+    PSSBlackDot * blackDot4;
+    PSSBlackDot * blackDot5;
+    PSSBlackDot * blackDot6;
     UIButton * settingsButton;
     PSSxView * xView;
     UIButton * xButton;
@@ -156,31 +162,67 @@
         
         self.currentTempo = 0.9;
 
-        self.view.backgroundColor = [UIColor blueColor];
+        self.view.backgroundColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
+        
         self.gameOn = NO;
         
         settingsPage = [[UIView alloc]initWithFrame:CGRectMake(0, 0-SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        settingsPage.backgroundColor = [UIColor blueColor];
+        settingsPage.clipsToBounds = YES;
+        settingsPage.alpha = 1;
+        
+        UIImageView *settingsBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        settingsBackground.image = [self blurView];
+        
+        [settingsPage addSubview:settingsBackground];
+        
         [self.view addSubview:settingsPage];
         
-        headerFrame = [[UIView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, 30)];
-        headerFrame.backgroundColor = [UIColor blueColor];
-        [self.view addSubview:headerFrame];
+//        headerFrame = [[UIView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, 30)];
+//        headerFrame.backgroundColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
+//        headerFrame.clipsToBounds = YES;
+//        headerFrame.alpha = 1;
+//       
+//        UIImageView *headerBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+//        headerBackground.image = [self blurView];
+//        
+//        [headerFrame addSubview:headerBackground];
+        
+//        [self.view addSubview:headerFrame];
         
         songTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         songTableView.dataSource = self;
         songTableView.delegate = self;
         songTableView.rowHeight = 40;
-        songTableView.backgroundColor = [UIColor blueColor];
-        songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
-        songTableView.SeparatorColor = [UIColor blueColor];
+//        songTableView.backgroundColor = [UIColor clearColor];
+        songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, SCREEN_HEIGHT*.135, 200, 0);
+        songTableView.SeparatorColor = [UIColor blackColor];
         songTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
+//        [self.view addSubview:songTableView];
+        
+//        UIView *gameBar = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / 2, SCREEN_WIDTH, 200)];
+        songTableView.clipsToBounds = YES;
+        songTableView.alpha = 1;
+        
+        UIImageView *songTablebackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 300) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        songTablebackground.image = [self blurView];
+        
+        [songTableView addSubview:songTablebackground];
+        
         [self.view addSubview:songTableView];
         
-        songsTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20)];
-        songsTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-        songsTableHeaderView.layer.cornerRadius = 5;
-        [headerFrame addSubview:songsTableHeaderView];
+        songsTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(10, 10, 0, 20)];
+//        songsTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//        songsTableHeaderView.layer.cornerRadius = 5;
+//        [self.view addSubview:songsTableHeaderView];
+        songsTableHeaderView.clipsToBounds = YES;
+        songsTableHeaderView.alpha = 1;
+        
+        UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        background.image = [self blurView];
+        
+        [songsTableHeaderView addSubview:background];
+        
+        [self.view addSubview:songsTableHeaderView];
         
         instTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         instTableView.dataSource = self;
@@ -195,119 +237,138 @@
         instTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-55, 5, 110, 20)];
         instTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
         instTableHeaderView.layer.cornerRadius = 5;
-        [headerFrame addSubview:instTableHeaderView];
+        [self.view addSubview:instTableHeaderView];
         
-        startButtonFrame = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .80+2, 5, 53, 20)];
-        startButtonFrame.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-        startButtonFrame.layer.cornerRadius = 5;
-        [headerFrame addSubview:startButtonFrame];
+//        startButtonFrame = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .80+2, 5, 53, 20)];
+//        startButtonFrame.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//        startButtonFrame.layer.cornerRadius = 5;
+//        [self.view addSubview:startButtonFrame];
         
-        closeSongTableButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
-        closeSongTableButton.layer.cornerRadius = 5;
-        //closeButton.titleLabel.textColor = [UIColor whiteColor];
-        closeSongTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        [closeSongTableButton setTitle:@"CLOSE" forState:UIControlStateNormal];
-        [closeSongTableButton addTarget:self action:@selector(closeSongTableView) forControlEvents:UIControlEventTouchUpInside];
-        
-        closeInstTableButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-64, -5, 80, 40)];
+        closeInstTableButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.01, 0, 80, 40)];
         closeInstTableButton.layer.cornerRadius = 5;
-        closeInstTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        [closeInstTableButton setTintColor:[UIColor blackColor]];
+        closeInstTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
         [closeInstTableButton setTitle:@"CLOSE" forState:UIControlStateNormal];
         [closeInstTableButton addTarget:self action:@selector(closeInstTableView) forControlEvents:UIControlEventTouchUpInside];
         
-        settingsView = [[PSSSettingsView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .93, -5, 40, 40)];
-        settingsView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
-        [headerFrame addSubview:settingsView];
+        blackDot1 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot1.backgroundColor = [UIColor whiteColor];
+        [csKey addSubview:blackDot1];
         
-        settingsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .92, -5, 40, 40)];
+        blackDot2 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot2.backgroundColor = [UIColor whiteColor];
+        [dsKey addSubview:blackDot2];
+        
+        blackDot3 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot3.backgroundColor = [UIColor whiteColor];
+        [fsKey addSubview:blackDot3];
+        
+        blackDot4 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot4.backgroundColor = [UIColor whiteColor];
+        [gsKey addSubview:blackDot4];
+        
+        blackDot5 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot5.backgroundColor = [UIColor whiteColor];
+        [asKey addSubview:blackDot5];
+        
+        blackDot6 = [[PSSBlackDot alloc]initWithFrame:CGRectMake(csKey.frame.size.width/2-5, 10, 10.5, 10.5)];
+        blackDot6.backgroundColor = [UIColor whiteColor];
+        [cs2Key addSubview:blackDot6];
+        
+        settingsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .86, 0, 80, 40)];
         [settingsButton addTarget:self action:@selector(openSettingsPage) forControlEvents:UIControlEventTouchUpInside];
+        settingsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [settingsButton setTitle:@"settings" forState:UIControlStateNormal];
         //settingsButton.backgroundColor = [UIColor redColor];
-        [headerFrame addSubview:settingsButton];
+        [self.view addSubview:settingsButton];
         
-        xView = [[PSSxView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .93, -5, 40, 40)];
+        xView = [[PSSxView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .93, 0, 40, 40)];
         xView.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.05];
         
         xButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .92, -5, 40, 40)];
         [xButton addTarget:self action:@selector(closeSettingsPage) forControlEvents:UIControlEventTouchUpInside];
         //settingsButton.backgroundColor = [UIColor redColor];
         
-        songsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
-        songsButton.layer.cornerRadius = 5;
+        songsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.01, 0, 80, 40)];
+//        songsButton.layer.cornerRadius = 5;
         songsButton.titleLabel.textColor = [UIColor whiteColor];
-        songsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        [songsButton setTitle:@"SONGS" forState:UIControlStateNormal];
+        songsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [songsButton setTitle:@"songs" forState:UIControlStateNormal];
         songsButton.backgroundColor = [UIColor clearColor];
         [songsButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
-        [headerFrame addSubview:songsButton];
+        [self.view addSubview:songsButton];
         
-        instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-55, -5, 110, 40)];
+        instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .109, 0, 110, 40)];
         instButton.layer.cornerRadius = 5;
         instButton.titleLabel.textColor = [UIColor whiteColor];
-        instButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        [instButton setTitle:@"INSTRUMENTS" forState:UIControlStateNormal];
+        instButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [instButton setTitle:@"instruments" forState:UIControlStateNormal];
         instButton.backgroundColor = [UIColor clearColor];
         [instButton addTarget:self action:@selector(openInstList) forControlEvents:UIControlEventTouchUpInside];
-        [headerFrame addSubview:instButton];
+        [self.view addSubview:instButton];
 
-        stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .04-4, -5, 80, 40)];
+        stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.01, 0, 80, 40)];
         stopButton.layer.cornerRadius = 5;
         stopButton.titleLabel.textColor = [UIColor whiteColor];
-        stopButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
-        [stopButton setTitle:@"STOP" forState:UIControlStateNormal];
+        stopButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [stopButton setTitle:@"stop" forState:UIControlStateNormal];
         stopButton.backgroundColor = [UIColor clearColor];
         [stopButton addTarget:self action:@selector(stopSong) forControlEvents:UIControlEventTouchUpInside];
         
-        startButton = [[UIButton alloc]initWithFrame:CGRectMake(-14,-10, 80, 40)];
+        startButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .75,0, 80, 40)];
         startButton.layer.cornerRadius = 5;
-        startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15];
+        startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
         //startButton.backgroundColor = [UIColor redColor];
-        [startButton setTitle:@"START" forState:UIControlStateNormal];
+        [startButton setTitle:@"start" forState:UIControlStateNormal];
         [startButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
-        [startButtonFrame addSubview:startButton];
+        [self.view addSubview:startButton];
         
-        displayWindow = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-20, headerFrame.frame.size.height/2-14, 40, 28)];
+        displayWindow = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .65, 6, 40, 28)];
         displayWindow.text = @"0";
         displayWindow.font = [UIFont fontWithName:@"HelveticaNeue-light" size:26];
-        displayWindow.textColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+        displayWindow.textColor = [UIColor blackColor];
         displayWindow.textAlignment = 1;
-        displayWindow.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.1];
+        displayWindow.backgroundColor = [UIColor whiteColor];
         
         NSArray * labelArray = @[@"Note Names", @"Do-Re-Mi"];
         keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:labelArray];
-        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.2, 185, 40);
+        keyLabelSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.17, 185, 40);
         keyLabelSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"keyLabel"] intValue];
+        keyLabelSegmentedControl.tintColor = [UIColor blackColor];
         [keyLabelSegmentedControl addTarget:self action:@selector(labelKeys:)forControlEvents:UIControlEventValueChanged];
         [self labelKeys:keyLabelSegmentedControl];
         
         UILabel * labelTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
         labelTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
-        labelTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        labelTitle.textColor = [UIColor blackColor];
         labelTitle.text = @"Labels";
         [keyLabelSegmentedControl addSubview:labelTitle];
         
         NSArray * expertModeArray = @[@"Off", @"On"];
         expertModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:expertModeArray];
-        expertModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.8, 185, 40);
-        expertModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"expertMode"] intValue];;
+        expertModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.45, 185, 40);
+        expertModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"expertMode"] intValue];
+        expertModeSegmentedControl.tintColor = [UIColor blackColor];
         [expertModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
         [self setGameMode:expertModeSegmentedControl];
         
         UILabel * expertModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
         expertModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
-        expertModeTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        expertModeTitle.textColor = [UIColor blackColor];
         expertModeTitle.text = @"Expert Mode - Labels off. All keys in random notes mode.";
         [expertModeSegmentedControl addSubview:expertModeTitle];
 
         NSArray * gameModeArray = @[@"Songs", @"Random Notes"];
         randomModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:gameModeArray];
-        randomModeSegmentedControl.frame = CGRectMake(35, SCREEN_HEIGHT * 0.5, 185, 40);
+        randomModeSegmentedControl.frame = CGRectMake(335, SCREEN_HEIGHT * 0.17, 185, 40);
         randomModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"randomMode"] intValue];
+        randomModeSegmentedControl.tintColor = [UIColor blackColor];
         [randomModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
         [self setGameMode:randomModeSegmentedControl];
         
         UILabel * gameModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
         gameModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
-        gameModeTitle.textColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        gameModeTitle.textColor = [UIColor blackColor];
         gameModeTitle.text = @"Game Mode";
         [randomModeSegmentedControl addSubview:gameModeTitle];
         
@@ -327,6 +388,7 @@
 
         blackKeyGlow= [[UIButton alloc]initWithFrame:CGRectMake(0, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
         blackKeyGlow.layer.cornerRadius = 15;
+        
         
 ////////////////////////////////////////////////////////////////////////////////
 //                          LOAD SONGS                                        //
@@ -620,246 +682,322 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
     
 //    [[Crashlytics sharedInstance] crash];       // Force a crash!!
-
     
     glowKeys = [@[] mutableCopy];
     
-    cKey = [[UIButton alloc]initWithFrame:CGRectMake(0, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    cKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    cKey.layer.cornerRadius = 15;
+    float w = ((SCREEN_WIDTH-(2*4)-(7*2))/8);
+    int h = SCREEN_HEIGHT-47;
+   // int x = ((SCREEN_WIDTH)/8+1.5);
+    
+    UIView * ckeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4, SCREEN_HEIGHT*.135, w, h)];
+    ckeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
+    ckeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:ckeyBottomLayer];
+    
+    cKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+ //   cKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    cKey.layer.cornerRadius = 5;
     cKey.tag = 0;
     [cKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [cKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [cKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [cKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:cKey];
+    [ckeyBottomLayer addSubview:cKey];
     [glowKeys addObject:cKey];
     
-    dKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    dKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    dKey.layer.cornerRadius = 15;
+    UIView * dkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w+2, SCREEN_HEIGHT*.135, w, h)];
+    dkeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.004f blue:0.847f alpha:1.0f];
+    dkeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:dkeyBottomLayer];
+    
+    dKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+//    dKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    dKey.layer.cornerRadius = 5;
     dKey.tag = 1;
     [dKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:dKey];
+    [dkeyBottomLayer addSubview:dKey];
     [glowKeys addObject:dKey];
     
-    eKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    eKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    eKey.layer.cornerRadius = 15;
+    UIView * ekeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*2+2*2, SCREEN_HEIGHT*.135, w, h)];
+    ekeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.365f green:0.000f blue:1.000f alpha:1.0f];
+    ekeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:ekeyBottomLayer];
+    
+    eKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+ //   eKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    eKey.layer.cornerRadius = 5;
     eKey.tag = 2;
     [eKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [eKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [eKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:eKey];
+    [ekeyBottomLayer addSubview:eKey];
     [glowKeys addObject:eKey];
     
-    fKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*3, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    fKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    fKey.layer.cornerRadius = 15;
+    UIView * fkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*3+2*3, SCREEN_HEIGHT*.135, w, h)];
+    fkeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.008f green:0.965f blue:1.000f alpha:1.0f];
+    fkeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:fkeyBottomLayer];
+    
+    fKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+ //   fKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    fKey.layer.cornerRadius = 5;
     fKey.tag = 3;
     [fKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:fKey];
+    [fkeyBottomLayer addSubview:fKey];
     [glowKeys addObject:fKey];
     
-    gKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    gKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    gKey.layer.cornerRadius = 15;
+    UIView * gkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*4+2*4, SCREEN_HEIGHT*.135, w, h)];
+    gkeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.000f green:0.827f blue:0.322f alpha:1.0f];
+    gkeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:gkeyBottomLayer];
+    
+    gKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+ //   gKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    gKey.layer.cornerRadius = 5;
     gKey.tag = 4;
     [gKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:gKey];
+    [gkeyBottomLayer addSubview:gKey];
     [glowKeys addObject:gKey];
     
-    aKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    aKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    aKey.layer.cornerRadius = 15;
+    UIView * akeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*5+2*5, SCREEN_HEIGHT*.135, w, h)];
+    akeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.875f green:0.933f blue:0.000f alpha:1.0f];
+    akeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:akeyBottomLayer];
+    
+    aKey = [[UIButton alloc]initWithFrame:CGRectMake(0,0, w, h)];
+  //  aKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    aKey.layer.cornerRadius = 5;
     aKey.tag = 5;
     [aKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [aKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [aKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:aKey];
+    [akeyBottomLayer addSubview:aKey];
     [glowKeys addObject:aKey];
     
-    bKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6, -100, SCREEN_WIDTH/8-1, SCREEN_HEIGHT+100)];
-    bKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    bKey.layer.cornerRadius = 15;
+    UIView * bkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*6+2*6, SCREEN_HEIGHT*.135, w, h)];
+    bkeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.518f blue:0.000f alpha:1.0f];
+    bkeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:bkeyBottomLayer];
+    
+    bKey = [[UIButton alloc]initWithFrame:CGRectMake(0,0, w, h)];
+   // bKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    bKey.layer.cornerRadius = 5;
     bKey.tag = 6;
     [bKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [bKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [bKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:bKey];
+    [bkeyBottomLayer addSubview:bKey];
     [glowKeys addObject:bKey];
     
-    c2Key = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*7, -100, SCREEN_WIDTH/8, SCREEN_HEIGHT+100)];
-    c2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    c2Key.layer.cornerRadius = 15;
+    UIView * c2keyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*7+2*7, SCREEN_HEIGHT*.135, w, h)];
+    c2keyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
+    c2keyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:c2keyBottomLayer];
+    
+    c2Key = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+  //  c2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+    c2Key.layer.cornerRadius = 5;
     c2Key.tag = 7;
     [c2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [c2Key addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [c2Key addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:c2Key];
+    [c2keyBottomLayer addSubview:c2Key];
     [glowKeys addObject:c2Key];
     
-    csKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    csKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    csKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * csBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    csBlackKey.backgroundColor = [UIColor blackColor];
+    csBlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:csBlackKey];
+    
+    csKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    csKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    csKey.layer.cornerRadius = 5;
     csKey.tag = 8;
     [csKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [csKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [csKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:csKey];
+    [csBlackKey addSubview:csKey];
     [glowKeys addObject:csKey];
     
-    dsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    dsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    dsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * dsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*2-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    dsBlackKey.backgroundColor = [UIColor blackColor];
+    dsBlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:dsBlackKey];
+    
+    dsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    dsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    dsKey.layer.cornerRadius = 5;
     dsKey.tag = 9;
     [dsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:dsKey];
+    [dsBlackKey addSubview:dsKey];
     [glowKeys addObject:dsKey];
     
-    fsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    fsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    fsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * fsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*4-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    fsBlackKey.backgroundColor = [UIColor blackColor];
+    fsBlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:fsBlackKey];
+    
+    fsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    fsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    fsKey.layer.cornerRadius = 5;
     fsKey.tag = 10;
     [fsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:fsKey];
+    [fsBlackKey addSubview:fsKey];
     [glowKeys addObject:fsKey];
     
-    gsKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    gsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    gsKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * gsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*5-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    gsBlackKey.backgroundColor = [UIColor blackColor];
+    gsBlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:gsBlackKey];
+    
+    gsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    gsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    gsKey.layer.cornerRadius = 5;
     gsKey.tag = 11;
     [gsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:gsKey];
+    [gsBlackKey addSubview:gsKey];
     [glowKeys addObject:gsKey];
     
-    asKey = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    asKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    asKey.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * asBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*6-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    asBlackKey.backgroundColor = [UIColor blackColor];
+    asBlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:asBlackKey];
+    
+    asKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    asKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    asKey.layer.cornerRadius = 5;
     asKey.tag = 12;
     [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:asKey];
+    [asBlackKey addSubview:asKey];
     [glowKeys addObject:asKey];
     
-    cs2Key = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*8-(SCREEN_WIDTH/13)/2, SCREEN_HEIGHT-SCREEN_HEIGHT*1.25, SCREEN_WIDTH/13, SCREEN_HEIGHT/2+100)];
-    cs2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    cs2Key.layer.cornerRadius = (SCREEN_WIDTH/13)/4;
+    UIButton * cs2BlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*8-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    cs2BlackKey.backgroundColor = [UIColor blackColor];
+    cs2BlackKey.layer.cornerRadius = 6;
+    [self.view addSubview:cs2BlackKey];
+    
+    cs2Key = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    cs2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+    cs2Key.layer.cornerRadius = 5;
     cs2Key.tag = 13;
     [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
     [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
     //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
-    [self.view addSubview:cs2Key];
+    [cs2BlackKey addSubview:cs2Key];
     [glowKeys addObject:cs2Key];
     
-    int circleWidth = SCREEN_WIDTH/8-10;
+    [self animateCircle:0 withY:0];
     
-    cLabel = [[UILabel alloc]initWithFrame:CGRectMake(5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    cLabel.layer.cornerRadius = circleWidth/2;
+    int keyWidth = (SCREEN_WIDTH-6)/8;
+    
+    cLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    cLabel.layer.cornerRadius = keyWidth/2;
     cLabel.layer.masksToBounds = YES;
 //    cLabel.text = @"DO";
-    cLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    cLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    cLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    cLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     cLabel.textAlignment = 1;
-    cLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    cLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:cLabel];
     
-    dLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    dLabel.layer.cornerRadius = circleWidth/2;
+    dLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    dLabel.layer.cornerRadius = keyWidth/2;
     dLabel.layer.masksToBounds = YES;
 //    dLabel.text = @"RE";
-    dLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    dLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    dLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    dLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     dLabel.textAlignment = 1;
-    dLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    dLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:dLabel];
     
-    eLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    eLabel.layer.cornerRadius = circleWidth/2;
+    eLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    eLabel.layer.cornerRadius = keyWidth/2;
     eLabel.layer.masksToBounds = YES;
 //    eLabel.text = @"MI";
-    eLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    eLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    eLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    eLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     eLabel.textAlignment = 1;
-    eLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    eLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:eLabel];
     
-    fLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*3+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    fLabel.layer.cornerRadius = circleWidth/2;
+    fLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*3, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    fLabel.layer.cornerRadius = keyWidth/2;
     fLabel.layer.masksToBounds = YES;
 //    fLabel.text = @"FA";
-    fLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    fLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    fLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    fLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     fLabel.textAlignment = 1;
-    fLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    fLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:fLabel];
     
-    gLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    gLabel.layer.cornerRadius = circleWidth/2;
+    gLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    gLabel.layer.cornerRadius = keyWidth/2;
     gLabel.layer.masksToBounds = YES;
 //    gLabel.text = @"SO";
-    gLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    gLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    gLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    gLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     gLabel.textAlignment = 1;
-    gLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    gLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:gLabel];
     
-    aLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    aLabel.layer.cornerRadius = circleWidth/2;
+    aLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    aLabel.layer.cornerRadius = keyWidth/2;
     aLabel.layer.masksToBounds = YES;
 //    aLabel.text = @"LA";
-    aLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    aLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    aLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    aLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     aLabel.textAlignment = 1;
-    aLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    aLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:aLabel];
     
-    bLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    bLabel.layer.cornerRadius = circleWidth/2;
+    bLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    bLabel.layer.cornerRadius = keyWidth/2;
     bLabel.layer.masksToBounds = YES;
 //    bLabel.text = @"TI";
-    bLabel.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    bLabel.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    bLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    bLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     bLabel.textAlignment = 1;
-    bLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+ //   bLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:bLabel];
     
-    c2Label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*7+5, SCREEN_HEIGHT * 0.7, circleWidth, circleWidth)];
-    c2Label.layer.cornerRadius = circleWidth/2;
+    c2Label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*7, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    c2Label.layer.cornerRadius = keyWidth/2;
     c2Label.layer.masksToBounds = YES;
 //    c2Label.text = @"DO";
-    c2Label.font = [UIFont fontWithName:@"HelveticaNeue-light" size:30];
-    c2Label.textColor = [UIColor colorWithWhite:1.0 alpha:0.3];
+    c2Label.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
+    c2Label.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     c2Label.textAlignment = 1;
-    c2Label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+//    c2Label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
     [self.view addSubview:c2Label];
 }
 
@@ -911,10 +1049,10 @@
                 [self playSong:currentSong withNote:note + 1];
             }else{
                 [stopButton removeFromSuperview];
-                [headerFrame addSubview:songsTableHeaderView];
-                [headerFrame addSubview:songsButton];
-                [headerFrame addSubview:instTableHeaderView];
-                [headerFrame addSubview:instButton];
+                [self.view addSubview:songsTableHeaderView];
+                [self.view addSubview:songsButton];
+                [self.view addSubview:instTableHeaderView];
+                [self.view addSubview:instButton];
                 self.isPlaying = NO;
             }
         });
@@ -941,8 +1079,7 @@
         [self setGameSongTempos:0.9];
         [self playRewardSong:0];
         [displayWindow removeFromSuperview];
-        [headerFrame addSubview:settingsView];
-        [headerFrame addSubview:settingsButton];
+        [self.view addSubview:settingsButton];
        // NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
         if ([[self.titleItems[indexOfGameSongslist]objectForKey:@"locked"] isEqualToString: @"Yes"]) {
             [self.titleItems[indexOfGameSongslist] removeObjectForKey:@"locked"];
@@ -1045,7 +1182,6 @@
             [instTableHeaderView removeFromSuperview];
             [self closeInstTableView];
             [settingsButton removeFromSuperview];
-            [settingsView removeFromSuperview];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 600 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [self startGame];
                 });
@@ -1067,7 +1203,7 @@
                                  @"notes":[@[] mutableCopy]
                                  }mutableCopy];
             
-            [headerFrame addSubview:displayWindow];
+            [self.view addSubview:displayWindow];
             displayWindow.text = [NSString stringWithFormat:@"0"];
             
             [songsButton removeFromSuperview];
@@ -1076,7 +1212,6 @@
             [instButton removeFromSuperview];
             [instTableHeaderView removeFromSuperview];
             [settingsButton removeFromSuperview];
-            [settingsView removeFromSuperview];
             
             self.currentTempo = 0.9;
 
@@ -1144,19 +1279,17 @@
         [displayWindow removeFromSuperview];
         [self rewardDisplay:maxScore withIndex:0];
         [self playRewardSong:0];
-        [headerFrame addSubview:settingsView];
-        [headerFrame addSubview:settingsButton];
+        [self.view addSubview:settingsButton];
         return;
     }
     self.gameOn = NO;
     [self playRewardSong:1];
     [displayWindow removeFromSuperview];
-    [headerFrame addSubview:songsTableHeaderView];
-    [headerFrame addSubview:songsButton];
-    [headerFrame addSubview:instTableHeaderView];
-    [headerFrame addSubview:instButton];
-    [headerFrame addSubview:settingsView];
-    [headerFrame addSubview:settingsButton];
+    [self.view addSubview:songsTableHeaderView];
+    [self.view addSubview:songsButton];
+    [self.view addSubview:instTableHeaderView];
+    [self.view addSubview:instButton];
+    [self.view addSubview:settingsButton];
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
     rewardDisplayView.backgroundColor = [UIColor clearColor];
@@ -1214,13 +1347,13 @@
 {
     [songsButton removeFromSuperview];
     [self.view addSubview:closeSongTableButton];
-    songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
+    songTableView.frame = CGRectMake(5, SCREEN_HEIGHT*.135, 200, 0);
     
     [UIView animateWithDuration:0.2 animations:^{
-        songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 200, 25);
+        songsTableHeaderView.frame = CGRectMake(5, 10, 200, 33);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.4 animations:^{
-            songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, SCREEN_HEIGHT-40);
+            songTableView.frame = CGRectMake(5, SCREEN_HEIGHT*.135, 200, SCREEN_HEIGHT-40);
         }completion:^(BOOL finished) {
         }];
     }];
@@ -1247,16 +1380,16 @@
     self.stopPlaying = NO;
     [closeSongTableButton removeFromSuperview];
     if (songTableView.frame.size.height > 100 && self.isPlaying) {
-        [headerFrame addSubview:stopButton];
+        [self.view addSubview:stopButton];
     }else{
-        [headerFrame addSubview:songsTableHeaderView];
-        [headerFrame addSubview:songsButton];
+        [self.view addSubview:songsTableHeaderView];
+        [self.view addSubview:songsButton];
     }
     [UIView animateWithDuration:0.2 animations:^{
-        songTableView.frame = CGRectMake(SCREEN_WIDTH * .05, 30, 200, 0);
+        songTableView.frame = CGRectMake(5, SCREEN_HEIGHT*.135, 200, 0);
     }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.2 animations:^{
-            songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH * .05, 5, 60, 20);
+            songsTableHeaderView.frame = CGRectMake(5, 10, 60, 20);
         }completion:^(BOOL finished) {
         }];
     }];
@@ -1266,8 +1399,8 @@
 {
     [closeInstTableButton removeFromSuperview];
     if (self.gameOn == NO) {
-        [headerFrame addSubview:instTableHeaderView];
-        [headerFrame addSubview:instButton];
+        [self.view addSubview:instTableHeaderView];
+        [self.view addSubview:instButton];
     }
     
     [UIView animateWithDuration:0.2 animations:^{
@@ -1287,18 +1420,18 @@
     [songsButton removeFromSuperview];
     [stopButton removeFromSuperview];
     [instButton removeFromSuperview];
+    
 
     [UIView animateWithDuration:0.4 animations:^{
         [startButton removeFromSuperview];
-        [startButtonFrame removeFromSuperview];
+//[startButtonFrame removeFromSuperview];
         [songsTableHeaderView removeFromSuperview];
         [instButton removeFromSuperview];
         [instTableHeaderView removeFromSuperview];
         [displayWindow removeFromSuperview];
         [songsButton removeFromSuperview];
-        settingsPage.frame =  CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+        settingsPage.frame =  CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-110);
     }completion:^(BOOL finished) {
-        [settingsView removeFromSuperview];
         [settingsButton removeFromSuperview];
         [self.view addSubview:xView];
         [self.view addSubview:xButton];
@@ -1315,16 +1448,15 @@
     }completion:^(BOOL finished) {
         [xView removeFromSuperview];
         [xButton removeFromSuperview];
-        [headerFrame addSubview:songsTableHeaderView];
-        [headerFrame addSubview:startButtonFrame];
-        [headerFrame addSubview:instTableHeaderView];
-        [headerFrame addSubview:instButton];
-        [headerFrame addSubview:settingsView];
-        [headerFrame addSubview:settingsButton];
-        [headerFrame addSubview:songsButton];
-        [startButtonFrame addSubview:startButton];
+        [self.view addSubview:songsTableHeaderView];
+//        [self.view addSubview:startButtonFrame];
+        [self.view addSubview:instTableHeaderView];
+        [self.view addSubview:instButton];
+        [self.view addSubview:settingsButton];
+        [self.view addSubview:songsButton];
+//        [startButtonFrame addSubview:startButton];
         if (self.gameOn) {
-            [headerFrame addSubview:displayWindow];
+            [self.view addSubview:displayWindow];
             [stopButton removeFromSuperview];
             [songsButton removeFromSuperview];
             [songsTableHeaderView removeFromSuperview];
@@ -1347,23 +1479,38 @@
 
 - (void)glowKey:(int)indexOfKeyView
 {
+    NSLog(@"indexOfKeyView %d", indexOfKeyView);
     UIView * currentGlowKey = glowKeys[indexOfKeyView];
-    currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
-    [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    } completion:^(BOOL finished) {
-    }];
+    currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+
+    if (indexOfKeyView <=8) {
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        } completion:^(BOOL finished) {
+        }];
+    } else if (indexOfKeyView >=9)
+    {
+        [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
+            currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        } completion:^(BOOL finished) {
+        }];
+    }
 }
 
 
 -(void)playNote:(UIButton *)sender
 {
-    sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+    sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-        sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        NSLog(@"sender %ld", (long)sender.tag);
+        if (sender.tag > 7) {
+            sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.6];
+        }else{
+        sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+        }
     } completion:^(BOOL finished) {
     }];
-    
+
     [player playSoundWithName:notes[instrument][sender.tag]];
     
     NSString * key = keys[sender.tag];
@@ -1387,14 +1534,14 @@
     [bLabel setAlpha:1.0];
     [c2Label setAlpha:1.0];
     
-    cLabel.text = @"DO";
-    dLabel.text = @"RE";
-    eLabel.text = @"MI";
-    fLabel.text = @"FA";
-    gLabel.text = @"SO";
-    aLabel.text = @"LA";
-    bLabel.text = @"TI";
-    c2Label.text = @"DO";
+    cLabel.text = @"do";
+    dLabel.text = @"re";
+    eLabel.text = @"mi";
+    fLabel.text = @"fa";
+    gLabel.text = @"so";
+    aLabel.text = @"la";
+    bLabel.text = @"ti";
+    c2Label.text = @"do";
 }
 
 -(void)addkeyNameLabels
@@ -1408,14 +1555,14 @@
     [bLabel setAlpha:1.0];
     [c2Label setAlpha:1.0];
     
-    cLabel.text = @"C";
-    dLabel.text = @"D";
-    eLabel.text = @"E";
-    fLabel.text = @"F";
-    gLabel.text = @"G";
-    aLabel.text = @"A";
-    bLabel.text = @"B";
-    c2Label.text = @"C";
+    cLabel.text = @"c";
+    dLabel.text = @"d";
+    eLabel.text = @"e";
+    fLabel.text = @"f";
+    gLabel.text = @"g";
+    aLabel.text = @"a";
+    bLabel.text = @"b";
+    c2Label.text = @"c";
 }
 
 -(void)removeLabels
@@ -1470,10 +1617,10 @@
 
 -(void)rewardDisplay:(int)totalScore withIndex:(int)indexOfGameSongslist
 {
-    [headerFrame addSubview:songsTableHeaderView];
-    [headerFrame addSubview:songsButton];
-    [headerFrame addSubview:instTableHeaderView];
-    [headerFrame addSubview:instButton];
+    [self.view addSubview:songsTableHeaderView];
+    [self.view addSubview:songsButton];
+    [self.view addSubview:instTableHeaderView];
+    [self.view addSubview:instButton];
     self.gameOn = NO;
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
@@ -1620,6 +1767,60 @@
     }
 }
 
+-(void)animateCircle:(int)xPostion withY:(int)yPosition
+{
+    {
+        static int x = 35;
+        int y = SCREEN_HEIGHT * 0.89;
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+        
+        // Do any additional setup after loading the view, typically from a nib.
+        // Set up the shape of the circle
+        int radius = 24;
+        CAShapeLayer *circle = [CAShapeLayer layer];
+        // Make a circular shape
+        circle.path = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 0, 2.0*radius, 2.0*radius)
+                                                 cornerRadius:radius].CGPath;
+        // Center the shape in self.view
+        circle.position = CGPointMake(x-radius,
+                                      y-radius);
+        
+        // Configure the apperence of the circle
+        circle.fillColor = [UIColor clearColor].CGColor;
+        circle.strokeColor =[UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f].CGColor;
+
+        circle.lineWidth = 0.5;
+        
+        // Add to parent layer
+        [self.view.layer addSublayer:circle];
+        
+        // Configure animation
+        CABasicAnimation *drawAnimation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
+        drawAnimation.duration            = 0.5; // "animate over 10 seconds or so.."
+        drawAnimation.repeatCount         = 1.0;  // Animate only once..
+        
+        // Animate from no part of the stroke being drawn to the entire stroke being drawn
+        drawAnimation.fromValue = [NSNumber numberWithFloat:0.0f];
+        drawAnimation.toValue   = [NSNumber numberWithFloat:1.0f];
+        
+        // Experiment with timing to get the appearence to look the way you want
+        drawAnimation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
+        
+        // Add the animation to the circle
+        [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];
+            
+            int count=0;
+            if(count < 8)
+            {
+                x = x + 71;
+                count++;
+                [self animateCircle:x withY:y];
+            }
+        });
+    }
+}
+
 - (void)saveData{
     NSString * path = [self listArchivePath];
     NSData * data = [NSKeyedArchiver archivedDataWithRootObject:self.titleItems];
@@ -1638,6 +1839,66 @@
         self.titleItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
     }
 }
+
+- (UIImage *)blurView
+{
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+	
+	CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    [[UIColor whiteColor] set];
+    CGContextFillRect(context, self.view.bounds);
+    
+    [self.view.layer renderInContext:context];
+    
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	
+	vImage_Buffer inBuffer;
+	inBuffer.data = CGBitmapContextGetData(context);
+	inBuffer.width = CGBitmapContextGetWidth(context);
+	inBuffer.height = CGBitmapContextGetHeight(context);
+	inBuffer.rowBytes = CGBitmapContextGetBytesPerRow(context);
+    
+	UIGraphicsBeginImageContext(self.view.bounds.size);
+	CGContextRef effectOutContext = UIGraphicsGetCurrentContext();
+	vImage_Buffer outBuffer;
+	outBuffer.data = CGBitmapContextGetData(effectOutContext);
+	outBuffer.width = CGBitmapContextGetWidth(effectOutContext);
+	outBuffer.height = CGBitmapContextGetHeight(effectOutContext);
+	outBuffer.rowBytes = CGBitmapContextGetBytesPerRow(effectOutContext);
+	
+	CGFloat blurRadius = 10;
+	CGFloat inputRadius = blurRadius * [[UIScreen mainScreen] scale];
+	int radius = floor(inputRadius * 9. * sqrt(2 * M_PI) / 4 + 0.5);
+	if (radius % 2 != 1) { radius += 1; }
+	vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
+	vImageBoxConvolve_ARGB8888(&outBuffer, &inBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
+	vImageBoxConvolve_ARGB8888(&inBuffer, &outBuffer, NULL, 0, 0, radius, radius, 0, kvImageEdgeExtend);
+    
+	// add tint
+	UIColor *tintColor = [UIColor colorWithWhite:1.0 alpha:0.7];
+//    UIColor *tintColor = [UIColor colorWithRed:0.271f green:0.000f blue:1.000f alpha:0.7f];
+//    UIColor *tintColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:0.7f];
+//    UIColor *tintColor = [UIColor colorWithRed:0.000f green:0.933f blue:0.208f alpha:0.7f];
+    
+	CGContextSaveGState(context);
+	CGContextSetFillColorWithColor(context, tintColor.CGColor);
+	CGContextFillRect(context, CGRectMake(0, 0, image.size.width, image.size.height));
+	CGContextRestoreGState(context);
+	
+	
+    CGImageRef imageRef = CGBitmapContextCreateImage(context);
+    UIImage *returnImage = [UIImage imageWithCGImage:imageRef];
+	
+	UIGraphicsEndImageContext();
+	UIGraphicsEndImageContext();
+    
+    CGImageRelease(imageRef);
+    
+    
+    return returnImage;
+}
+
 
 - (BOOL)prefersStatusBarHidden {return YES;}
 

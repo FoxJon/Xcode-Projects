@@ -81,10 +81,10 @@
 		B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E981B1940A57000DE10D6 /* PSSInstTableView.m */; };
 		B03E986519414C2600DE10D6 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = B03E986419414C2600DE10D6 /* lock.png */; };
 		B03E986E1941EF1400DE10D6 /* PSSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */; };
-		B04D19CD1946333200A0C470 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B04D19CC1946333200A0C470 /* Crashlytics.framework */; };
-		B0523627193A18350068F67D /* PSSSettingsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSSettingsView.m */; };
+		B0523627193A18350068F67D /* PSSBlackDot.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523626193A18350068F67D /* PSSBlackDot.m */; };
 		B052362A193A29A40068F67D /* PSSxView.m in Sources */ = {isa = PBXBuildFile; fileRef = B0523629193A29A40068F67D /* PSSxView.m */; };
 		B06F54F019357046006B1D72 /* cs2Note.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = B06F54EF19357046006B1D72 /* cs2Note.mp3 */; };
+		B094F5B619486E63002D4E15 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B094F5B519486E63002D4E15 /* Crashlytics.framework */; };
 		B0FBA5E11931FBD800AF1C08 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E01931FBD800AF1C08 /* Foundation.framework */; };
 		B0FBA5E31931FBD800AF1C08 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */; };
 		B0FBA5E51931FBD800AF1C08 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0FBA5E41931FBD800AF1C08 /* UIKit.framework */; };
@@ -202,12 +202,12 @@
 		B03E986419414C2600DE10D6 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		B03E986C1941EF1400DE10D6 /* PSSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PSSTableViewCell.h; path = ../PSSTableViewCell.h; sourceTree = "<group>"; };
 		B03E986D1941EF1400DE10D6 /* PSSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PSSTableViewCell.m; path = ../PSSTableViewCell.m; sourceTree = "<group>"; };
-		B04D19CC1946333200A0C470 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		B0523625193A18350068F67D /* PSSSettingsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSSettingsView.h; sourceTree = "<group>"; };
-		B0523626193A18350068F67D /* PSSSettingsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSSettingsView.m; sourceTree = "<group>"; };
+		B0523625193A18350068F67D /* PSSBlackDot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSBlackDot.h; sourceTree = "<group>"; };
+		B0523626193A18350068F67D /* PSSBlackDot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSBlackDot.m; sourceTree = "<group>"; };
 		B0523628193A29920068F67D /* PSSxView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSSxView.h; sourceTree = "<group>"; };
 		B0523629193A29A40068F67D /* PSSxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSxView.m; sourceTree = "<group>"; };
 		B06F54EF19357046006B1D72 /* cs2Note.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Note.mp3; sourceTree = "<group>"; };
+		B094F5B519486E63002D4E15 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piano Simon Says.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FBA5E01931FBD800AF1C08 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -250,7 +250,7 @@
 			files = (
 				B0FBA5E31931FBD800AF1C08 /* CoreGraphics.framework in Frameworks */,
 				B0FBA5E51931FBD800AF1C08 /* UIKit.framework in Frameworks */,
-				B04D19CD1946333200A0C470 /* Crashlytics.framework in Frameworks */,
+				B094F5B619486E63002D4E15 /* Crashlytics.framework in Frameworks */,
 				B0FBA5E11931FBD800AF1C08 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,7 +292,7 @@
 		B0FBA5DF1931FBD800AF1C08 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B04D19CC1946333200A0C470 /* Crashlytics.framework */,
+				B094F5B519486E63002D4E15 /* Crashlytics.framework */,
 				B0FBA5E01931FBD800AF1C08 /* Foundation.framework */,
 				B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */,
 				B0FBA5E41931FBD800AF1C08 /* UIKit.framework */,
@@ -324,8 +324,8 @@
 			isa = PBXGroup;
 			children = (
 				B03E986419414C2600DE10D6 /* lock.png */,
-				B0523625193A18350068F67D /* PSSSettingsView.h */,
-				B0523626193A18350068F67D /* PSSSettingsView.m */,
+				B0523625193A18350068F67D /* PSSBlackDot.h */,
+				B0523626193A18350068F67D /* PSSBlackDot.m */,
 				B0523628193A29920068F67D /* PSSxView.h */,
 				B0523629193A29A40068F67D /* PSSxView.m */,
 				B0FBA5E81931FBD800AF1C08 /* Piano Simon Says-Info.plist */,
@@ -472,7 +472,7 @@
 				B0FBA5D91931FBD800AF1C08 /* Sources */,
 				B0FBA5DA1931FBD800AF1C08 /* Frameworks */,
 				B0FBA5DB1931FBD800AF1C08 /* Resources */,
-				B0FB027419462B7100833769 /* ShellScript */,
+				B094F5B419486E34002D4E15 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -643,7 +643,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		B0FB027419462B7100833769 /* ShellScript */ = {
+		B094F5B419486E34002D4E15 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -666,7 +666,7 @@
 				B0FBA6111931FCB300AF1C08 /* PSSPianoViewController.m in Sources */,
 				B0FBA5ED1931FBD800AF1C08 /* main.m in Sources */,
 				B03E986E1941EF1400DE10D6 /* PSSTableViewCell.m in Sources */,
-				B0523627193A18350068F67D /* PSSSettingsView.m in Sources */,
+				B0523627193A18350068F67D /* PSSBlackDot.m in Sources */,
 				B0FBA5F11931FBD800AF1C08 /* PSSAppDelegate.m in Sources */,
 				B03E981C1940A57000DE10D6 /* PSSInstTableView.m in Sources */,
 				B052362A193A29A40068F67D /* PSSxView.m in Sources */,

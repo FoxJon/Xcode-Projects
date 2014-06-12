@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface PSSSettingsView : UIView
+@interface PSSBlackDot : UIView
 
 @end

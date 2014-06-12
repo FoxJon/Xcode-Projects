@@ -23,7 +23,7 @@
 - (void)drawRect:(CGRect)rect
 {
     // X
-    [[UIColor colorWithWhite:1.0 alpha:0.4] set];
+    [[UIColor blackColor] set];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 2.0);

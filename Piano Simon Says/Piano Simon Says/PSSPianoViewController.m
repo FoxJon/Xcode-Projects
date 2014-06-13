@@ -51,6 +51,8 @@
     UIView * c2Key;
     UIView * cs2Key;
     
+    UIView * headerView;
+    
     UIButton * startButton;
     UIButton * stopButton;
     UIButton * songsButton;
@@ -68,12 +70,13 @@
     UILabel * bLabel;
     UILabel * c2Label;
     UILabel * displayWindow;
+    UILabel * scoreLabel;
     UILabel * titleLabel;
     
     int noteCount;
     int score;
     int maxScore;
-    int keyWidth;
+    float keyWidth;
     
     NSNumber * sn;  //sixteenth note
     NSNumber * en;  //eighth note
@@ -167,7 +170,7 @@
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
-        keyWidth = (SCREEN_WIDTH-6)/8;
+        keyWidth = (SCREEN_WIDTH-22)/8;
         
         self.touchArray = [@[@100]mutableCopy];
         
@@ -187,61 +190,118 @@
         settingsPage = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH*.40, SCREEN_HEIGHT)];
         settingsPage.clipsToBounds = YES;
         settingsPage.alpha = 1;
-        //settingsPage.backgroundColor = [UIColor redColor];
-        
-        UIImageView *settingsBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 320) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        UIImageView *settingsBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*.40, SCREEN_HEIGHT)];
         settingsBackground.image = [self blurView];
-        
         [settingsPage addSubview:settingsBackground];
+ 
+        
+        headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, 40)];
+        [self.view addSubview:headerView];
         
         
+        if (SCREEN_WIDTH < 500) {
+            settingsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .86, 0, 70, 40)];
+        }else{
+            settingsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .87, 0, 70, 40)];
+        }
+        [settingsButton addTarget:self action:@selector(openSettingsPage) forControlEvents:UIControlEventTouchUpInside];
+        settingsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [settingsButton setTitle:@"settings" forState:UIControlStateNormal];
+        //settingsButton.backgroundColor = [UIColor redColor];
+        [self.view addSubview:settingsButton];
         
-//        headerFrame = [[UIView alloc]initWithFrame:CGRectMake(0,0, SCREEN_WIDTH, 30)];
-//        headerFrame.backgroundColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
-//        headerFrame.clipsToBounds = YES;
-//        headerFrame.alpha = 1;
-
-//        UIImageView *headerBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//        headerBackground.image = [self blurView];
-//
-//        [headerFrame addSubview:headerBackground];
-//        
-//        [self.view addSubview:headerFrame];
+        xView = [[PSSxView alloc]initWithFrame:CGRectMake(settingsPage.frame.size.width*.81, 0, 40, 40)];
+        xView.backgroundColor = [UIColor clearColor];
+        
+        xButton = [[UIButton alloc]initWithFrame:CGRectMake(-5, -5, 40, 40)];
+        [xButton addTarget:self action:@selector(closeSettingsPage) forControlEvents:UIControlEventTouchUpInside];
+        //        xButton.backgroundColor = [UIColor redColor];
+        
+        if (SCREEN_WIDTH < 500) {
+            songsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.74, 0, 60, 40)];
+        }else{
+            songsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77, 0, 60, 40)];
+        }
+        //        songsButton.layer.cornerRadius = 5;
+        songsButton.titleLabel.textColor = [UIColor whiteColor];
+        songsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [songsButton setTitle:@"songs" forState:UIControlStateNormal];
+        songsButton.backgroundColor = [UIColor clearColor];
+        [songsButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:songsButton];
+        
+        if (SCREEN_WIDTH < 500) {
+            instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.095, 0, 90, 40)];
+        }else{
+            instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.095, 0, 90, 40)];
+        }
+        instButton.layer.cornerRadius = 5;
+        instButton.titleLabel.textColor = [UIColor whiteColor];
+        instButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [instButton setTitle:@"instruments" forState:UIControlStateNormal];
+        instButton.backgroundColor = [UIColor clearColor];
+        [instButton addTarget:self action:@selector(openInstList) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:instButton];
+        
+        if (SCREEN_WIDTH < 500) {
+            stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.74, 0, 60, 40)];
+        }else{
+            stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77, 0, 60, 40)];
+        }
+        stopButton.layer.cornerRadius = 5;
+        stopButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        [stopButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [stopButton setTitle:@"stop" forState:UIControlStateNormal];
+        stopButton.backgroundColor = [UIColor clearColor];
+        [stopButton addTarget:self action:@selector(stopSong) forControlEvents:UIControlEventTouchUpInside];
+        
+        if (SCREEN_WIDTH < 500) {
+            startButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.005,0, 50, 40)];
+        }else{
+            startButton = [[UIButton alloc]initWithFrame:CGRectMake(4,0, 50, 40)];
+        }
+        startButton.layer.cornerRadius = 5;
+        startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        //startButton.backgroundColor = [UIColor redColor];
+        [startButton setTitle:@"start" forState:UIControlStateNormal];
+        [startButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:startButton];
+        
+        if (SCREEN_WIDTH < 500) {
+            scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.74, 0, 60, 40)];
+        }else{
+            scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * 0.77, 0, 60, 40)];
+        }
+        scoreLabel.text = @"score: ";
+        scoreLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
+        scoreLabel.textColor = [UIColor whiteColor];
+        scoreLabel.textAlignment = 1;
+        
+        songsTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH*.40, 40)];
+        songsTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        [self.view addSubview:songsTableHeaderView];
         
         songTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         songTableView.dataSource = self;
         songTableView.delegate = self;
         songTableView.rowHeight = 40;
         songTableView.backgroundColor = [UIColor clearColor];
-        songTableView.frame = CGRectMake(-200, 40, 200, SCREEN_HEIGHT-40);
+        songTableView.frame = CGRectMake(SCREEN_WIDTH, 40, SCREEN_WIDTH*.40, SCREEN_HEIGHT-40);
         songTableView.SeparatorColor = [UIColor blackColor];
         songTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-//       [self.view addSubview:songTableView];
-        
-//        UIView *gameBar = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / 2, SCREEN_WIDTH, 200)];
         songTableView.clipsToBounds = YES;
         songTableView.alpha = 1;
         
-        UIImageView *songTablebackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 320) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
+        UIImageView *songTablebackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH*.40, SCREEN_HEIGHT)];
         songTablebackground.image = [self blurView];
         
-        [songTableView addSubview:songTablebackground];
+        [songsTableHeaderView addSubview:songTablebackground];
         
         [self.view addSubview:songTableView];
         
-        songsTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(-200, 0, 200, 40)];
-        songsTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-//        songsTableHeaderView.layer.cornerRadius = 5;
-        [self.view addSubview:songsTableHeaderView];
-        songsTableHeaderView.clipsToBounds = YES;
-        songsTableHeaderView.alpha = 1;
-
-        UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        background.image = [self blurView];
-
-        [songsTableHeaderView addSubview:background];
-
-        [self.view addSubview:songsTableHeaderView];
+        instTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(-210,0, 210, 40)];
+        instTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+        [self.view addSubview:instTableHeaderView];
         
         instTableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
         instTableView.dataSource = self;
@@ -251,41 +311,17 @@
         instTableView.frame = CGRectMake(-210,40, 210, SCREEN_HEIGHT-40);
         instTableView.SeparatorColor = [UIColor blackColor];
         instTableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
-        [self.view addSubview:instTableView];
-        
         instTableView.clipsToBounds = YES;
         instTableView.alpha = 1;
         
-//        UIImageView *tableViewbackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 280) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
-//        tableViewbackground.image = [self blurView];
-//        
-//        [instTableView addSubview:tableViewbackground];
-//        
-//        [self.view addSubview:instTableView];
+        UIImageView *tableViewbackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 210, SCREEN_HEIGHT)];
+        tableViewbackground.image = [self blurView];
         
+        [instTableHeaderView addSubview:tableViewbackground];
         
-        instTableHeaderView = [[UIView alloc]initWithFrame:CGRectMake(-210,0, 210, 40)];
-        instTableHeaderView.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-//        instTableHeaderView.layer.cornerRadius = 5;
-        [self.view addSubview:instTableHeaderView];
+        [self.view addSubview:instTableView];
         
-//        UIView *gameBar = [[UIView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / 2, SCREEN_WIDTH, 200)];
-        instTableHeaderView.clipsToBounds = YES;
-        instTableHeaderView.alpha = 1;
-        
-        UIImageView *instTableBackground = [[UIImageView alloc] initWithFrame:CGRectMake(0, (SCREEN_HEIGHT - 200) / -2, SCREEN_WIDTH, SCREEN_HEIGHT)];
-        instTableBackground.image = [self blurView];
-        
-        [instTableHeaderView addSubview:instTableBackground];
-        
-        [self.view addSubview:instTableHeaderView];
-        
-//        startButtonFrame = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .80+2, 5, 53, 20)];
-//        startButtonFrame.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-//        startButtonFrame.layer.cornerRadius = 5;
-//        [self.view addSubview:startButtonFrame];
-        
-        closeSongTableButton = [[UIButton alloc]initWithFrame:CGRectMake(-10, 1, 80, 40)];
+        closeSongTableButton = [[UIButton alloc]initWithFrame:CGRectMake(songsTableHeaderView.frame.size.width-65, 1, 80, 40)];
         closeSongTableButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
         [closeSongTableButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [closeSongTableButton setTitle:@"close" forState:UIControlStateNormal];
@@ -322,62 +358,20 @@
         blackDot6.backgroundColor = [UIColor whiteColor];
         [cs2Key addSubview:blackDot6];
         
-        settingsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .86, 0, 80, 40)];
-        [settingsButton addTarget:self action:@selector(openSettingsPage) forControlEvents:UIControlEventTouchUpInside];
-        settingsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
-        [settingsButton setTitle:@"settings" forState:UIControlStateNormal];
-        //settingsButton.backgroundColor = [UIColor redColor];
-        [self.view addSubview:settingsButton];
         
-        xView = [[PSSxView alloc]initWithFrame:CGRectMake(settingsPage.frame.size.width-55, 0, 40, 40)];
-        xView.backgroundColor = [UIColor clearColor];
         
-        xButton = [[UIButton alloc]initWithFrame:CGRectMake(-5, -5, 40, 40)];
-        [xButton addTarget:self action:@selector(closeSettingsPage) forControlEvents:UIControlEventTouchUpInside];
-//        xButton.backgroundColor = [UIColor redColor];
-        
-        songsButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.01, 0, 80, 40)];
-//        songsButton.layer.cornerRadius = 5;
-        songsButton.titleLabel.textColor = [UIColor whiteColor];
-        songsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
-        [songsButton setTitle:@"songs" forState:UIControlStateNormal];
-        songsButton.backgroundColor = [UIColor clearColor];
-        [songsButton addTarget:self action:@selector(openSongList) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:songsButton];
-        
-        instButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .109, 0, 110, 40)];
-        instButton.layer.cornerRadius = 5;
-        instButton.titleLabel.textColor = [UIColor whiteColor];
-        instButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
-        [instButton setTitle:@"instruments" forState:UIControlStateNormal];
-        instButton.backgroundColor = [UIColor clearColor];
-        [instButton addTarget:self action:@selector(openInstList) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:instButton];
-
-        stopButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * -0.01, 0, 80, 40)];
-        stopButton.layer.cornerRadius = 5;
-        stopButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
-        [stopButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [stopButton setTitle:@"stop" forState:UIControlStateNormal];
-        stopButton.backgroundColor = [UIColor clearColor];
-        [stopButton addTarget:self action:@selector(stopSong) forControlEvents:UIControlEventTouchUpInside];
-        
-        startButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .75,0, 80, 40)];
-        startButton.layer.cornerRadius = 5;
-        startButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
-        //startButton.backgroundColor = [UIColor redColor];
-        [startButton setTitle:@"start" forState:UIControlStateNormal];
-        [startButton addTarget:self action:@selector(startGame) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:startButton];
-        
-        displayWindow = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH * .67, 6, 40, 28)];
+        if (SCREEN_WIDTH < 500) {
+        displayWindow = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 80, 6, 40, 28)];
+        }else{
+            displayWindow = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH - 80, 6, 40, 28)];
+        }
         displayWindow.text = @"0";
-        displayWindow.font = [UIFont fontWithName:@"HelveticaNeue-light" size:26];
-        displayWindow.textColor = [UIColor blackColor];
+        displayWindow.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
+        displayWindow.textColor = [UIColor whiteColor];
         displayWindow.layer.cornerRadius = 5;
         displayWindow.layer.masksToBounds = YES;
         displayWindow.textAlignment = 1;
-        displayWindow.backgroundColor = [UIColor whiteColor];
+        displayWindow.backgroundColor = [UIColor clearColor];
         
         NSArray * labelArray = @[@"note names", @"do-re-mi"];
         keyLabelSegmentedControl = [[UISegmentedControl alloc] initWithItems:labelArray];
@@ -397,9 +391,10 @@
         expertModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:expertModeArray];
         expertModeSegmentedControl.frame = CGRectMake(settingsPage.frame.size.width/2-92.5, SCREEN_HEIGHT * 0.59, 185, 40);
         expertModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"expertMode"] intValue];
+
         expertModeSegmentedControl.tintColor = [UIColor blackColor];
         [expertModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
-        [self setGameMode:expertModeSegmentedControl];
+   //     [self setGameMode:expertModeSegmentedControl];
         
         UILabel * expertModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
         expertModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
@@ -411,9 +406,10 @@
         proModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:proModeArray];
         proModeSegmentedControl.frame = CGRectMake(settingsPage.frame.size.width/2-92.5, SCREEN_HEIGHT * 0.83, 185, 40);
         proModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"proMode"] intValue];
+
         proModeSegmentedControl.tintColor = [UIColor blackColor];
         [proModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
-        [self setGameMode:proModeSegmentedControl];
+  //      [self setGameMode:proModeSegmentedControl];
         
         UILabel * proModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-25, 500, 20)];
         proModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
@@ -425,9 +421,10 @@
         gameModeSegmentedControl = [[UISegmentedControl alloc] initWithItems:gameModeArray];
         gameModeSegmentedControl.frame = CGRectMake(settingsPage.frame.size.width/2-92.5, SCREEN_HEIGHT * 0.35, 185, 40);
         gameModeSegmentedControl.selectedSegmentIndex = [[defaults objectForKey:@"gameMode"] intValue];
+
         gameModeSegmentedControl.tintColor = [UIColor blackColor];
         [gameModeSegmentedControl addTarget:self action:@selector(setGameMode:)forControlEvents:UIControlEventValueChanged];
-        [self setGameMode:gameModeSegmentedControl];
+  //      [self setGameMode:gameModeSegmentedControl];
         
         UILabel * gameModeTitle = [[UILabel alloc]initWithFrame:CGRectMake(0,-27, 500, 24)];
         gameModeTitle.font = [UIFont fontWithName:@"HelveticaNeue-light" size:20];
@@ -468,7 +465,7 @@
         
         [self setGameSongTempos:0.9];
         
-        [self loadListItems];
+//        [self loadListItems];
     
         if (self.titleItems == nil) {
             self.titleItems = [
@@ -528,6 +525,9 @@
                                  @"locked":@"Yes"} mutableCopy],
                              ]mutableCopy];
         }
+        
+        NSLog(@"%@", self.titleItems);
+
         
         instrumentList = @[@"Piano1",@"Piano2",@"Piano3",@"Marimba",@"Xylophone"];
         
@@ -881,7 +881,7 @@
     [c2keyBottomLayer addSubview:c2Key];
     [glowKeys addObject:c2Key];
     
-    UIView * csBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * csBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth+1)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     
     csBlackKey.backgroundColor = [UIColor blackColor];
     csBlackKey.layer.cornerRadius = 6;
@@ -898,7 +898,7 @@
     [csBlackKey addSubview:csKey];
     [glowKeys addObject:csKey];
     
-    UIView * dsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*2)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * dsBlackKey = [[UIView alloc]initWithFrame:CGRectMake(((4+keyWidth)*2)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     dsBlackKey.backgroundColor = [UIColor blackColor];
     dsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:dsBlackKey];
@@ -914,7 +914,7 @@
     [dsBlackKey addSubview:dsKey];
     [glowKeys addObject:dsKey];
     
-    UIView * fsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*4)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * fsBlackKey = [[UIView alloc]initWithFrame:CGRectMake(((4+keyWidth*4)+7)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     fsBlackKey.backgroundColor = [UIColor blackColor];
     fsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:fsBlackKey];
@@ -930,7 +930,7 @@
     [fsBlackKey addSubview:fsKey];
     [glowKeys addObject:fsKey];
     
-    UIView * gsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*5)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * gsBlackKey = [[UIView alloc]initWithFrame:CGRectMake(((4+keyWidth*5)+9)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     gsBlackKey.backgroundColor = [UIColor blackColor];
     gsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:gsBlackKey];
@@ -946,7 +946,7 @@
     [gsBlackKey addSubview:gsKey];
     [glowKeys addObject:gsKey];
     
-    UIView * asBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*6)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * asBlackKey = [[UIView alloc]initWithFrame:CGRectMake(((4+keyWidth*6)+11)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     asBlackKey.backgroundColor = [UIColor blackColor];
     asBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:asBlackKey];
@@ -962,7 +962,7 @@
     [asBlackKey addSubview:asKey];
     [glowKeys addObject:asKey];
     
-    UIView * cs2BlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*8)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * cs2BlackKey = [[UIView alloc]initWithFrame:CGRectMake(((4+keyWidth*8)+15)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     cs2BlackKey.backgroundColor = [UIColor blackColor];
     cs2BlackKey.layer.cornerRadius = 6;
     [self.view addSubview:cs2BlackKey];
@@ -978,9 +978,13 @@
     [cs2BlackKey addSubview:cs2Key];
     [glowKeys addObject:cs2Key];
     
-    [self animateCircle:0 withY:0];
+    [self animateCircle];
     
-    cLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    cLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        cLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     cLabel.layer.cornerRadius = keyWidth/2;
     cLabel.layer.masksToBounds = YES;
 //    cLabel.text = @"DO";
@@ -988,9 +992,13 @@
     cLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     cLabel.textAlignment = 1;
 //    cLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:cLabel];
+    [cKey addSubview:cLabel];
     
-    dLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*1, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    dLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        dLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     dLabel.layer.cornerRadius = keyWidth/2;
     dLabel.layer.masksToBounds = YES;
 //    dLabel.text = @"RE";
@@ -998,9 +1006,13 @@
     dLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     dLabel.textAlignment = 1;
 //    dLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:dLabel];
+    [dKey addSubview:dLabel];
     
-    eLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*2, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    eLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        eLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     eLabel.layer.cornerRadius = keyWidth/2;
     eLabel.layer.masksToBounds = YES;
 //    eLabel.text = @"MI";
@@ -1008,9 +1020,13 @@
     eLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     eLabel.textAlignment = 1;
 //    eLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:eLabel];
+    [eKey addSubview:eLabel];
     
-    fLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*3, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    fLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        fLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     fLabel.layer.cornerRadius = keyWidth/2;
     fLabel.layer.masksToBounds = YES;
 //    fLabel.text = @"FA";
@@ -1018,9 +1034,13 @@
     fLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     fLabel.textAlignment = 1;
 //    fLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:fLabel];
+    [fKey addSubview:fLabel];
     
-    gLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*4, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    gLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        gLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     gLabel.layer.cornerRadius = keyWidth/2;
     gLabel.layer.masksToBounds = YES;
 //    gLabel.text = @"SO";
@@ -1028,9 +1048,13 @@
     gLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     gLabel.textAlignment = 1;
 //    gLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:gLabel];
+    [gKey addSubview:gLabel];
     
-    aLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*5, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    aLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        aLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     aLabel.layer.cornerRadius = keyWidth/2;
     aLabel.layer.masksToBounds = YES;
 //    aLabel.text = @"LA";
@@ -1038,19 +1062,27 @@
     aLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     aLabel.textAlignment = 1;
 //    aLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:aLabel];
+    [aKey addSubview:aLabel];
     
-    bLabel = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*6, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    bLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        bLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     bLabel.layer.cornerRadius = keyWidth/2;
     bLabel.layer.masksToBounds = YES;
 //    bLabel.text = @"TI";
     bLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:20];
     bLabel.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     bLabel.textAlignment = 1;
- //   bLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:bLabel];
+//    bLabel.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
+    [bKey addSubview:bLabel];
     
-    c2Label = [[UILabel alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/8*7, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
+    if (SCREEN_WIDTH > 500) {
+    c2Label = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth+1, keyWidth, keyWidth)];
+    }else{
+        c2Label = [[UILabel alloc]initWithFrame:CGRectMake(0, cKey.frame.size.height-keyWidth-4, keyWidth, keyWidth)];
+    }
     c2Label.layer.cornerRadius = keyWidth/2;
     c2Label.layer.masksToBounds = YES;
 //    c2Label.text = @"DO";
@@ -1058,7 +1090,7 @@
     c2Label.textColor = [UIColor colorWithRed:0.000f green:0.000f blue:0.000f alpha:1.0f];
     c2Label.textAlignment = 1;
 //    c2Label.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.2];
-    [self.view addSubview:c2Label];
+    [c2Key addSubview:c2Label];
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1108,11 +1140,13 @@
             {
                 [self playSong:currentSong withNote:note + 1];
             }else{
+                if (self.isPlaying==NO){
+                    [headerView addSubview:songsButton];
+                    [headerView addSubview:instButton];
+                }
                 [stopButton removeFromSuperview];
-                [self.view addSubview:songsTableHeaderView];
-                [self.view addSubview:songsButton];
-                [self.view addSubview:instTableHeaderView];
-                [self.view addSubview:instButton];
+                [self.view insertSubview:songsTableHeaderView belowSubview:songTableView];
+                [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
                 self.isPlaying = NO;
             }
         });
@@ -1139,6 +1173,7 @@
         [self setGameSongTempos:0.9];
         [self playRewardSong:0];
         [displayWindow removeFromSuperview];
+        [scoreLabel removeFromSuperview];
         [self.view addSubview:settingsButton];
        // NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
         if ([[self.titleItems[indexOfGameSongslist]objectForKey:@"locked"] isEqualToString: @"Yes"]) {
@@ -1230,7 +1265,7 @@
 {
     //if song is playing..
     if (self.isPlaying) {
-        
+        NSLog(@"is playing");
         //stop playing and run this method again.
         if (self.isPlaying) {
             self.isPlaying = NO;
@@ -1251,11 +1286,11 @@
         }else{
             
             // if song table is open, close it
-            if (songTableView.frame.size.height > 100) {
+            if (songTableView.frame.origin.x < SCREEN_WIDTH) {
                 [self closeSongTableView];
                 }
-            if (instTableView.frame.size.height > 100) {
-                [self closeInstTableView];
+            if (settingsPage.frame.origin.x < SCREEN_WIDTH) {
+                [self closeSettingsPage];
             }
             self.gameOn = YES;
             randomNotesDict = [@{
@@ -1264,6 +1299,8 @@
                                  }mutableCopy];
             
             [self.view addSubview:displayWindow];
+            [headerView addSubview:scoreLabel];
+
             displayWindow.text = [NSString stringWithFormat:@"0"];
             
             [songsButton removeFromSuperview];
@@ -1298,7 +1335,7 @@
     }
 }
 
-- (void)playGame:(UIButton *)sender
+- (void)playGame:(UIView *)note withTag:(int)tag
 {
     if (self.gameOn){
         if (noteCount == [tempSongNotesArray count]) {
@@ -1307,7 +1344,7 @@
             NSLog(@"END");
             return;
             }else{
-            if (notes[instrument][sender.tag] == tempSongNotesArray[noteCount]){
+            if (notes[instrument][tag] == tempSongNotesArray[noteCount]){
                 score++;
                 displayWindow.text = [NSString stringWithFormat:@"%d", score];
                 if (score > maxScore) {
@@ -1337,6 +1374,7 @@
     if (self.randomMode) {
         displayWindow.text = @"0";
         [displayWindow removeFromSuperview];
+        [scoreLabel removeFromSuperview];
         [self rewardDisplay:maxScore withIndex:0];
         [self playRewardSong:0];
         [self.view addSubview:settingsButton];
@@ -1345,10 +1383,11 @@
     self.gameOn = NO;
     [self playRewardSong:1];
     [displayWindow removeFromSuperview];
-    [self.view addSubview:songsTableHeaderView];
-    [self.view addSubview:songsButton];
-    [self.view addSubview:instTableHeaderView];
-    [self.view addSubview:instButton];
+    [scoreLabel removeFromSuperview];
+    [self.view insertSubview:songsTableHeaderView belowSubview:songTableView];
+    [headerView addSubview:songsButton];
+    [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
+    [headerView addSubview:instButton];
     [self.view addSubview:settingsButton];
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
@@ -1405,29 +1444,35 @@
 
 -(void)openSongList
 {
-    [self closeSettingsPage];
+    [self closeInstTableView];
     [songsButton removeFromSuperview];
-    [instButton removeFromSuperview];
-    [songsButton removeFromSuperview];
+//    [instButton removeFromSuperview];
+    [settingsButton removeFromSuperview];
     [songsTableHeaderView addSubview:closeSongTableButton];
     
+    [songTableView reloadData];
+    
     [UIView animateWithDuration:0.2 animations:^{
-        songsTableHeaderView.frame = CGRectMake(0, 0, 200, 40);
-        songTableView.frame = CGRectMake(0, 40, 200, SCREEN_HEIGHT-40);
+        songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*.40, 0, SCREEN_WIDTH*.40, 40);
+        songTableView.frame = CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*.40, 40, SCREEN_WIDTH*.40, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
     }];
 }
 
+
 -(void)openInstList
 {
     [self closeSettingsPage];
+    [self closeSongTableView];
     [instButton removeFromSuperview];
-    [songsButton removeFromSuperview];
+    [startButton removeFromSuperview];
     [instTableHeaderView addSubview:closeInstTableButton];
+    
+    [instTableView reloadData];
     
     [UIView animateWithDuration:0.2 animations:^{
         instTableHeaderView.frame = CGRectMake(0, 0, 210, 40);
-        instTableView.frame = CGRectMake(0, 40, 210, SCREEN_HEIGHT-40);
+        instTableView.frame = CGRectMake(0, 40, 210, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
     }];
 }
@@ -1436,18 +1481,24 @@
 {
     self.stopPlaying = NO;
     [closeSongTableButton removeFromSuperview];
-    if (songTableView.frame.size.height > 100 && self.isPlaying) {
-        [self.view addSubview:stopButton];
+    if (songTableView.frame.origin.x < SCREEN_WIDTH && self.isPlaying) {
+        NSLog(@"HERE");
+        [headerView addSubview:stopButton];
     }else{
-        [self.view addSubview:songsTableHeaderView];
-        [self.view addSubview:songsButton];
+        [headerView addSubview:startButton];
     }
-    [self.view addSubview:instButton];
-    [self.view addSubview:songsButton];
+    if (self.gameOn == YES) {
+        [songsButton removeFromSuperview];
+        [settingsButton removeFromSuperview];
+    }
+    
     [UIView animateWithDuration:0.2 animations:^{
-        songsTableHeaderView.frame = CGRectMake(-200, 0, 200, 40);
-        songTableView.frame = CGRectMake(-200, 40, 200, SCREEN_HEIGHT-40);
+        songsTableHeaderView.frame = CGRectMake(SCREEN_WIDTH, 0, SCREEN_WIDTH*.40, 40);
+        songTableView.frame = CGRectMake(SCREEN_WIDTH, 40, SCREEN_WIDTH*.40, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
+        if (self.gameOn == NO) {
+        [self.view addSubview:settingsButton];
+        }
     }];
 }
 
@@ -1455,33 +1506,35 @@
 {
     [closeInstTableButton removeFromSuperview];
     if (self.gameOn == NO) {
-//        [self.view addSubview:instTableHeaderView];
-        [self.view addSubview:instButton];
-        [self.view addSubview:songsButton];
+//        [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
     }
     [UIView animateWithDuration:0.2 animations:^{
-        instTableView.frame = CGRectMake(-210, 40, 210, SCREEN_HEIGHT);
         instTableHeaderView.frame = CGRectMake(-210, 0, 210, 40);
+        instTableView.frame = CGRectMake(-210, 40, 210, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
+        [headerView addSubview:instButton];
+        [headerView addSubview:startButton];
+        [headerView addSubview:songsButton];
     }];
 }
 
 -(void)openSettingsPage
 {
-    [self closeSongTableView];
+//    [self closeSongTableView];
     [self closeInstTableView];
-//    [songsButton removeFromSuperview];
+    [songsButton removeFromSuperview];
 //    [stopButton removeFromSuperview];
 //    [instButton removeFromSuperview];
     [settingsButton removeFromSuperview];
 
     [UIView animateWithDuration:0.2 animations:^{
-        [startButton removeFromSuperview];
+//        [startButton removeFromSuperview];
 //        [startButtonFrame removeFromSuperview];
 //        [songsTableHeaderView removeFromSuperview];
 //        [instButton removeFromSuperview];
 //        [instTableHeaderView removeFromSuperview];
         [displayWindow removeFromSuperview];
+        [scoreLabel removeFromSuperview];
 //        [songsButton removeFromSuperview];
         settingsPage.frame =  CGRectMake(SCREEN_WIDTH-SCREEN_WIDTH*.40, 0, SCREEN_WIDTH*.40, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
@@ -1502,18 +1555,20 @@
     }completion:^(BOOL finished) {
         [xView removeFromSuperview];
         [xButton removeFromSuperview];
-//        [self.view addSubview:songsTableHeaderView];
-//        [self.view addSubview:startButtonFrame];
-//        [self.view addSubview:instTableHeaderView];
-//        [self.view addSubview:instButton];
+//        [self.view insertSubview:songsTableHeaderView belowSubview:songTableView];
+//        [headerView addSubview:startButtonFrame];
+//        [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
+//        [headerView addSubview:instButton];
         [self.view addSubview:settingsButton];
-//        [self.view addSubview:songsButton];
-        [self.view addSubview:startButton];
+        [headerView addSubview:songsButton];
+//        [headerView addSubview:startButton];
 //        [startButtonFrame addSubview:startButton];
         if (self.gameOn) {
             [self.view addSubview:displayWindow];
+            [headerView addSubview:scoreLabel];
             [stopButton removeFromSuperview];
             [songsButton removeFromSuperview];
+            [settingsButton removeFromSuperview];
             [songsTableHeaderView removeFromSuperview];
             [instButton removeFromSuperview];
             [instTableHeaderView removeFromSuperview];
@@ -1525,7 +1580,7 @@
 {
     self.stopPlaying = YES;
     [stopButton removeFromSuperview];
-    [self.view addSubview:songsButton];
+    [headerView addSubview:songsButton];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 800 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         self.stopPlaying = NO;
         NSLog(@"PLAYON");
@@ -1537,8 +1592,6 @@
     if (self.proMode) {
         return;
     }else{
-        
-        NSLog(@"indexOfKeyView %d", indexOfKeyView);
         UIView * currentGlowKey = glowKeys[indexOfKeyView];
 
         if (indexOfKeyView <=8) {
@@ -1690,14 +1743,16 @@
 	[defaults setObject:[NSNumber numberWithInteger:[gameModeSegmentedControl selectedSegmentIndex]] forKey:@"gameMode"];
     [defaults setObject:[NSNumber numberWithInteger:[proModeSegmentedControl selectedSegmentIndex]] forKey:@"proMode"];
 	[defaults synchronize];
+//   NSLog(@"defaults modes: %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+
 }
 
 -(void)rewardDisplay:(int)totalScore withIndex:(int)indexOfGameSongslist
 {
-    [self.view addSubview:songsTableHeaderView];
-    [self.view addSubview:songsButton];
-    [self.view addSubview:instTableHeaderView];
-    [self.view addSubview:instButton];
+    [self.view insertSubview:songsTableHeaderView belowSubview:songTableView];
+    [headerView addSubview:songsButton];
+    [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
+    [headerView addSubview:instButton];
     self.gameOn = NO;
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
@@ -1748,12 +1803,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    NSLog(@"%@",tableView);
     if(tableView == songTableView)
     {
         return [self.titleItems count];
 
     }else if(tableView == instTableView)
     {
+        NSLog(@"5");
         return 5;
     }
     else return 0;
@@ -1776,11 +1833,13 @@
         selectionColor.backgroundColor = [UIColor clearColor];
         cell.selectedBackgroundView = selectionColor;
 
-        cell.backgroundColor =[UIColor colorWithWhite:1.0 alpha:0.2];
+        cell.backgroundColor =[UIColor clearColor];
         cell.layer.cornerRadius = 5;
         cell.imageView.frame = CGRectMake(10, 10, 200, 20);
         
-//        cell.songInfo = self.titleItems[indexPath.row];
+        NSLog(@"%@", self.titleItems);
+
+        cell.songInfo = self.titleItems[indexPath.row];        
         
         return cell;
         
@@ -1791,6 +1850,9 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
         }
+        
+        NSLog(@"%@",instrumentList[indexPath.row]);
+
         
         cell.textLabel.text = instrumentList[indexPath.row];
         cell.textLabel.textColor = [UIColor blackColor];
@@ -1844,12 +1906,17 @@
     }
 }
 
--(void)animateCircle:(int)xPostion withY:(int)yPosition
+-(void)animateCircle
 {
     {
-        static int x = 35;
-        int y = SCREEN_HEIGHT * 0.89;
         
+        static int count = 0;
+        static int pad = 0;
+        count = count + 1;
+        float x = (4+((keyWidth)*count)-((keyWidth)/2)+pad);
+        int y = SCREEN_HEIGHT * 0.89;
+        pad = pad + 2;
+
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -1887,17 +1954,18 @@
         // Add the animation to the circle
         [circle addAnimation:drawAnimation forKey:@"drawCircleAnimation"];
             
-            int count=0;
+            
             if(count < 8)
             {
-                x = x + 71;
-                count++;
-                [self animateCircle:x withY:y];
+                [self animateCircle];
+                
             }
         });
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self.view addSubview:settingsPage];
         [self.view addSubview:instTableView];
         [self.view addSubview:songTableView];
+        });
     }
 }
 
@@ -1983,174 +2051,220 @@
 {
     UITouch *touch= [touches anyObject];
     
-    if ([touch view] == cKey) [self playNote:cKey withTag:0];
-    if ([touch view] == dKey) [self playNote:dKey withTag:1];
-    if ([touch view] == eKey) [self playNote:eKey withTag:2];
-    if ([touch view] == fKey) [self playNote:fKey withTag:3];
-    if ([touch view] == gKey) [self playNote:gKey withTag:4];
-    if ([touch view] == aKey) [self playNote:aKey withTag:5];
-    if ([touch view] == bKey) [self playNote:bKey withTag:6];
-    if ([touch view] == c2Key)[self playNote:c2Key withTag:7];
-    if ([touch view] == csKey)[self playNote:csKey withTag:8];
-    if ([touch view] == dsKey) [self playNote:dsKey withTag:9];
-    if ([touch view] == fsKey) [self playNote:fsKey withTag:10];
-    if ([touch view] == gsKey) [self playNote:gsKey withTag:11];
-    if ([touch view] == asKey) [self playNote:asKey withTag:12];
-    if ([touch view] == cs2Key) [self playNote:cs2Key withTag:13];
+    if ([touch view] == cKey){
+        [self playNote:cKey withTag:0];
+        [self playGame:cKey withTag:0];
+    }
+    if ([touch view] == dKey){
+       [self playNote:dKey withTag:1];
+        [self playGame:dKey withTag:1];
+    }
+    if ([touch view] == eKey){
+        [self playNote:eKey withTag:2];
+        [self playGame:eKey withTag:2];
+    }
+    if ([touch view] == fKey){
+        [self playNote:fKey withTag:3];
+        [self playGame:fKey withTag:3];
+    }
+    if ([touch view] == gKey){
+        [self playNote:gKey withTag:4];
+        [self playGame:gKey withTag:4];
+    }
+    if ([touch view] == aKey){
+        [self playNote:aKey withTag:5];
+        [self playGame:aKey withTag:5];
+    }
+    if ([touch view] == bKey){
+        [self playNote:bKey withTag:6];
+        [self playGame:bKey withTag:6];
+    }
+    if ([touch view] == c2Key){
+        [self playNote:c2Key withTag:7];
+        [self playGame:c2Key withTag:7];
+    }
+    if ([touch view] == csKey){
+        [self playNote:csKey withTag:8];
+        [self playGame:csKey withTag:8];
+    }
+    if ([touch view] == dsKey){
+        [self playNote:dsKey withTag:9];
+        [self playGame:dsKey withTag:9];
+    }
+    if ([touch view] == fsKey){
+        [self playNote:fsKey withTag:10];
+        [self playGame:fsKey withTag:10];
+    }
+    if ([touch view] == gsKey){
+        [self playNote:gsKey withTag:11];
+        [self playGame:gsKey withTag:11];
+    }
+    if ([touch view] == asKey){
+        [self playNote:asKey withTag:12];
+        [self playGame:asKey withTag:12];
+    }
+    if ([touch view] == cs2Key){
+        [self playNote:cs2Key withTag:13];
+        [self playGame:cs2Key withTag:13];
+    }
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    NSLog(@"self.touchArray %@", self.touchArray);
-    NSArray * touchArrayCopy = [self.touchArray copy];
-    NSLog(@"touchArrayCopy %@", touchArrayCopy);
+    if (self.gameOn) {
+        return;
+    }else{
+        NSLog(@"self.touchArray %@", self.touchArray);
+        NSArray * touchArrayCopy = [self.touchArray copy];
+        NSLog(@"touchArrayCopy %@", touchArrayCopy);
 
-    UITouch *touch = [touches anyObject];
-    CGPoint location = [touch locationInView:self.view];
-    NSLog(@"x:%f y %f", location.x, location.y);
-    
-    float wkh = SCREEN_HEIGHT*.125-2 + SCREEN_HEIGHT/2.5+4;  //white key height
-    float hwkw = ((SCREEN_WIDTH/12)/2)-2;                    //half of white key width, minus 2 padding
+        UITouch *touch = [touches anyObject];
+        CGPoint location = [touch locationInView:self.view];
+        NSLog(@"x:%f y %f", location.x, location.y);
+        
+        float wkh = SCREEN_HEIGHT*.125-2 + SCREEN_HEIGHT/2.5+4;  //white key height
+        float hwkw = ((SCREEN_WIDTH/12)/2)-2;                    //half of white key width, minus 2 padding
 
-    
-    if (location.x > 3 && location.x < 3+keyWidth && location.y > wkh){
-        if (![touchArrayCopy[0] isEqual: @0]) {
-            [self playNote:cKey withTag:0];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@0];
-        }else{
-            return;
+        
+        if (location.x > 3 && location.x < 3+keyWidth && location.y > wkh){
+            if (![touchArrayCopy[0] isEqual: @0]) {
+                [self playNote:cKey withTag:0];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@0];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 5+keyWidth && location.x < 5+keyWidth*2 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @1]) {
-            [self playNote:dKey withTag:1];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@1];
-        }else{
-            return;
+        if (location.x > 5+keyWidth && location.x < 5+keyWidth*2 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @1]) {
+                [self playNote:dKey withTag:1];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@1];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 7+keyWidth*2 && location.x < 7+keyWidth*3 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @2]) {
-            [self playNote:eKey withTag:2];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@2];
-        }else{
-            return;
+        if (location.x > 7+keyWidth*2 && location.x < 7+keyWidth*3 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @2]) {
+                [self playNote:eKey withTag:2];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@2];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 9+keyWidth*3 && location.x < 9+keyWidth*4 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @3]) {
-            [self playNote:fKey withTag:3];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@3];
-        }else{
-            return;
+        if (location.x > 9+keyWidth*3 && location.x < 9+keyWidth*4 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @3]) {
+                [self playNote:fKey withTag:3];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@3];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 11+keyWidth*4 && location.x < 11+keyWidth*5 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @4]) {
-            [self playNote:gKey withTag:4];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@4];
-        }else{
-            return;
+        if (location.x > 11+keyWidth*4 && location.x < 11+keyWidth*5 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @4]) {
+                [self playNote:gKey withTag:4];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@4];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 13+keyWidth*5 && location.x < 13+keyWidth*6 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @5]) {
-            [self playNote:aKey withTag:5];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@5];
-        }else{
-            return;
+        if (location.x > 13+keyWidth*5 && location.x < 13+keyWidth*6 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @5]) {
+                [self playNote:aKey withTag:5];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@5];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 15+keyWidth*6 && location.x < 15+keyWidth*7 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @6]) {
-            [self playNote:bKey withTag:6];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@6];
-        }else{
-            return;
+        if (location.x > 15+keyWidth*6 && location.x < 15+keyWidth*7 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @6]) {
+                [self playNote:bKey withTag:6];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@6];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > 17+keyWidth*7 && location.x < 17+keyWidth*8 && location.y > wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @7]) {
-            [self playNote:c2Key withTag:7];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@7];
-        }else{
-            return;
+        if (location.x > 17+keyWidth*7 && location.x < 17+keyWidth*8 && location.y > wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @7]) {
+                [self playNote:c2Key withTag:7];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@7];
+            }else{
+                return;
+            }
         }
-    }
-    
-    if (location.x > (4+keyWidth)-hwkw && location.x < (4+keyWidth)+hwkw && location.y < wkh) {
+        
+        if (location.x > (4+keyWidth)-hwkw && location.x < (4+keyWidth)+hwkw && location.y < wkh) {
 
-        if (![touchArrayCopy[0] isEqual: @8]) {
-            [self playNote:csKey withTag:8];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@8];
-        }else{
-            return;
+            if (![touchArrayCopy[0] isEqual: @8]) {
+                [self playNote:csKey withTag:8];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@8];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > (4+keyWidth*2)-hwkw && location.x < (4+keyWidth*2)+hwkw && location.y < wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @9]) {
-            [self playNote:dsKey withTag:9];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@9];
-        }else{
-            return;
+        if (location.x > (4+keyWidth*2)-hwkw && location.x < (4+keyWidth*2)+hwkw && location.y < wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @9]) {
+                [self playNote:dsKey withTag:9];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@9];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > (4+keyWidth*4)-hwkw && location.x < (4+keyWidth*4)+hwkw && location.y < wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @10]) {
-            [self playNote:fsKey withTag:10];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@10];
-        }else{
-            return;
+        if (location.x > (4+keyWidth*4)-hwkw && location.x < (4+keyWidth*4)+hwkw && location.y < wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @10]) {
+                [self playNote:fsKey withTag:10];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@10];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > (4+keyWidth*5)-hwkw && location.x < (4+keyWidth*5)+hwkw && location.y < wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @11]) {
-            [self playNote:gsKey withTag:11];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@11];
-        }else{
-            return;
+        if (location.x > (4+keyWidth*5)-hwkw && location.x < (4+keyWidth*5)+hwkw && location.y < wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @11]) {
+                [self playNote:gsKey withTag:11];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@11];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > (4+keyWidth*6)-hwkw && location.x < (4+keyWidth*6)+hwkw && location.y < wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @12]) {
-            [self playNote:asKey withTag:12];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@12];
-        }else{
-            return;
+        if (location.x > (4+keyWidth*6)-hwkw && location.x < (4+keyWidth*6)+hwkw && location.y < wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @12]) {
+                [self playNote:asKey withTag:12];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@12];
+            }else{
+                return;
+            }
         }
-    }
-    if (location.x > (4+keyWidth*8)-hwkw && location.x < (4+keyWidth*8)+hwkw && location.y < wkh)
-    {
-        if (![touchArrayCopy[0] isEqual: @13]) {
-            [self playNote:cs2Key withTag:13];
-            [self.touchArray removeAllObjects];
-            [self.touchArray addObject:@13];
-        }else{
-            return;
+        if (location.x > (4+keyWidth*8)-hwkw && location.x < (4+keyWidth*8)+hwkw && location.y < wkh)
+        {
+            if (![touchArrayCopy[0] isEqual: @13]) {
+                [self playNote:cs2Key withTag:13];
+                [self.touchArray removeAllObjects];
+                [self.touchArray addObject:@13];
+            }else{
+                return;
+            }
         }
     }
 }

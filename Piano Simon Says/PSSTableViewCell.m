@@ -48,6 +48,8 @@
         lockImageView.image = nil;
     }
     
+    NSLog(@"%@",songInfo[@"title"]);
+    
     songTitle.text = songInfo[@"title"];
 }
 

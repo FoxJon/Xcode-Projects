@@ -30,24 +30,27 @@
 
 @property (nonatomic) float currentTempo;
 
+@property (nonatomic) NSMutableArray * touchArray;
+
 @end
 
 @implementation PSSPianoViewController
 {
-    UIButton * cKey;
-    UIButton * csKey;
-    UIButton * dKey;
-    UIButton * dsKey;
-    UIButton * eKey;
-    UIButton * fKey;
-    UIButton * fsKey;
-    UIButton * gKey;
-    UIButton * gsKey;
-    UIButton * aKey;
-    UIButton * asKey;
-    UIButton * bKey;
-    UIButton * c2Key;
-    UIButton * cs2Key;
+    UIView * cKey;
+    UIView * csKey;
+    UIView * dKey;
+    UIView * dsKey;
+    UIView * eKey;
+    UIView * fKey;
+    UIView * fsKey;
+    UIView * gKey;
+    UIView * gsKey;
+    UIView * aKey;
+    UIView * asKey;
+    UIView * bKey;
+    UIView * c2Key;
+    UIView * cs2Key;
+    
     UIButton * startButton;
     UIButton * stopButton;
     UIButton * songsButton;
@@ -70,6 +73,7 @@
     int noteCount;
     int score;
     int maxScore;
+    int keyWidth;
     
     NSNumber * sn;  //sixteenth note
     NSNumber * en;  //eighth note
@@ -162,6 +166,10 @@
     if (self) {
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        
+        keyWidth = (SCREEN_WIDTH-6)/8;
+        
+        self.touchArray = [@[@100]mutableCopy];
         
         self.currentTempo = 0.9;
 
@@ -752,12 +760,10 @@
     ckeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:ckeyBottomLayer];
     
-    cKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    cKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
  //   cKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     cKey.layer.cornerRadius = 5;
     cKey.tag = 0;
-    [cKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [cKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [cKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [cKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [ckeyBottomLayer addSubview:cKey];
@@ -768,12 +774,12 @@
     dkeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:dkeyBottomLayer];
     
-    dKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    dKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
 //    dKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     dKey.layer.cornerRadius = 5;
     dKey.tag = 1;
-    [dKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [dKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [dKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [dkeyBottomLayer addSubview:dKey];
@@ -784,12 +790,12 @@
     ekeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:ekeyBottomLayer];
     
-    eKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    eKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
  //   eKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     eKey.layer.cornerRadius = 5;
     eKey.tag = 2;
-    [eKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [eKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [eKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [eKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [eKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [ekeyBottomLayer addSubview:eKey];
@@ -800,12 +806,12 @@
     fkeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:fkeyBottomLayer];
     
-    fKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    fKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
  //   fKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     fKey.layer.cornerRadius = 5;
     fKey.tag = 3;
-    [fKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [fKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [fKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [fkeyBottomLayer addSubview:fKey];
@@ -816,12 +822,12 @@
     gkeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:gkeyBottomLayer];
     
-    gKey = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    gKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
  //   gKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     gKey.layer.cornerRadius = 5;
     gKey.tag = 4;
-    [gKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [gKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [gKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [gkeyBottomLayer addSubview:gKey];
@@ -832,12 +838,12 @@
     akeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:akeyBottomLayer];
     
-    aKey = [[UIButton alloc]initWithFrame:CGRectMake(0,0, w, h)];
+    aKey = [[UIView alloc]initWithFrame:CGRectMake(0,0, w, h)];
   //  aKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     aKey.layer.cornerRadius = 5;
     aKey.tag = 5;
-    [aKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [aKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [aKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [aKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [aKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [akeyBottomLayer addSubview:aKey];
@@ -848,12 +854,12 @@
     bkeyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:bkeyBottomLayer];
     
-    bKey = [[UIButton alloc]initWithFrame:CGRectMake(0,0, w, h)];
+    bKey = [[UIView alloc]initWithFrame:CGRectMake(0,0, w, h)];
    // bKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     bKey.layer.cornerRadius = 5;
     bKey.tag = 6;
-    [bKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [bKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [bKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [bKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [bKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [bkeyBottomLayer addSubview:bKey];
@@ -864,116 +870,115 @@
     c2keyBottomLayer.layer.cornerRadius = 5;
     [self.view addSubview:c2keyBottomLayer];
     
-    c2Key = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, w, h)];
+    c2Key = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
   //  c2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
     c2Key.layer.cornerRadius = 5;
     c2Key.tag = 7;
-    [c2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [c2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [c2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [c2Key addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [c2Key addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [c2keyBottomLayer addSubview:c2Key];
     [glowKeys addObject:c2Key];
     
-    UIButton * csBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * csBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    
     csBlackKey.backgroundColor = [UIColor blackColor];
     csBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:csBlackKey];
     
-    csKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    csKey = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     csKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     csKey.layer.cornerRadius = 5;
     csKey.tag = 8;
-    [csKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [csKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [csKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [csKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [csKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [csBlackKey addSubview:csKey];
     [glowKeys addObject:csKey];
     
-    UIButton * dsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*2-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * dsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*2)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     dsBlackKey.backgroundColor = [UIColor blackColor];
     dsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:dsBlackKey];
     
-    dsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    dsKey = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     dsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     dsKey.layer.cornerRadius = 5;
     dsKey.tag = 9;
-    [dsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [dsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [dsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [dsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [dsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [dsBlackKey addSubview:dsKey];
     [glowKeys addObject:dsKey];
     
-    UIButton * fsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*4-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * fsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*4)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     fsBlackKey.backgroundColor = [UIColor blackColor];
     fsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:fsBlackKey];
     
-    fsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    fsKey = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     fsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     fsKey.layer.cornerRadius = 5;
     fsKey.tag = 10;
-    [fsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [fsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [fsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [fsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [fsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [fsBlackKey addSubview:fsKey];
     [glowKeys addObject:fsKey];
     
-    UIButton * gsBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*5-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * gsBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*5)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     gsBlackKey.backgroundColor = [UIColor blackColor];
     gsBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:gsBlackKey];
     
-    gsKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    gsKey = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     gsKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     gsKey.layer.cornerRadius = 5;
     gsKey.tag = 11;
-    [gsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [gsKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [gsKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [gsKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [gsKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [gsBlackKey addSubview:gsKey];
     [glowKeys addObject:gsKey];
     
-    UIButton * asBlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*6-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * asBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*6)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     asBlackKey.backgroundColor = [UIColor blackColor];
     asBlackKey.layer.cornerRadius = 6;
     [self.view addSubview:asBlackKey];
     
-    asKey = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    asKey = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     asKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     asKey.layer.cornerRadius = 5;
     asKey.tag = 12;
-    [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [asKey addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [asKey addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
 //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
 //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [asBlackKey addSubview:asKey];
     [glowKeys addObject:asKey];
     
-    UIButton * cs2BlackKey = [[UIButton alloc]initWithFrame:CGRectMake(4+w*8-(SCREEN_WIDTH/13)/2-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
+    UIView * cs2BlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth*8)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     cs2BlackKey.backgroundColor = [UIColor blackColor];
     cs2BlackKey.layer.cornerRadius = 6;
     [self.view addSubview:cs2BlackKey];
     
-    cs2Key = [[UIButton alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
+    cs2Key = [[UIView alloc]initWithFrame:CGRectMake(2, 2, SCREEN_WIDTH/12, SCREEN_HEIGHT/2.5)];
     cs2Key.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
     cs2Key.layer.cornerRadius = 5;
     cs2Key.tag = 13;
-    [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
-    [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
+//    [cs2Key addTarget:self action:@selector(playNote:) forControlEvents:UIControlEventTouchDown];
+//    [cs2Key addTarget:self action:@selector(playGame:) forControlEvents:UIControlEventTouchDown];
     //    [asKey addTarget:self action:@selector(touchesEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
     //    [asKey addTarget:self action:@selector(touchesCancelled:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [cs2BlackKey addSubview:cs2Key];
     [glowKeys addObject:cs2Key];
     
     [self animateCircle:0 withY:0];
-    
-    int keyWidth = (SCREEN_WIDTH-6)/8;
     
     cLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT * 0.775, keyWidth, keyWidth)];
     cLabel.layer.cornerRadius = keyWidth/2;
@@ -1554,26 +1559,27 @@
 }
 
 
--(void)playNote:(UIButton *)sender
-{
-    if (sender.tag <=7) {
-        sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+-(void)playNote:(UIView *)note withTag:(int)tag
+{    
+    NSLog(@"INCOMING");
+    if (tag <=7) {
+        note.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+            note.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
         } completion:^(BOOL finished) {
         }];
-    } else if (sender.tag >=8)
+    } else if (tag >=8)
     {
-        sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.9];
+        note.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.9];
         [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
-            sender.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
+            note.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
         } completion:^(BOOL finished) {
         }];
     }
 
-    [player playSoundWithName:notes[instrument][sender.tag]];
+    [player playSoundWithName:notes[instrument][tag]];
     
-    NSString * key = keys[sender.tag];
+    NSString * key = keys[tag];
     NSLog(@"key %@", key);
 }
 
@@ -1971,6 +1977,182 @@
     
     
     return returnImage;
+}
+
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch= [touches anyObject];
+    
+    if ([touch view] == cKey) [self playNote:cKey withTag:0];
+    if ([touch view] == dKey) [self playNote:dKey withTag:1];
+    if ([touch view] == eKey) [self playNote:eKey withTag:2];
+    if ([touch view] == fKey) [self playNote:fKey withTag:3];
+    if ([touch view] == gKey) [self playNote:gKey withTag:4];
+    if ([touch view] == aKey) [self playNote:aKey withTag:5];
+    if ([touch view] == bKey) [self playNote:bKey withTag:6];
+    if ([touch view] == c2Key)[self playNote:c2Key withTag:7];
+    if ([touch view] == csKey)[self playNote:csKey withTag:8];
+    if ([touch view] == dsKey) [self playNote:dsKey withTag:9];
+    if ([touch view] == fsKey) [self playNote:fsKey withTag:10];
+    if ([touch view] == gsKey) [self playNote:gsKey withTag:11];
+    if ([touch view] == asKey) [self playNote:asKey withTag:12];
+    if ([touch view] == cs2Key) [self playNote:cs2Key withTag:13];
+}
+
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    NSLog(@"self.touchArray %@", self.touchArray);
+    NSArray * touchArrayCopy = [self.touchArray copy];
+    NSLog(@"touchArrayCopy %@", touchArrayCopy);
+
+    UITouch *touch = [touches anyObject];
+    CGPoint location = [touch locationInView:self.view];
+    NSLog(@"x:%f y %f", location.x, location.y);
+    
+    float wkh = SCREEN_HEIGHT*.125-2 + SCREEN_HEIGHT/2.5+4;  //white key height
+    float hwkw = ((SCREEN_WIDTH/12)/2)-2;                    //half of white key width, minus 2 padding
+
+    
+    if (location.x > 3 && location.x < 3+keyWidth && location.y > wkh){
+        if (![touchArrayCopy[0] isEqual: @0]) {
+            [self playNote:cKey withTag:0];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@0];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 5+keyWidth && location.x < 5+keyWidth*2 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @1]) {
+            [self playNote:dKey withTag:1];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@1];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 7+keyWidth*2 && location.x < 7+keyWidth*3 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @2]) {
+            [self playNote:eKey withTag:2];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@2];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 9+keyWidth*3 && location.x < 9+keyWidth*4 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @3]) {
+            [self playNote:fKey withTag:3];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@3];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 11+keyWidth*4 && location.x < 11+keyWidth*5 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @4]) {
+            [self playNote:gKey withTag:4];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@4];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 13+keyWidth*5 && location.x < 13+keyWidth*6 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @5]) {
+            [self playNote:aKey withTag:5];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@5];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 15+keyWidth*6 && location.x < 15+keyWidth*7 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @6]) {
+            [self playNote:bKey withTag:6];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@6];
+        }else{
+            return;
+        }
+    }
+    if (location.x > 17+keyWidth*7 && location.x < 17+keyWidth*8 && location.y > wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @7]) {
+            [self playNote:c2Key withTag:7];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@7];
+        }else{
+            return;
+        }
+    }
+    
+    if (location.x > (4+keyWidth)-hwkw && location.x < (4+keyWidth)+hwkw && location.y < wkh) {
+
+        if (![touchArrayCopy[0] isEqual: @8]) {
+            [self playNote:csKey withTag:8];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@8];
+        }else{
+            return;
+        }
+    }
+    if (location.x > (4+keyWidth*2)-hwkw && location.x < (4+keyWidth*2)+hwkw && location.y < wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @9]) {
+            [self playNote:dsKey withTag:9];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@9];
+        }else{
+            return;
+        }
+    }
+    if (location.x > (4+keyWidth*4)-hwkw && location.x < (4+keyWidth*4)+hwkw && location.y < wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @10]) {
+            [self playNote:fsKey withTag:10];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@10];
+        }else{
+            return;
+        }
+    }
+    if (location.x > (4+keyWidth*5)-hwkw && location.x < (4+keyWidth*5)+hwkw && location.y < wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @11]) {
+            [self playNote:gsKey withTag:11];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@11];
+        }else{
+            return;
+        }
+    }
+    if (location.x > (4+keyWidth*6)-hwkw && location.x < (4+keyWidth*6)+hwkw && location.y < wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @12]) {
+            [self playNote:asKey withTag:12];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@12];
+        }else{
+            return;
+        }
+    }
+    if (location.x > (4+keyWidth*8)-hwkw && location.x < (4+keyWidth*8)+hwkw && location.y < wkh)
+    {
+        if (![touchArrayCopy[0] isEqual: @13]) {
+            [self playNote:cs2Key withTag:13];
+            [self.touchArray removeAllObjects];
+            [self.touchArray addObject:@13];
+        }else{
+            return;
+        }
+    }
 }
 
 

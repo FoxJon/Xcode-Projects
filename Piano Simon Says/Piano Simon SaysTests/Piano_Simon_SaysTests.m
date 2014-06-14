@@ -1,6 +1,6 @@
 //
-//  Piano_Simon_SaysTests.m
-//  Piano Simon SaysTests
+//  Piano SaysTests.m
+//  Piano SaysTests
 //
 //  Created by Jonathan Fox on 5/25/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  PSSInstTableView.h
-//  Piano Simon Says
+//  Piano Says
 //
 //  Created by Jonathan Fox on 6/5/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  PSSANotePlayer.m
-//  Piano Simon Says
+//  Piano Says
 //
 //  Created by Jonathan Fox on 5/25/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.

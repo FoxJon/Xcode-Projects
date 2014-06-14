@@ -208,7 +208,7 @@
 		B0523629193A29A40068F67D /* PSSxView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PSSxView.m; sourceTree = "<group>"; };
 		B06F54EF19357046006B1D72 /* cs2Note.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = cs2Note.mp3; sourceTree = "<group>"; };
 		B094F5B519486E63002D4E15 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piano Simon Says.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0FBA5DD1931FBD800AF1C08 /* piano ♪ says.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "piano ♪ says.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B0FBA5E01931FBD800AF1C08 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B0FBA5E21931FBD800AF1C08 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B0FBA5E41931FBD800AF1C08 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -283,7 +283,7 @@
 		B0FBA5DE1931FBD800AF1C08 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */,
+				B0FBA5DD1931FBD800AF1C08 /* piano ♪ says.app */,
 				B0FBA5F81931FBD800AF1C08 /* Piano Simon SaysTests.xctest */,
 			);
 			name = Products;
@@ -465,9 +465,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B0FBA5DC1931FBD800AF1C08 /* Piano Simon Says */ = {
+		B0FBA5DC1931FBD800AF1C08 /* piano ♪ says */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B0FBA6091931FBD800AF1C08 /* Build configuration list for PBXNativeTarget "Piano Simon Says" */;
+			buildConfigurationList = B0FBA6091931FBD800AF1C08 /* Build configuration list for PBXNativeTarget "piano ♪ says" */;
 			buildPhases = (
 				B0FBA5D91931FBD800AF1C08 /* Sources */,
 				B0FBA5DA1931FBD800AF1C08 /* Frameworks */,
@@ -478,9 +478,9 @@
 			);
 			dependencies = (
 			);
-			name = "Piano Simon Says";
+			name = "piano ♪ says";
 			productName = "Piano Simon Says";
-			productReference = B0FBA5DD1931FBD800AF1C08 /* Piano Simon Says.app */;
+			productReference = B0FBA5DD1931FBD800AF1C08 /* piano ♪ says.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B0FBA5F71931FBD800AF1C08 /* Piano Simon SaysTests */ = {
@@ -531,7 +531,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B0FBA5DC1931FBD800AF1C08 /* Piano Simon Says */,
+				B0FBA5DC1931FBD800AF1C08 /* piano ♪ says */,
 				B0FBA5F71931FBD800AF1C08 /* Piano Simon SaysTests */,
 			);
 		};
@@ -688,7 +688,7 @@
 /* Begin PBXTargetDependency section */
 		B0FBA5FE1931FBD800AF1C08 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = B0FBA5DC1931FBD800AF1C08 /* Piano Simon Says */;
+			target = B0FBA5DC1931FBD800AF1C08 /* piano ♪ says */;
 			targetProxy = B0FBA5FD1931FBD800AF1C08 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -799,6 +799,9 @@
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "85C11FB4-6713-4C78-A67B-9618BD95CF30";
+				"PROVISIONING_PROFILE[sdk=*]" = "85C11FB4-6713-4C78-A67B-9618BD95CF30";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -817,6 +820,8 @@
 				GCC_PREFIX_HEADER = "Piano Simon Says/Piano Simon Says-Prefix.pch";
 				INFOPLIST_FILE = "Piano Simon Says/Piano Simon Says-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "85C11FB4-6713-4C78-A67B-9618BD95CF30";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -873,7 +878,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B0FBA6091931FBD800AF1C08 /* Build configuration list for PBXNativeTarget "Piano Simon Says" */ = {
+		B0FBA6091931FBD800AF1C08 /* Build configuration list for PBXNativeTarget "piano ♪ says" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				B0FBA60A1931FBD800AF1C08 /* Debug */,

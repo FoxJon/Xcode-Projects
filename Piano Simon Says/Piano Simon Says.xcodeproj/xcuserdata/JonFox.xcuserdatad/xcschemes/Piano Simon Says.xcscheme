@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B0FBA5DC1931FBD800AF1C08"
-               BuildableName = "Piano Simon Says.app"
-               BlueprintName = "Piano Simon Says"
+               BuildableName = "piano &#x266a; says.app"
+               BlueprintName = "piano &#x266a; says"
                ReferencedContainer = "container:Piano Simon Says.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,8 +43,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FBA5DC1931FBD800AF1C08"
-            BuildableName = "Piano Simon Says.app"
-            BlueprintName = "Piano Simon Says"
+            BuildableName = "piano &#x266a; says.app"
+            BlueprintName = "piano &#x266a; says"
             ReferencedContainer = "container:Piano Simon Says.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FBA5DC1931FBD800AF1C08"
-            BuildableName = "Piano Simon Says.app"
-            BlueprintName = "Piano Simon Says"
+            BuildableName = "piano &#x266a; says.app"
+            BlueprintName = "piano &#x266a; says"
             ReferencedContainer = "container:Piano Simon Says.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,8 +80,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B0FBA5DC1931FBD800AF1C08"
-            BuildableName = "Piano Simon Says.app"
-            BlueprintName = "Piano Simon Says"
+            BuildableName = "piano &#x266a; says.app"
+            BlueprintName = "piano &#x266a; says"
             ReferencedContainer = "container:Piano Simon Says.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -90,7 +90,7 @@
     UIView * songsTableHeaderView;
     UIView * instTableHeaderView;
     UIView * settingsPage;
-    UIView * headerFrame;
+//   UIView * headerFrame;
 //    UIView * startButtonFrame;
     
     NSArray * keys;
@@ -208,7 +208,7 @@
         settingsButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:16];
         [settingsButton setTitle:@"settings" forState:UIControlStateNormal];
         //settingsButton.backgroundColor = [UIColor redColor];
-        [self.view addSubview:settingsButton];
+        [headerView addSubview:settingsButton];
         
         xView = [[PSSxView alloc]initWithFrame:CGRectMake(settingsPage.frame.size.width*.81, 0, 40, 40)];
         xView.backgroundColor = [UIColor clearColor];
@@ -465,7 +465,7 @@
         
         [self setGameSongTempos:0.9];
         
-//        [self loadListItems];
+        [self loadListItems];
     
         if (self.titleItems == nil) {
             self.titleItems = [
@@ -1163,7 +1163,7 @@
     self.playlength++;
     
     if (self.currentTempo > 0.2) {
-        self.currentTempo = self.currentTempo - 0.049;
+        self.currentTempo = self.currentTempo - 0.045;
     }
     [self setGameSongTempos:self.currentTempo];
     
@@ -1174,7 +1174,7 @@
         [self playRewardSong:0];
         [displayWindow removeFromSuperview];
         [scoreLabel removeFromSuperview];
-        [self.view addSubview:settingsButton];
+        [headerView addSubview:settingsButton];
        // NSLog(@"%@", [self.titleItems[1]objectForKey:@"locked"]);
         if ([[self.titleItems[indexOfGameSongslist]objectForKey:@"locked"] isEqualToString: @"Yes"]) {
             [self.titleItems[indexOfGameSongslist] removeObjectForKey:@"locked"];
@@ -1377,7 +1377,7 @@
         [scoreLabel removeFromSuperview];
         [self rewardDisplay:maxScore withIndex:0];
         [self playRewardSong:0];
-        [self.view addSubview:settingsButton];
+        [headerView addSubview:settingsButton];
         return;
     }
     self.gameOn = NO;
@@ -1388,7 +1388,7 @@
     [headerView addSubview:songsButton];
     [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
     [headerView addSubview:instButton];
-    [self.view addSubview:settingsButton];
+    [headerView addSubview:settingsButton];
     
     UIView * rewardDisplayView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/2-50, SCREEN_WIDTH, 100)];
     rewardDisplayView.backgroundColor = [UIColor clearColor];
@@ -1445,9 +1445,9 @@
 -(void)openSongList
 {
     [self closeInstTableView];
-    [songsButton removeFromSuperview];
+//    [songsButton removeFromSuperview];
 //    [instButton removeFromSuperview];
-    [settingsButton removeFromSuperview];
+//    [settingsButton removeFromSuperview];
     [songsTableHeaderView addSubview:closeSongTableButton];
     
     [songTableView reloadData];
@@ -1464,8 +1464,8 @@
 {
     [self closeSettingsPage];
     [self closeSongTableView];
-    [instButton removeFromSuperview];
-    [startButton removeFromSuperview];
+//    [instButton removeFromSuperview];
+//    [startButton removeFromSuperview];
     [instTableHeaderView addSubview:closeInstTableButton];
     
     [instTableView reloadData];
@@ -1482,7 +1482,7 @@
     self.stopPlaying = NO;
     [closeSongTableButton removeFromSuperview];
     if (songTableView.frame.origin.x < SCREEN_WIDTH && self.isPlaying) {
-        NSLog(@"HERE");
+        [songsButton removeFromSuperview];
         [headerView addSubview:stopButton];
     }else{
         [headerView addSubview:startButton];
@@ -1497,7 +1497,7 @@
         songTableView.frame = CGRectMake(SCREEN_WIDTH, 40, SCREEN_WIDTH*.40, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
         if (self.gameOn == NO) {
-        [self.view addSubview:settingsButton];
+        [headerView addSubview:settingsButton];
         }
     }];
 }
@@ -1512,9 +1512,9 @@
         instTableHeaderView.frame = CGRectMake(-210, 0, 210, 40);
         instTableView.frame = CGRectMake(-210, 40, 210, SCREEN_HEIGHT);
     }completion:^(BOOL finished) {
-        [headerView addSubview:instButton];
-        [headerView addSubview:startButton];
-        [headerView addSubview:songsButton];
+//        [headerView addSubview:instButton];
+//        [headerView addSubview:startButton];
+//        [headerView addSubview:songsButton];
     }];
 }
 
@@ -1522,10 +1522,10 @@
 {
 //    [self closeSongTableView];
     [self closeInstTableView];
-    [songsButton removeFromSuperview];
+//    [songsButton removeFromSuperview];
 //    [stopButton removeFromSuperview];
 //    [instButton removeFromSuperview];
-    [settingsButton removeFromSuperview];
+//    [settingsButton removeFromSuperview];
 
     [UIView animateWithDuration:0.2 animations:^{
 //        [startButton removeFromSuperview];
@@ -1559,8 +1559,8 @@
 //        [headerView addSubview:startButtonFrame];
 //        [self.view insertSubview:instTableHeaderView belowSubview:instTableView];
 //        [headerView addSubview:instButton];
-        [self.view addSubview:settingsButton];
-        [headerView addSubview:songsButton];
+//        [self.view addSubview:settingsButton];
+//        [headerView addSubview:songsButton];
 //        [headerView addSubview:startButton];
 //        [startButtonFrame addSubview:startButton];
         if (self.gameOn) {

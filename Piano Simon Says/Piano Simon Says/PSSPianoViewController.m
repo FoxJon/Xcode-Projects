@@ -30,7 +30,13 @@
 
 @property (nonatomic) float currentTempo;
 
-@property (nonatomic) NSMutableArray * touchArray;
+@property (nonatomic) NSMutableArray * touchArray1;
+@property (nonatomic) NSMutableArray * touchArray2;
+@property (nonatomic) NSMutableArray * touchArray3;
+
+@property (nonatomic) NSMutableArray * touchCount;
+
+@property(nonatomic, getter=isMultipleTouchEnabled) BOOL multipleTouchEnabled;
 
 @end
 
@@ -50,6 +56,14 @@
     UIView * bKey;
     UIView * c2Key;
     UIView * cs2Key;
+    UIView * cKeyBottomLayer;
+    UIView * dKeyBottomLayer;
+    UIView * eKeyBottomLayer;
+    UIView * fKeyBottomLayer;
+    UIView * gKeyBottomLayer;
+    UIView * aKeyBottomLayer;
+    UIView * bKeyBottomLayer;
+    UIView * c2KeyBottomLayer;
     
     UIView * headerView;
     
@@ -160,6 +174,10 @@
     NSDictionary * thisOldManFullArray;
     NSDictionary * threeBlindMiceFullArray;
     NSDictionary * twinkleTwinkleFullArray;
+    
+    UITouch *finger1;
+    UITouch *finger2;
+    UITouch *finger3;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -167,11 +185,16 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         
+        self.multipleTouchEnabled = YES;
+        
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         
         keyWidth = (SCREEN_WIDTH-22)/8;
         
-        self.touchArray = [@[@100]mutableCopy];
+        self.touchArray1 = [@[]mutableCopy];
+        self.touchArray2 = [@[@100]mutableCopy];
+        self.touchArray3 = [@[@100]mutableCopy];
+        self.touchCount = [@[]mutableCopy];
         
         self.currentTempo = 0.9;
 
@@ -746,89 +769,92 @@
     float w = ((SCREEN_WIDTH-(2*4)-(7*2))/8);
     int h = SCREEN_HEIGHT-47;
     
-    UIView * ckeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4, SCREEN_HEIGHT*.135, w, h)];
-    ckeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
-    ckeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:ckeyBottomLayer];
+    cKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4, SCREEN_HEIGHT*.135, w, h)];
+    cKeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
+    cKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:cKeyBottomLayer];
     
     cKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     cKey.layer.cornerRadius = 5;
     cKey.tag = 0;
-    [ckeyBottomLayer addSubview:cKey];
+    [cKeyBottomLayer addSubview:cKey];
     [glowKeys addObject:cKey];
     
-    UIView * dkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w+2, SCREEN_HEIGHT*.135, w, h)];
-    dkeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.004f blue:0.847f alpha:1.0f];
-    dkeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:dkeyBottomLayer];
+    dKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w+2, SCREEN_HEIGHT*.135, w, h)];
+    dKeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.004f blue:0.847f alpha:1.0f];
+    dKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:dKeyBottomLayer];
     
     dKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     dKey.layer.cornerRadius = 5;
     dKey.tag = 1;
-    [dkeyBottomLayer addSubview:dKey];
+    [dKeyBottomLayer addSubview:dKey];
     [glowKeys addObject:dKey];
     
-    UIView * ekeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*2+2*2, SCREEN_HEIGHT*.135, w, h)];
-    ekeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.365f green:0.000f blue:1.000f alpha:1.0f];
-    ekeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:ekeyBottomLayer];
+    eKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*2+2*2, SCREEN_HEIGHT*.135, w, h)];
+    eKeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.365f green:0.000f blue:1.000f alpha:1.0f];
+    eKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:eKeyBottomLayer];
     
     eKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     eKey.layer.cornerRadius = 5;
     eKey.tag = 2;
-    [ekeyBottomLayer addSubview:eKey];
+    [eKeyBottomLayer addSubview:eKey];
     [glowKeys addObject:eKey];
     
-    UIView * fkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*3+2*3, SCREEN_HEIGHT*.135, w, h)];
-    fkeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.008f green:0.965f blue:1.000f alpha:1.0f];
-    fkeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:fkeyBottomLayer];
+    fKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*3+2*3, SCREEN_HEIGHT*.135, w, h)];
+    fKeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.008f green:0.965f blue:1.000f alpha:1.0f];
+    fKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:fKeyBottomLayer];
     
     fKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     fKey.layer.cornerRadius = 5;
     fKey.tag = 3;
-    [fkeyBottomLayer addSubview:fKey];
+    [fKeyBottomLayer addSubview:fKey];
     [glowKeys addObject:fKey];
     
-    UIView * gkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*4+2*4, SCREEN_HEIGHT*.135, w, h)];
-    gkeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.000f green:0.827f blue:0.322f alpha:1.0f];
-    gkeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:gkeyBottomLayer];
+    gKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*4+2*4, SCREEN_HEIGHT*.135, w, h)];
+    gKeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.000f green:0.827f blue:0.322f alpha:1.0f];
+    gKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:gKeyBottomLayer];
     
     gKey = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     gKey.layer.cornerRadius = 5;
     gKey.tag = 4;
-    [gkeyBottomLayer addSubview:gKey];
+    [gKeyBottomLayer addSubview:gKey];
     [glowKeys addObject:gKey];
-    UIView * akeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*5+2*5, SCREEN_HEIGHT*.135, w, h)];
-    akeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.875f green:0.933f blue:0.000f alpha:1.0f];
-    akeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:akeyBottomLayer];
+    
+    aKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*5+2*5, SCREEN_HEIGHT*.135, w, h)];
+    aKeyBottomLayer.backgroundColor = [UIColor colorWithRed:0.875f green:0.933f blue:0.000f alpha:1.0f];
+    aKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:aKeyBottomLayer];
     
     aKey = [[UIView alloc]initWithFrame:CGRectMake(0,0, w, h)];
     aKey.layer.cornerRadius = 5;
     aKey.tag = 5;
-    [akeyBottomLayer addSubview:aKey];
+    [aKeyBottomLayer addSubview:aKey];
     [glowKeys addObject:aKey];
-    UIView * bkeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*6+2*6, SCREEN_HEIGHT*.135, w, h)];
-    bkeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.518f blue:0.000f alpha:1.0f];
-    bkeyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:bkeyBottomLayer];
+    
+    bKeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*6+2*6, SCREEN_HEIGHT*.135, w, h)];
+    bKeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.518f blue:0.000f alpha:1.0f];
+    bKeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:bKeyBottomLayer];
     
     bKey = [[UIView alloc]initWithFrame:CGRectMake(0,0, w, h)];
     bKey.layer.cornerRadius = 5;
     bKey.tag = 6;
-    [bkeyBottomLayer addSubview:bKey];
+    [bKeyBottomLayer addSubview:bKey];
     [glowKeys addObject:bKey];
-    UIView * c2keyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*7+2*7, SCREEN_HEIGHT*.135, w, h)];
-    c2keyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
-    c2keyBottomLayer.layer.cornerRadius = 5;
-    [self.view addSubview:c2keyBottomLayer];
+    
+    c2KeyBottomLayer = [[UIView alloc]initWithFrame:CGRectMake(4+w*7+2*7, SCREEN_HEIGHT*.135, w, h)];
+    c2KeyBottomLayer.backgroundColor = [UIColor colorWithRed:1.000f green:0.008f blue:0.000f alpha:1.0f];
+    c2KeyBottomLayer.layer.cornerRadius = 5;
+    [self.view addSubview:c2KeyBottomLayer];
     
     c2Key = [[UIView alloc]initWithFrame:CGRectMake(0, 0, w, h)];
     c2Key.layer.cornerRadius = 5;
     c2Key.tag = 7;
-    [c2keyBottomLayer addSubview:c2Key];
+    [c2KeyBottomLayer addSubview:c2Key];
     [glowKeys addObject:c2Key];
     UIView * csBlackKey = [[UIView alloc]initWithFrame:CGRectMake((4+keyWidth+1)-((SCREEN_WIDTH/12)/2)-2, SCREEN_HEIGHT*.125-2, SCREEN_WIDTH/12+4, SCREEN_HEIGHT/2.5+4)];
     
@@ -1892,220 +1918,620 @@
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    UITouch *touch= [touches anyObject];
+    [self.touchCount addObject:@1];
     
-    if ([touch view] == cKey){
-        [self playNote:cKey withTag:0];
-        [self playGame:cKey withTag:0];
-    }
-    if ([touch view] == dKey){
-       [self playNote:dKey withTag:1];
-        [self playGame:dKey withTag:1];
-    }
-    if ([touch view] == eKey){
-        [self playNote:eKey withTag:2];
-        [self playGame:eKey withTag:2];
-    }
-    if ([touch view] == fKey){
-        [self playNote:fKey withTag:3];
-        [self playGame:fKey withTag:3];
-    }
-    if ([touch view] == gKey){
-        [self playNote:gKey withTag:4];
-        [self playGame:gKey withTag:4];
-    }
-    if ([touch view] == aKey){
-        [self playNote:aKey withTag:5];
-        [self playGame:aKey withTag:5];
-    }
-    if ([touch view] == bKey){
-        [self playNote:bKey withTag:6];
-        [self playGame:bKey withTag:6];
-    }
-    if ([touch view] == c2Key){
-        [self playNote:c2Key withTag:7];
-        [self playGame:c2Key withTag:7];
-    }
-    if ([touch view] == csKey){
-        [self playNote:csKey withTag:8];
-        [self playGame:csKey withTag:8];
-    }
-    if ([touch view] == dsKey){
-        [self playNote:dsKey withTag:9];
-        [self playGame:dsKey withTag:9];
-    }
-    if ([touch view] == fsKey){
-        [self playNote:fsKey withTag:10];
-        [self playGame:fsKey withTag:10];
-    }
-    if ([touch view] == gsKey){
-        [self playNote:gsKey withTag:11];
-        [self playGame:gsKey withTag:11];
-    }
-    if ([touch view] == asKey){
-        [self playNote:asKey withTag:12];
-        [self playGame:asKey withTag:12];
-    }
-    if ([touch view] == cs2Key){
-        [self playNote:cs2Key withTag:13];
-        [self playGame:cs2Key withTag:13];
+    for (UITouch * touch in touches) {
+        if([self.touchCount count]==1) finger1 = touch;
+        if([self.touchCount count]==2) finger2 = touch;
+        if([self.touchCount count]==3) finger3 = touch;
+    
+        if ([touch view] == cKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@0];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@0];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@0];
+            }
+            [self playNote:cKey withTag:0];
+            [self playGame:cKey withTag:0];
+        }
+        if ([touch view] == dKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@1];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@1];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@1];
+            }
+            [self playNote:dKey withTag:1];
+            [self playGame:dKey withTag:1];
+        }
+        if ([touch view] == eKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@2];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@2];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@2];
+            }
+            [self playNote:eKey withTag:2];
+            [self playGame:eKey withTag:2];
+        }
+        if ([touch view] == fKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@3];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@3];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@3];
+            }
+            [self playNote:fKey withTag:3];
+            [self playGame:fKey withTag:3];
+        }
+        if ([touch view] == gKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@4];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@4];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@4];
+            }
+            [self playNote:gKey withTag:4];
+            [self playGame:gKey withTag:4];
+        }
+        if ([touch view] == aKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@5];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@5];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@5];
+            }
+            [self playNote:aKey withTag:5];
+            [self playGame:aKey withTag:5];
+        }
+        if ([touch view] == bKey){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@6];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@6];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@6];
+            }
+            [self playNote:bKey withTag:6];
+            [self playGame:bKey withTag:6];
+        }
+        if ([touch view] == c2Key){
+            if ([self.touchCount count]==1) {
+                [self.touchArray1 removeAllObjects];
+                [self.touchArray1 addObject:@7];
+            }
+            if ([self.touchCount count]==2) {
+                [self.touchArray2 removeAllObjects];
+                [self.touchArray2 addObject:@7];
+            }
+            if ([self.touchCount count]==3) {
+                [self.touchArray3 removeAllObjects];
+                [self.touchArray3 addObject:@7];
+            }
+            [self playNote:c2Key withTag:7];
+            [self playGame:c2Key withTag:7];
+        }
+        if ([touch view] == csKey){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@8];
+            [self playNote:csKey withTag:8];
+            [self playGame:csKey withTag:8];
+        }
+        if ([touch view] == dsKey){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@9];
+            [self playNote:dsKey withTag:9];
+            [self playGame:dsKey withTag:9];
+        }
+        if ([touch view] == fsKey){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@10];
+            [self playNote:fsKey withTag:10];
+            [self playGame:fsKey withTag:10];
+        }
+        if ([touch view] == gsKey){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@11];
+            [self playNote:gsKey withTag:11];
+            [self playGame:gsKey withTag:11];
+        }
+        if ([touch view] == asKey){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@12];
+            [self playNote:asKey withTag:12];
+            [self playGame:asKey withTag:12];
+        }
+        if ([touch view] == cs2Key){
+            [self.touchArray1 removeAllObjects];
+            [self.touchArray1 addObject:@13];
+            [self playNote:cs2Key withTag:13];
+            [self playGame:cs2Key withTag:13];
+        }
     }
 }
+
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (self.gameOn) {
         return;
     }else{
-        NSArray * touchArrayCopy = [self.touchArray copy];
-
-        UITouch *touch = [touches anyObject];
-        CGPoint location = [touch locationInView:self.view];
+        NSArray * touchArray1Copy = [self.touchArray1 copy];
+        NSArray * touchArray2Copy = [self.touchArray2 copy];
+        NSArray * touchArray3Copy = [self.touchArray3 copy];
         
+        UITouch *touch1 = [touches anyObject];
+        CGPoint location1 = [touch1 locationInView:self.view];
+
         float wkh = SCREEN_HEIGHT*.125-2 + SCREEN_HEIGHT/2.5+4;  //white key height
         float hwkw = ((SCREEN_WIDTH/12)/2)-2;                    //half of white key width, minus 2 padding
 
-        
-        if (location.x > 3 && location.x < 3+keyWidth && location.y > wkh){
-            if (![touchArrayCopy[0] isEqual: @0]) {
-                [self playNote:cKey withTag:0];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@0];
-            }else{
-                return;
+        for (UITouch* touch in touches) {
+            if (location1.x > 3 && location1.x < 3+keyWidth && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @0]){
+                            [self playNote:cKey withTag:0];
+                            [self.touchArray1 removeAllObjects];
+                            [self.touchArray1 addObject:@0];
+                        }else{
+                            return;
+                        }
+                    }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @0]) {
+                        [self playNote:cKey withTag:0];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@0];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @0]) {
+                        [self playNote:cKey withTag:0];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@0];
+                    }else{
+                        return;
+                    }
+                }
             }
-        }
-        if (location.x > 5+keyWidth && location.x < 5+keyWidth*2 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @1]) {
-                [self playNote:dKey withTag:1];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@1];
-            }else{
-                return;
+            
+            if (location1.x > 5+keyWidth && location1.x < 5+keyWidth*2 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @1]){
+                        [self playNote:dKey withTag:1];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@1];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @1]) {
+                        [self playNote:dKey withTag:1];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@1];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @1]) {
+                        [self playNote:dKey withTag:1];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@1];
+                    }else{
+                        return;
+                    }
+                }
             }
-        }
-        if (location.x > 7+keyWidth*2 && location.x < 7+keyWidth*3 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @2]) {
-                [self playNote:eKey withTag:2];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@2];
-            }else{
-                return;
-            }
-        }
-        if (location.x > 9+keyWidth*3 && location.x < 9+keyWidth*4 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @3]) {
-                [self playNote:fKey withTag:3];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@3];
-            }else{
-                return;
-            }
-        }
-        if (location.x > 11+keyWidth*4 && location.x < 11+keyWidth*5 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @4]) {
-                [self playNote:gKey withTag:4];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@4];
-            }else{
-                return;
-            }
-        }
-        if (location.x > 13+keyWidth*5 && location.x < 13+keyWidth*6 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @5]) {
-                [self playNote:aKey withTag:5];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@5];
-            }else{
-                return;
-            }
-        }
-        if (location.x > 15+keyWidth*6 && location.x < 15+keyWidth*7 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @6]) {
-                [self playNote:bKey withTag:6];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@6];
-            }else{
-                return;
-            }
-        }
-        if (location.x > 17+keyWidth*7 && location.x < 17+keyWidth*8 && location.y > wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @7]) {
-                [self playNote:c2Key withTag:7];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@7];
-            }else{
-                return;
-            }
-        }
-        
-        if (location.x > (4+keyWidth)-hwkw && location.x < (4+keyWidth)+hwkw && location.y < wkh) {
 
-            if (![touchArrayCopy[0] isEqual: @8]) {
-                [self playNote:csKey withTag:8];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@8];
-            }else{
-                return;
+            if (location1.x > 7+keyWidth*2 && location1.x < 7+keyWidth*3 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @2]){
+                        [self playNote:eKey withTag:2];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@2];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @2]) {
+                        [self playNote:eKey withTag:2];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@2];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @2]) {
+                        [self playNote:eKey withTag:2];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@2];
+                    }else{
+                        return;
+                    }
+                }
+            }
+        
+            if (location1.x > 9+keyWidth*3 && location1.x < 9+keyWidth*4 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @3]){
+                        [self playNote:fKey withTag:3];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@3];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @3]) {
+                        [self playNote:fKey withTag:3];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@3];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @3]) {
+                        [self playNote:fKey withTag:3];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@3];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            
+            if (location1.x > 11+keyWidth*4 && location1.x < 11+keyWidth*5 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @4]){
+                        [self playNote:gKey withTag:4];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@4];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @4]) {
+                        [self playNote:gKey withTag:4];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@4];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @4]) {
+                        [self playNote:gKey withTag:4];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@4];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            
+            if (location1.x > 13+keyWidth*5 && location1.x < 13+keyWidth*6 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @5]){
+                        [self playNote:aKey withTag:5];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@5];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @5]) {
+                        [self playNote:aKey withTag:5];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@5];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @5]) {
+                        [self playNote:aKey withTag:5];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@5];
+                    }else{
+                        return;
+                    }
+                }
+            }
+        
+            if (location1.x > 15+keyWidth*6 && location1.x < 15+keyWidth*7 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @6]){
+                        [self playNote:bKey withTag:6];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@6];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @6]) {
+                        [self playNote:bKey withTag:6];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@6];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @6]) {
+                        [self playNote:bKey withTag:6];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@6];
+                    }else{
+                        return;
+                    }
+                }
+            }
+        
+            if (location1.x > 17+keyWidth*7 && location1.x < 17+keyWidth*8 && location1.y > wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @7]){
+                        [self playNote:c2Key withTag:7];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@7];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @7]) {
+                        [self playNote:c2Key withTag:7];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@7];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @7]) {
+                        [self playNote:c2Key withTag:7];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@7];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            if (location1.x > (4+keyWidth)-hwkw && location1.x < (4+keyWidth)+hwkw && location1.y < wkh) {
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @8]){
+                        [self playNote:csKey withTag:8];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@8];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @8]) {
+                        [self playNote:csKey withTag:8];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@8];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @8]) {
+                        [self playNote:csKey withTag:8];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@8];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            if (location1.x > (4+keyWidth*2)-hwkw && location1.x < (4+keyWidth*2)+hwkw && location1.y < wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @9]){
+                        [self playNote:dsKey withTag:9];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@9];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @9]) {
+                        [self playNote:dsKey withTag:9];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@9];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @9]) {
+                        [self playNote:dsKey withTag:9];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@9];
+                    }else{
+                        return;
+                    }
+                }
+            }
+        if (location1.x > (4+keyWidth*4)-hwkw && location1.x < (4+keyWidth*4)+hwkw && location1.y < wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @10]){
+                        [self playNote:fsKey withTag:10];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@10];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @10]) {
+                        [self playNote:fsKey withTag:10];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@10];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @10]) {
+                        [self playNote:fsKey withTag:10];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@10];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            if (location1.x > (4+keyWidth*5)-hwkw && location1.x < (4+keyWidth*5)+hwkw && location1.y < wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @11]){
+                        [self playNote:gsKey withTag:11];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@11];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @11]) {
+                        [self playNote:gsKey withTag:11];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@11];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @11]) {
+                        [self playNote:gsKey withTag:11];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@11];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            if (location1.x > (4+keyWidth*6)-hwkw && location1.x < (4+keyWidth*6)+hwkw && location1.y < wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @12]){
+                        [self playNote:asKey withTag:12];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@12];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @12]) {
+                        [self playNote:asKey withTag:12];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@12];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @12]) {
+                        [self playNote:asKey withTag:12];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@12];
+                    }else{
+                        return;
+                    }
+                }
+            }
+            if (location1.x > (4+keyWidth*8)-hwkw && location1.x < (4+keyWidth*8)+hwkw && location1.y < wkh){
+                if(finger1 == touch){
+                    if (![touchArray1Copy[0] isEqual: @13]){
+                        [self playNote:cs2Key withTag:13];
+                        [self.touchArray1 removeAllObjects];
+                        [self.touchArray1 addObject:@13];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger2 == touch){
+                    if (![touchArray2Copy[0] isEqual: @13]) {
+                        [self playNote:cs2Key withTag:13];
+                        [self.touchArray2 removeAllObjects];
+                        [self.touchArray2 addObject:@13];
+                    }else{
+                        return;
+                    }
+                }
+                if(finger3 == touch){
+                    if (![touchArray3Copy[0] isEqual: @13]) {
+                        [self playNote:cs2Key withTag:13];
+                        [self.touchArray3 removeAllObjects];
+                        [self.touchArray3 addObject:@13];
+                    }else{
+                        return;
+                    }
+                }
             }
         }
-        if (location.x > (4+keyWidth*2)-hwkw && location.x < (4+keyWidth*2)+hwkw && location.y < wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @9]) {
-                [self playNote:dsKey withTag:9];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@9];
-            }else{
-                return;
-            }
-        }
-        if (location.x > (4+keyWidth*4)-hwkw && location.x < (4+keyWidth*4)+hwkw && location.y < wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @10]) {
-                [self playNote:fsKey withTag:10];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@10];
-            }else{
-                return;
-            }
-        }
-        if (location.x > (4+keyWidth*5)-hwkw && location.x < (4+keyWidth*5)+hwkw && location.y < wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @11]) {
-                [self playNote:gsKey withTag:11];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@11];
-            }else{
-                return;
-            }
-        }
-        if (location.x > (4+keyWidth*6)-hwkw && location.x < (4+keyWidth*6)+hwkw && location.y < wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @12]) {
-                [self playNote:asKey withTag:12];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@12];
-            }else{
-                return;
-            }
-        }
-        if (location.x > (4+keyWidth*8)-hwkw && location.x < (4+keyWidth*8)+hwkw && location.y < wkh)
-        {
-            if (![touchArrayCopy[0] isEqual: @13]) {
-                [self playNote:cs2Key withTag:13];
-                [self.touchArray removeAllObjects];
-                [self.touchArray addObject:@13];
-            }else{
-                return;
-            }
-        }
+    }
+}
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    for (UITouch* touch in touches) {
+        [self.touchCount removeLastObject];
+        if(finger1 == touch) finger1 = nil;
+        if(finger2 == touch) finger2 = nil;
+        if(finger3 == touch) finger3 = nil;
     }
 }
 

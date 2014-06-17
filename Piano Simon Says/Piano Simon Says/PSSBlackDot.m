@@ -25,24 +25,7 @@
     [[UIColor blackColor] set];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
-//    CGContextSetLineWidth(context, 1.0);
-//    
-//    CGContextClearRect(context, rect);
-//        
-//    
-//    CGContextMoveToPoint(context, 6.5, 13);
-//    CGContextAddLineToPoint(context, 22.5, 13);
-//    
-//    CGContextMoveToPoint(context, 6.5, 20);
-//    CGContextAddLineToPoint(context, 22.5, 20);
-//    
-//    CGContextMoveToPoint(context, 6.5, 27);
-//    CGContextAddLineToPoint(context, 22.5, 27);
-//    
-//    CGContextStrokePath(context);
-    
-    
-//    [[UIColor colorWithWhite:1.0 alpha:0.2] set];
+
     CGContextFillEllipseInRect(context, CGRectMake(0, 0, 10.5, 10.5));
     
     CGContextStrokePath(context);

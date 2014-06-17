@@ -1488,13 +1488,13 @@
     }else{
         UIView * currentGlowKey = glowKeys[indexOfKeyView];
 
-        if (indexOfKeyView <=8) {
+        if (indexOfKeyView <=7) {
             currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:1.0];
             [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{
                 currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
             } completion:^(BOOL finished) {
             }];
-        } else if (indexOfKeyView >=9)
+        } else if (indexOfKeyView >=8)
         {
             currentGlowKey.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.9];
             [UIView animateWithDuration:0.4 delay:0.0 options:UIViewAnimationOptionAllowUserInteraction animations:^{

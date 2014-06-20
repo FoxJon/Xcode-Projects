@@ -68,7 +68,6 @@
 {
     [self.tableView reloadData];
     NSLog(@"refreshTableView");
-
 }
 
 - (void)viewDidLoad
@@ -107,13 +106,24 @@
                 @"status":status,
                 @"category":category
             }];
+        }
+    [[BTAData mainData] loadListItems];
+    
+    if (self.venueProfiles == nil)
+    {
+        [[BTAData mainData] loadListItems];
+        self.venueProfiles = [BTAData mainData].listItems;
+    }else if ([BTAData mainData].listItems == nil && self.venueProfiles == nil){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Sorry" message: @"Not connected to internet. Please try again later." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }else{
+        [self.tableView reloadData];
     }
-    [self.tableView reloadData];
+
     [lmanager stopUpdatingLocation];
     
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
     [self.venueProfiles sortUsingDescriptors:@[sort]];
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

@@ -13,5 +13,9 @@
 +(BTAData *)mainData;
 
 @property (nonatomic) int selectedCell;
+@property (nonatomic) NSMutableArray * listItems;
+
+- (void)saveData;
+- (void) loadListItems;
 
 @end

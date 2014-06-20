@@ -23,6 +23,7 @@
     MKMapView * fsMap;
     CLLocationManager * lmanager;
     CLLocation * currentLocation;
+    NSMutableArray * sortedAnnotationInfoArray;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,6 +67,26 @@
     [fsMap addAnnotation:annotation];
     
     NSArray * venues = [BTAFourSquareRequest getVenuesWithLat:currentLocation.coordinate.latitude andLong:currentLocation.coordinate.longitude];
+    
+    for (NSDictionary * venue in venues) {
+        
+        NSDictionary * venueInfo = venue[@"venue"];
+        
+//        NSDictionary * icon = venueInfo[@"categories"][0][@"icon"][@"prefix"];
+        NSDictionary * nameInfo = venueInfo[@"name"];
+        NSDictionary * distance = venueInfo[@"location"][@"distance"];
+//        NSDictionary * status = venueInfo[@"hours"][@"isOpen"];
+//        NSDictionary * category = venueInfo[@"categories"][0][@"shortName"];
+        
+        sortedAnnotationInfoArray = [@[]mutableCopy];
+        [sortedAnnotationInfoArray addObject:@{
+                                @"name":nameInfo,
+                                @"distance":distance,
+                                }];
+    }
+    
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
+    [sortedAnnotationInfoArray sortUsingDescriptors:@[sort]];
     
     [self createMapAnnotationsWithVenues:venues andLocation:currentLocation.coordinate];
     

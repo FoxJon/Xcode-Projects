@@ -57,51 +57,88 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    currentLocation = [locations firstObject];
+    [lmanager stopUpdatingLocation];
+    
+    NSLog(@"locations %@", locations);
+    
+    if (locations == nil) {
+        NSLog(@"NO LOCATION");
+        
+        for (NSDictionary * location in [BTAData mainData].listItems) {
+            currentLocation = location[@"current"];
+        }
+    }else{
+        currentLocation = [locations firstObject];
+        NSLog(@"WHY ARE YOU HERE?");
+    }
+
 
     BTAAnnotation * annotation = [[BTAAnnotation alloc]initWithCoordinate:currentLocation.coordinate];
-    
+
     annotation.title = @"YOU ARE HERE";
     annotation.subtitle = @"Wahooey!";
     
+    [fsMap removeAnnotation:annotation];
     [fsMap addAnnotation:annotation];
+
+    NSArray * venues = [BTAData mainData].listItems;  //[BTAFourSquareRequest getVenuesWithLat:currentLocation.coordinate.latitude andLong:currentLocation.coordinate.longitude];
     
-    NSArray * venues = [BTAFourSquareRequest getVenuesWithLat:currentLocation.coordinate.latitude andLong:currentLocation.coordinate.longitude];
-    
-    for (NSDictionary * venue in venues) {
-        
-        NSDictionary * venueInfo = venue[@"venue"];
-        
-//        NSDictionary * icon = venueInfo[@"categories"][0][@"icon"][@"prefix"];
-        NSDictionary * nameInfo = venueInfo[@"name"];
-        NSDictionary * distance = venueInfo[@"location"][@"distance"];
-//        NSDictionary * status = venueInfo[@"hours"][@"isOpen"];
-//        NSDictionary * category = venueInfo[@"categories"][0][@"shortName"];
-        
-        sortedAnnotationInfoArray = [@[]mutableCopy];
-        [sortedAnnotationInfoArray addObject:@{
-                                @"name":nameInfo,
-                                @"distance":distance,
-                                }];
-    }
-    
-    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
-    [sortedAnnotationInfoArray sortUsingDescriptors:@[sort]];
+    NSLog(@"%@", venues);
     
     [self createMapAnnotationsWithVenues:venues andLocation:currentLocation.coordinate];
-    
 }
 
 -(void)createMapAnnotationsWithVenues:(NSArray *)venues andLocation:(CLLocationCoordinate2D)coordinate
 {
+    if (currentLocation == nil) {
+        NSLog(@"NO LOCATION");
+        
+        for (NSDictionary * location in [BTAData mainData].listItems) {
+            currentLocation = location[@"current"];
+        }
+    }
     double minLat = coordinate.latitude,
     minLong = coordinate.longitude,
     maxLat = coordinate.latitude,
     maxLong = coordinate.longitude;
-    
+
     int index = [BTAData mainData].selectedCell;
     
-    NSDictionary * locationInfo = venues[index][@"venue"][@"location"];
+    sortedAnnotationInfoArray = [@[]mutableCopy];
+    
+    for (NSDictionary * venue in venues) {
+    
+        NSDictionary * venueInfo = venue[@"venue"];
+
+        NSDictionary * nameInfo = venueInfo[@"name"];
+        NSDictionary * distance = venueInfo[@"location"][@"distance"];
+        NSDictionary * location = venueInfo[@"location"];
+
+        [sortedAnnotationInfoArray addObject:@{
+                                @"name":nameInfo,
+                                @"distance":distance,
+                                @"location":location,
+                                    }];
+        }
+    
+    if ([sortedAnnotationInfoArray count] == 0)
+    {
+        NSLog(@"venues == nil");
+        [[BTAData mainData] loadListItems];
+        NSLog(@"Items loaded from singleton");
+        sortedAnnotationInfoArray = [BTAData mainData].listItems;
+    }else if ([[BTAData mainData].listItems count] == 0 && [sortedAnnotationInfoArray count] == 0){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Sorry" message: @"Not connected to internet. Please try again later." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }else{
+        [BTAData mainData].listItems = sortedAnnotationInfoArray;
+    }
+        NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
+        [sortedAnnotationInfoArray sortUsingDescriptors:@[sort]];
+ //   NSLog(@"sortedAnnotationInfoArray %@", sortedAnnotationInfoArray);
+
+    NSDictionary * locationInfo = sortedAnnotationInfoArray[index][@"location"];
+//    NSLog(@"locationInfo %@", locationInfo);
 
     double latitude = [locationInfo[@"lat"]doubleValue];
     double longitude = [locationInfo[@"lng"]doubleValue];
@@ -115,8 +152,8 @@
     
     [annotation setCoordinate:CLLocationCoordinate2DMake(latitude, longitude)];
     
-    [annotation setTitle:venues[index][@"venue"][@"name"]];
-    [annotation setSubtitle:venues[index][@"venue"][@"location"][@"address"]];
+    [annotation setTitle:sortedAnnotationInfoArray[index][@"name"]];
+    [annotation setSubtitle:sortedAnnotationInfoArray[index][@"location"][@"address"]];
 
 
     [fsMap addAnnotation:annotation];

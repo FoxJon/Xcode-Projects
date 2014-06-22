@@ -23,25 +23,31 @@
     CLLocationManager * lmanager;
     CLLocation * currentLocation;
     NSArray * venueProfilesCopy;
+    UIActivityIndicatorView *spinner;
 }
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
-        
+                
         lmanager = [[CLLocationManager alloc]init];
         lmanager.delegate = self;
         
         [lmanager startUpdatingLocation];
+        NSLog(@"startUpdatingLocation");
+        
+        spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        spinner.center = CGPointMake(160, 125);
+        spinner.hidesWhenStopped = YES;
+        [spinner setColor:[UIColor lightGrayColor]];
+        [self.view addSubview:spinner];
+        [spinner startAnimating];
     }
-    
-   
-    
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -56,12 +62,6 @@
     self.tableView.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0);
     
      [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshTableView) name:UIApplicationWillEnterForegroundNotification object:[UIApplication sharedApplication]];
-}
-
--(void) viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 -(void)refreshTableView
@@ -83,47 +83,69 @@
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
+    [lmanager stopUpdatingLocation];
+
     self.venueProfiles = [@[]mutableCopy];
     
     currentLocation = [locations firstObject];
     
     NSArray * venues = [BTAFourSquareRequest getVenuesWithLat:currentLocation.coordinate.latitude andLong:currentLocation.coordinate.longitude];
+    NSLog(@"LOADING");
     
     for (NSDictionary * venue in venues) {
-    
+  //      NSLog(@"%@", venue);
         NSDictionary * venueInfo = venue[@"venue"];
         
         NSDictionary * icon = venueInfo[@"categories"][0][@"icon"][@"prefix"];
         NSDictionary * nameInfo = venueInfo[@"name"];
+        NSDictionary * location = venueInfo[@"location"];
         NSDictionary * distance = venueInfo[@"location"][@"distance"];
         NSDictionary * status = venueInfo[@"hours"][@"isOpen"];
         NSDictionary * category = venueInfo[@"categories"][0][@"shortName"];
         
+        if (status == nil) {
+            status = @{@"nil":@""};
+        }
+
         [self.venueProfiles addObject:@{
                 @"icon": icon,
                 @"name":nameInfo,
+                @"location":location,
                 @"distance":distance,
                 @"status":status,
-                @"category":category
+                @"category":category,
+                @"current":currentLocation
             }];
         }
-    [[BTAData mainData] loadListItems];
     
-    if (self.venueProfiles == nil)
+    if ([self.venueProfiles count] == 0)
     {
+        NSLog(@"venues == nil");
         [[BTAData mainData] loadListItems];
+        NSLog(@"Items loaded from singleton");
         self.venueProfiles = [BTAData mainData].listItems;
-    }else if ([BTAData mainData].listItems == nil && self.venueProfiles == nil){
+    }else if ([[BTAData mainData].listItems count] == 0 && [self.venueProfiles count] == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Sorry" message: @"Not connected to internet. Please try again later." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }else{
-        [self.tableView reloadData];
+        [BTAData mainData].listItems = self.venueProfiles;
+        [[BTAData mainData]saveData];
     }
-
-    [lmanager stopUpdatingLocation];
-    
+        
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
     [self.venueProfiles sortUsingDescriptors:@[sort]];
+    NSLog(@"SORTING");
+    
+    [self.tableView reloadData];
+    NSLog(@"RELOAD TABLEVIEW");
+    
+    NSLog(@"STOP LOADING");
+    [spinner removeFromSuperview];
+}
+
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    NSLog(@"ERROR: %@", error);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -138,7 +160,6 @@
     if (cell == nil) {
         cell = [[BTATableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     cell.index = self.venueProfiles[indexPath.row];
     
     return cell;
@@ -153,6 +174,5 @@
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
-
 
 @end

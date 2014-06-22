@@ -77,9 +77,9 @@
     businessImage.image = image;
     
     businessName.text = index[@"name"];
-    
-    int feet = (int)index[@"distance"];
-    float miles = feet * 0.0001893939;
+
+    int meters = [index[@"distance"]intValue];
+    float miles = meters * 0.00062137;
     NSString * distance = [NSString stringWithFormat:@"%.02f miles away", miles];
     businessDistance.text = distance;
     

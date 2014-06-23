@@ -35,7 +35,6 @@
         lmanager.delegate = self;
         
         [lmanager startUpdatingLocation];
-        NSLog(@"startUpdatingLocation");
         
         spinner = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         spinner.center = CGPointMake(160, 125);
@@ -67,7 +66,6 @@
 -(void)refreshTableView
 {
     [self.tableView reloadData];
-    NSLog(@"refreshTableView");
 }
 
 - (void)viewDidLoad
@@ -90,10 +88,9 @@
     currentLocation = [locations firstObject];
     
     NSArray * venues = [BTAFourSquareRequest getVenuesWithLat:currentLocation.coordinate.latitude andLong:currentLocation.coordinate.longitude];
-    NSLog(@"LOADING");
     
     for (NSDictionary * venue in venues) {
-  //      NSLog(@"%@", venue);
+        
         NSDictionary * venueInfo = venue[@"venue"];
         
         NSDictionary * icon = venueInfo[@"categories"][0][@"icon"][@"prefix"];
@@ -120,9 +117,7 @@
     
     if ([self.venueProfiles count] == 0)
     {
-        NSLog(@"venues == nil");
         [[BTAData mainData] loadListItems];
-        NSLog(@"Items loaded from singleton");
         self.venueProfiles = [BTAData mainData].listItems;
     }else if ([[BTAData mainData].listItems count] == 0 && [self.venueProfiles count] == 0){
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Sorry" message: @"Not connected to internet. Please try again later." delegate: nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -134,12 +129,9 @@
         
     NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:YES];
     [self.venueProfiles sortUsingDescriptors:@[sort]];
-    NSLog(@"SORTING");
     
     [self.tableView reloadData];
-    NSLog(@"RELOAD TABLEVIEW");
     
-    NSLog(@"STOP LOADING");
     [spinner removeFromSuperview];
 }
 

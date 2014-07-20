@@ -8,9 +8,12 @@
 
 #import "JHFEntryCell.h"
 #import "JHFDiaryEntry.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface JHFEntryCell ()
+
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+
 @property (weak, nonatomic) IBOutlet UILabel *bodyLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 
@@ -38,11 +41,11 @@
     self.locationLabel.text = entry.location;
 
     NSDateFormatter * dateFormatter = [[NSDateFormatter alloc]init];
-    [dateFormatter setDateFormat:@"EEEE, MMMMM d yyyy"];
+    [dateFormatter setDateFormat:@"EEEE MMMM d, yyyy"];
     NSDate * date = [NSDate dateWithTimeIntervalSince1970:entry.date];
 
-    NSLog(@"%@", date);
- //   self.dateLabel.text = [dateFormatter stringFromDate:date];
+    self.dateLabel.text = [dateFormatter stringFromDate:date];
+
     
     if (entry.image) {
         self.mainImageView.image = [UIImage imageWithData:entry.image];
@@ -56,6 +59,14 @@
         self.moodImageView.image = [UIImage imageNamed:@"icn_average"];
     }else if (entry.mood == JHFDiaryEntryMoodBad) {
         self.moodImageView.image = [UIImage imageNamed:@"icn_bad"];
+    }
+    
+    self.mainImageView.layer.cornerRadius = CGRectGetWidth(self.mainImageView.frame)/2.0f;
+    
+    if (entry.location.length > 0) {
+        self.locationLabel.text = entry.location;
+    }else{
+        self.locationLabel.text = @"No location";
     }
 }
 

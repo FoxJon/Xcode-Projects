@@ -46,7 +46,7 @@
         } else {
             self.messages = objects;
             [self.tableView reloadData];
-            NSLog(@"retrieved %d mesages", [self.messages count]);
+            NSLog(@"retrieved %lu mesages", (unsigned long)[self.messages count]);
         }
     }];
 }

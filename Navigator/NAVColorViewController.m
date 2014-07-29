@@ -37,6 +37,16 @@
     UIButton * triangleButton;
     UIButton * diamondButton;
 }
+//
+//- (id)initWithColor:(UIColor *)color
+//{
+//    self = [super initWithNibName:nil bundle:nil];
+//    if(self)
+//    {
+//        self.view.backgroundColor = color;
+//    }
+//    return self;
+//}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

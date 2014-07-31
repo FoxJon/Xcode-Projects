@@ -19,7 +19,7 @@
 @implementation TBAViewController
 {
     UIView * grayBox;
-    UIButton * reset;
+    UIButton * resetButton;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -29,11 +29,11 @@
         
         [self makeGrayBox];
         
-        reset = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT-50, 100, 30)];
-        [reset setTitle:@"RESET" forState:UIControlStateNormal];
-        [reset addTarget:self action:@selector(makeGrayBox) forControlEvents:UIControlEventTouchUpInside];
-        reset.alpha = 0;
-        [self.view addSubview:reset];
+        resetButton = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-50, SCREEN_HEIGHT-70, 100, 60)];
+        [resetButton setTitle:@"RESET" forState:UIControlStateNormal];
+        [resetButton addTarget:self action:@selector(makeGrayBox) forControlEvents:UIControlEventTouchUpInside];
+        resetButton.alpha = 0;
+        [self.view addSubview:resetButton];
     }
     return self;
 }
@@ -65,14 +65,12 @@
     [UIView animateWithDuration:0.4 animations:^{
         grayBox.alpha = 1;
         grayBoxLabel.alpha = 1;
-        reset.alpha = 0;
-    }completion:^(BOOL finished) {
+        resetButton.alpha = 0;
     }];
-    
 }
 
-- (void)handlePan:(UIPanGestureRecognizer *)gestureRecognizer
-{
+- (void)handlePan:(UIPanGestureRecognizer *)gestureRecognizer {
+    
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.animator removeBehavior:self.snap];
     }
@@ -88,31 +86,29 @@
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         
-        NSLog(@"%f", grayBox.center.y);
         if (grayBox.center.x < 0) {
             [UIView animateWithDuration:0.1 animations:^{
                 grayBox.frame = CGRectMake(-200, grayBox.center.y-100, 200, 200);
             }completion:^(BOOL finished) {
-                [grayBox removeFromSuperview];
-                [UIView animateWithDuration:0.4 animations:^{
-                    reset.alpha = 1;
-                }completion:^(BOOL finished) {
-                }];
+                [self removeGrayBoxAndShowResetButton];
             }];
         } else if (grayBox.center.x > SCREEN_WIDTH) {
             [UIView animateWithDuration:0.1 animations:^{
                 grayBox.frame = CGRectMake(SCREEN_WIDTH+200, grayBox.center.y-100, 200, 200);
             }completion:^(BOOL finished) {
-                [grayBox removeFromSuperview];
-                [UIView animateWithDuration:0.4 animations:^{
-                    reset.alpha = 1;
-                }completion:^(BOOL finished) {
-                }];
+                [self removeGrayBoxAndShowResetButton];
             }];
         } else {
             [self.animator addBehavior:self.snap];
         }
     }
+}
+
+-(void)removeGrayBoxAndShowResetButton {
+    [grayBox removeFromSuperview];
+    [UIView animateWithDuration:0.4 animations:^{
+        resetButton.alpha = 1;
+    }];
 }
 
 - (void)didReceiveMemoryWarning

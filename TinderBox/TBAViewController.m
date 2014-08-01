@@ -38,15 +38,15 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-}
 
 - (void)makeGrayBox {
     grayBox = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200)];
     grayBox.backgroundColor = [UIColor darkGrayColor];
     grayBox.layer.cornerRadius = 15;
+    grayBox.layer.shadowColor = [UIColor blackColor].CGColor;
+    grayBox.layer.shadowOpacity = 0.75;
+    grayBox.layer.shadowRadius = 15.0;
+    grayBox.layer.shadowOffset = (CGSize){0.0,20.0};
     grayBox.alpha = 0;
     [self.view addSubview:grayBox];
     
@@ -74,18 +74,40 @@
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         [self.animator removeBehavior:self.snap];
     }
+    
     else if (gestureRecognizer.state == UIGestureRecognizerStateChanged) {
+        
         CGPoint newCenter = grayBox.center;
         newCenter.x += [gestureRecognizer translationInView:self.view].x;
         newCenter.y += [gestureRecognizer translationInView:self.view].y;
         
         grayBox.center = newCenter;
         
-        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+        NSLog(@"%f", gestureRecognizer.view.frame.origin.y);
         
+        // rotation
+        if ([gestureRecognizer translationInView:self.view].y < 100) {
+            grayBox.transform = CGAffineTransformMakeRotation((grayBox.center.x/SCREEN_WIDTH-.5)/3);
+        }
+        else if ([gestureRecognizer translationInView:self.view].y > 100) {
+            grayBox.transform = CGAffineTransformMakeRotation(((SCREEN_WIDTH-grayBox.center.x)/SCREEN_WIDTH-.5)/3);
+        }
+        
+        // alpha
+        if (grayBox.center.x > self.view.frame.origin.x+SCREEN_WIDTH/2) {
+            grayBox.alpha = (SCREEN_WIDTH-grayBox.center.x)/SCREEN_WIDTH+.5;
+        }else if (grayBox.center.x < self.view.frame.origin.x+SCREEN_WIDTH/2) {
+            grayBox.alpha = (grayBox.center.x)/SCREEN_WIDTH+.5;
+        }
+        
+        // velocity
+        if ([gestureRecognizer velocityInView:self.view].x > -500 && [gestureRecognizer velocityInView:self.view].x < 500) {
+            [gestureRecognizer setTranslation:CGPointZero inView:self.view];
+        }
     }
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         
+        //animate off screen or snap back to center
         if (grayBox.center.x < 0) {
             [UIView animateWithDuration:0.1 animations:^{
                 grayBox.frame = CGRectMake(-200, grayBox.center.y-100, 200, 200);
@@ -100,6 +122,9 @@
             }];
         } else {
             [self.animator addBehavior:self.snap];
+            [UIView animateWithDuration:0.4 animations:^{
+                grayBox.alpha = 1;
+            }];
         }
     }
 }

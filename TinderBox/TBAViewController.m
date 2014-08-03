@@ -90,7 +90,6 @@
         
         grayBox.center = newCenter;
         
-        
         // rotation
         if (self.tap > 175) {
             grayBox.transform = CGAffineTransformMakeRotation(((SCREEN_WIDTH-grayBox.center.x)/SCREEN_WIDTH-.5)/3);
@@ -106,6 +105,7 @@
             grayBox.alpha = (grayBox.center.x)/SCREEN_WIDTH+.5;
         }
         
+        //keeps box under finger
         [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     }
     
@@ -113,14 +113,14 @@
         
         //animate off screen or snap back to center
         if (grayBox.center.x < 50) {
-            [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+            [UIView animateWithDuration:0.175 delay:0.0 options:UIViewAnimationOptionCurveEaseIn
                              animations: ^(void) {
-                grayBox.frame = CGRectMake(-300, grayBox.center.y-175, 300, 350);
+                grayBox.frame = CGRectMake(-600, grayBox.center.y-210, 300, 350);
             }completion:^(BOOL finished) {
                 [self removeGrayBoxAndShowResetButton];
             }];
         } else if (grayBox.center.x > SCREEN_WIDTH-50) {
-            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+            [UIView animateWithDuration:0.175 delay:0.0 options:UIViewAnimationOptionCurveEaseIn
                              animations: ^(void) {
                 grayBox.frame = CGRectMake(SCREEN_WIDTH+300, grayBox.center.y-175, 300, 350);
             }completion:^(BOOL finished) {

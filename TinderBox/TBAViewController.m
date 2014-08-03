@@ -13,6 +13,7 @@
 @property UIPanGestureRecognizer * gestureRecognizer;
 @property UISnapBehavior * snap;
 @property UIDynamicAnimator * animator;
+@property float tap;
 
 @end
 
@@ -40,9 +41,9 @@
 
 
 - (void)makeGrayBox {
-    grayBox = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-100, SCREEN_HEIGHT/2-100, 200, 200)];
+    grayBox = [[UIView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/2-150, 70, 300, 350)];
     grayBox.backgroundColor = [UIColor darkGrayColor];
-    grayBox.layer.cornerRadius = 15;
+    grayBox.layer.cornerRadius = 10;
     grayBox.layer.shadowColor = [UIColor blackColor].CGColor;
     grayBox.layer.shadowOpacity = 0.75;
     grayBox.layer.shadowRadius = 15.0;
@@ -51,7 +52,7 @@
     [self.view addSubview:grayBox];
     
     self.animator = [[UIDynamicAnimator alloc]initWithReferenceView:self.view];
-    self.snap = [[UISnapBehavior alloc]initWithItem:grayBox snapToPoint:self.view.center];
+    self.snap = [[UISnapBehavior alloc]initWithItem:grayBox snapToPoint:CGPointMake(SCREEN_WIDTH/2,SCREEN_HEIGHT/2-35)];
     self.gestureRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(handlePan:)];
     [grayBox addGestureRecognizer:self.gestureRecognizer];
     
@@ -69,6 +70,12 @@
     }];
 }
 
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [[event allTouches] anyObject];
+    CGPoint location = [touch locationInView:touch.view];
+    self.tap = location.y;
+}
+
 - (void)handlePan:(UIPanGestureRecognizer *)gestureRecognizer {
     
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
@@ -83,14 +90,13 @@
         
         grayBox.center = newCenter;
         
-        NSLog(@"%f", gestureRecognizer.view.frame.origin.y);
         
         // rotation
-        if ([gestureRecognizer translationInView:self.view].y < 100) {
-            grayBox.transform = CGAffineTransformMakeRotation((grayBox.center.x/SCREEN_WIDTH-.5)/3);
-        }
-        else if ([gestureRecognizer translationInView:self.view].y > 100) {
+        if (self.tap > 175) {
             grayBox.transform = CGAffineTransformMakeRotation(((SCREEN_WIDTH-grayBox.center.x)/SCREEN_WIDTH-.5)/3);
+        }
+        else if (self.tap < 175) {
+            grayBox.transform = CGAffineTransformMakeRotation((grayBox.center.x/SCREEN_WIDTH-.5)/3);
         }
         
         // alpha
@@ -100,23 +106,23 @@
             grayBox.alpha = (grayBox.center.x)/SCREEN_WIDTH+.5;
         }
         
-        // velocity
-        if ([gestureRecognizer velocityInView:self.view].x > -500 && [gestureRecognizer velocityInView:self.view].x < 500) {
-            [gestureRecognizer setTranslation:CGPointZero inView:self.view];
-        }
+        [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     }
+    
     else if (gestureRecognizer.state == UIGestureRecognizerStateEnded) {
         
         //animate off screen or snap back to center
-        if (grayBox.center.x < 0) {
-            [UIView animateWithDuration:0.1 animations:^{
-                grayBox.frame = CGRectMake(-200, grayBox.center.y-100, 200, 200);
+        if (grayBox.center.x < 50) {
+            [UIView animateWithDuration:0.1 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+                             animations: ^(void) {
+                grayBox.frame = CGRectMake(-300, grayBox.center.y-175, 300, 350);
             }completion:^(BOOL finished) {
                 [self removeGrayBoxAndShowResetButton];
             }];
-        } else if (grayBox.center.x > SCREEN_WIDTH) {
-            [UIView animateWithDuration:0.1 animations:^{
-                grayBox.frame = CGRectMake(SCREEN_WIDTH+200, grayBox.center.y-100, 200, 200);
+        } else if (grayBox.center.x > SCREEN_WIDTH-50) {
+            [UIView animateWithDuration:0.2 delay:0.0 options:UIViewAnimationOptionCurveEaseInOut
+                             animations: ^(void) {
+                grayBox.frame = CGRectMake(SCREEN_WIDTH+300, grayBox.center.y-175, 300, 350);
             }completion:^(BOOL finished) {
                 [self removeGrayBoxAndShowResetButton];
             }];

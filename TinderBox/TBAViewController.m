@@ -99,9 +99,9 @@
         }
         
         // alpha
-        if (grayBox.center.x > self.view.frame.origin.x+SCREEN_WIDTH/2) {
+        if (grayBox.center.x > SCREEN_WIDTH/2) {
             grayBox.alpha = (SCREEN_WIDTH-grayBox.center.x)/SCREEN_WIDTH+.5;
-        }else if (grayBox.center.x < self.view.frame.origin.x+SCREEN_WIDTH/2) {
+        }else if (grayBox.center.x < SCREEN_WIDTH/2) {
             grayBox.alpha = (grayBox.center.x)/SCREEN_WIDTH+.5;
         }
         

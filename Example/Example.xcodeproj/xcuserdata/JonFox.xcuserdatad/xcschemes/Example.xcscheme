@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B07550F4197CB89A00DF438F"
-               BuildableName = "Photo Bombers.app"
-               BlueprintName = "Photo Bombers"
-               ReferencedContainer = "container:Photo Bombers.xcodeproj">
+               BlueprintIdentifier = "B015DB87199D710400E638D7"
+               BuildableName = "Example.app"
+               BlueprintName = "Example"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,20 +32,20 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B075510F197CB89A00DF438F"
-               BuildableName = "Photo BombersTests.xctest"
-               BlueprintName = "Photo BombersTests"
-               ReferencedContainer = "container:Photo Bombers.xcodeproj">
+               BlueprintIdentifier = "B015DBA8199D710400E638D7"
+               BuildableName = "ExampleTests.xctest"
+               BlueprintName = "ExampleTests"
+               ReferencedContainer = "container:Example.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B07550F4197CB89A00DF438F"
-            BuildableName = "Photo Bombers.app"
-            BlueprintName = "Photo Bombers"
-            ReferencedContainer = "container:Photo Bombers.xcodeproj">
+            BlueprintIdentifier = "B015DB87199D710400E638D7"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -61,10 +61,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B07550F4197CB89A00DF438F"
-            BuildableName = "Photo Bombers.app"
-            BlueprintName = "Photo Bombers"
-            ReferencedContainer = "container:Photo Bombers.xcodeproj">
+            BlueprintIdentifier = "B015DB87199D710400E638D7"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -79,10 +79,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B07550F4197CB89A00DF438F"
-            BuildableName = "Photo Bombers.app"
-            BlueprintName = "Photo Bombers"
-            ReferencedContainer = "container:Photo Bombers.xcodeproj">
+            BlueprintIdentifier = "B015DB87199D710400E638D7"
+            BuildableName = "Example.app"
+            BlueprintName = "Example"
+            ReferencedContainer = "container:Example.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,18 +1,18 @@
 //
-//  Photo_BombersTests.m
-//  Photo BombersTests
+//  ExampleTests.m
+//  ExampleTests
 //
-//  Created by Jonathan Fox on 7/20/14.
+//  Created by Jonathan Fox on 8/14/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 
-@interface Photo_BombersTests : XCTestCase
+@interface ExampleTests : XCTestCase
 
 @end
 
-@implementation Photo_BombersTests
+@implementation ExampleTests
 
 - (void)setUp
 {

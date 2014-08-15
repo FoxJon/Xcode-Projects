@@ -1,8 +1,8 @@
 //
 //  JHFAppDelegate.h
-//  Photo Bombers
+//  Example
 //
-//  Created by Jonathan Fox on 7/20/14.
+//  Created by Jonathan Fox on 8/14/14.
 //  Copyright (c) 2014 Jon Fox. All rights reserved.
 //
 

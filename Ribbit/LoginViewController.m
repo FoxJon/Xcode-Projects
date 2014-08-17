@@ -22,9 +22,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.navigationItem.hidesBackButton = YES;
+    
+    if ([UIScreen mainScreen].bounds.size.height == 568) {
+        self.backgroundImageView.image = [UIImage imageNamed:@"loginBackground-568h"];
+        
+//        self.userNameField.delegate = self;
+//        self.passwordField.delegate = self;
+    }
 }
 
-
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:YES];
+    
+    self.navigationController.navigationBar.hidden = YES;
+}
 
 /*
 #pragma mark - Navigation
@@ -58,4 +69,11 @@
        }];
     }
 }
+
+#pragma mark - UITextField delegate methods
+
+//-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+//    [textField resignFirstResponder];
+//    return YES;
+//}
 @end

@@ -1,21 +1,19 @@
 {
   "images" : [
     {
-      "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "Icon_58.png",
-      "scale" : "2x"
+      "scale" : "1x",
+      "filename" : "loginBackground.png"
     },
     {
-      "size" : "40x40",
       "idiom" : "iphone",
-      "filename" : "Icon_80.png",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "loginBackground@2x.png"
     },
     {
-      "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Icon_120.png",
+      "filename" : "loginBackground-568h@2x.png",
+      "subtype" : "retina4",
       "scale" : "2x"
     }
   ],

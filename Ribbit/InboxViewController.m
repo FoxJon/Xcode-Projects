@@ -37,6 +37,8 @@
 {
     [super viewWillAppear:animated];
     
+    self.navigationController.navigationBarHidden = NO;
+    
     PFQuery *query = [PFQuery queryWithClassName:@"Messages"];
     [query whereKey:@"recipientIds" equalTo:[[PFUser currentUser] objectId]];
     [query orderByDescending:@"createdAt"];

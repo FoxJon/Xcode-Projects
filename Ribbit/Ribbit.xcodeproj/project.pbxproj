@@ -7,12 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B009CECE19A05AB3003833DE /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B009CECD19A05AB3003833DE /* TPKeyboardAvoidingScrollView.m */; };
+		B009CED119A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B009CED019A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.m */; };
 		B030BC62190D3B73009F5921 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B030BC61190D3B73009F5921 /* FriendsViewController.m */; };
 		B030BC65190D50E9009F5921 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B030BC64190D50E9009F5921 /* CameraViewController.m */; };
-		B030BC6A190D9012009F5921 /* icon_image.png in Resources */ = {isa = PBXBuildFile; fileRef = B030BC66190D9012009F5921 /* icon_image.png */; };
-		B030BC6B190D9012009F5921 /* icon_image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B030BC67190D9012009F5921 /* icon_image@2x.png */; };
-		B030BC6C190D9012009F5921 /* icon_video.png in Resources */ = {isa = PBXBuildFile; fileRef = B030BC68190D9012009F5921 /* icon_video.png */; };
-		B030BC6D190D9012009F5921 /* icon_video@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B030BC69190D9012009F5921 /* icon_video@2x.png */; };
 		B030BC70190D937A009F5921 /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B030BC6F190D937A009F5921 /* ImageViewController.m */; };
 		B03A19AD190C748D00947238 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03A19AC190C748D00947238 /* Foundation.framework */; };
 		B03A19AF190C748D00947238 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03A19AE190C748D00947238 /* CoreGraphics.framework */; };
@@ -27,12 +25,6 @@
 		B03A19D0190C748D00947238 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B03A19CE190C748D00947238 /* InfoPlist.strings */; };
 		B03A19D2190C748D00947238 /* RibbitTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B03A19D1190C748D00947238 /* RibbitTests.m */; };
 		B03A19DC190C74B100947238 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B03A19DB190C74B100947238 /* MainStoryboard.storyboard */; };
-		B03A19E3190C771100947238 /* camera.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19DD190C771100947238 /* camera.png */; };
-		B03A19E4190C771100947238 /* camera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19DE190C771100947238 /* camera@2x.png */; };
-		B03A19E5190C771100947238 /* friends.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19DF190C771100947238 /* friends.png */; };
-		B03A19E6190C771100947238 /* friends@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19E0190C771100947238 /* friends@2x.png */; };
-		B03A19E7190C771100947238 /* inbox.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19E1190C771100947238 /* inbox.png */; };
-		B03A19E8190C771100947238 /* inbox@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B03A19E2190C771100947238 /* inbox@2x.png */; };
 		B03A19EC190C843100947238 /* InboxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B03A19EB190C843100947238 /* InboxViewController.m */; };
 		B03A19EE190C90D400947238 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03A19ED190C90D400947238 /* Parse.framework */; };
 		B03A19F0190C914D00947238 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B03A19EF190C914D00947238 /* AudioToolbox.framework */; };
@@ -60,14 +52,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B009CECC19A05AB2003833DE /* TPKeyboardAvoidingScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingScrollView.h; sourceTree = "<group>"; };
+		B009CECD19A05AB3003833DE /* TPKeyboardAvoidingScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TPKeyboardAvoidingScrollView.m; sourceTree = "<group>"; };
+		B009CECF19A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+TPKeyboardAvoidingAdditions.h"; sourceTree = "<group>"; };
+		B009CED019A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+TPKeyboardAvoidingAdditions.m"; sourceTree = "<group>"; };
 		B030BC60190D3B73009F5921 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendsViewController.h; sourceTree = "<group>"; };
 		B030BC61190D3B73009F5921 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendsViewController.m; sourceTree = "<group>"; };
 		B030BC63190D50E9009F5921 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		B030BC64190D50E9009F5921 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		B030BC66190D9012009F5921 /* icon_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_image.png; sourceTree = "<group>"; };
-		B030BC67190D9012009F5921 /* icon_image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_image@2x.png"; sourceTree = "<group>"; };
-		B030BC68190D9012009F5921 /* icon_video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_video.png; sourceTree = "<group>"; };
-		B030BC69190D9012009F5921 /* icon_video@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_video@2x.png"; sourceTree = "<group>"; };
 		B030BC6E190D937A009F5921 /* ImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
 		B030BC6F190D937A009F5921 /* ImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		B03A19A9190C748D00947238 /* Ribbit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ribbit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -87,12 +79,6 @@
 		B03A19CF190C748D00947238 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B03A19D1190C748D00947238 /* RibbitTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RibbitTests.m; sourceTree = "<group>"; };
 		B03A19DB190C74B100947238 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
-		B03A19DD190C771100947238 /* camera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = camera.png; sourceTree = "<group>"; };
-		B03A19DE190C771100947238 /* camera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera@2x.png"; sourceTree = "<group>"; };
-		B03A19DF190C771100947238 /* friends.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = friends.png; sourceTree = "<group>"; };
-		B03A19E0190C771100947238 /* friends@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "friends@2x.png"; sourceTree = "<group>"; };
-		B03A19E1190C771100947238 /* inbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = inbox.png; sourceTree = "<group>"; };
-		B03A19E2190C771100947238 /* inbox@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "inbox@2x.png"; sourceTree = "<group>"; };
 		B03A19EA190C843100947238 /* InboxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InboxViewController.h; sourceTree = "<group>"; };
 		B03A19EB190C843100947238 /* InboxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InboxViewController.m; sourceTree = "<group>"; };
 		B03A19ED190C90D400947238 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
@@ -150,26 +136,29 @@
 		B03A19A0190C748C00947238 = {
 			isa = PBXGroup;
 			children = (
-				B030BC6E190D937A009F5921 /* ImageViewController.h */,
-				B030BC6F190D937A009F5921 /* ImageViewController.m */,
 				B030BC63190D50E9009F5921 /* CameraViewController.h */,
 				B030BC64190D50E9009F5921 /* CameraViewController.m */,
-				B030BC60190D3B73009F5921 /* FriendsViewController.h */,
-				B030BC61190D3B73009F5921 /* FriendsViewController.m */,
 				B03A1A07190CBE2400947238 /* EditFriendsViewController.h */,
 				B03A1A08190CBE2400947238 /* EditFriendsViewController.m */,
+				B030BC60190D3B73009F5921 /* FriendsViewController.h */,
+				B030BC61190D3B73009F5921 /* FriendsViewController.m */,
+				B030BC6E190D937A009F5921 /* ImageViewController.h */,
+				B030BC6F190D937A009F5921 /* ImageViewController.m */,
+				B03A19EA190C843100947238 /* InboxViewController.h */,
+				B03A19EB190C843100947238 /* InboxViewController.m */,
 				B03A1A01190C9B0F00947238 /* LoginViewController.h */,
 				B03A1A02190C9B0F00947238 /* LoginViewController.m */,
 				B03A1A04190C9B2300947238 /* SignUpViewController.h */,
 				B03A1A05190C9B2300947238 /* SignUpViewController.m */,
-				B03A19EA190C843100947238 /* InboxViewController.h */,
-				B03A19EB190C843100947238 /* InboxViewController.m */,
-				B03A19E9190C772300947238 /* Images */,
+				B009CECC19A05AB2003833DE /* TPKeyboardAvoidingScrollView.h */,
+				B009CECD19A05AB3003833DE /* TPKeyboardAvoidingScrollView.m */,
+				B009CECF19A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.h */,
+				B009CED019A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.m */,
 				B03A19DB190C74B100947238 /* MainStoryboard.storyboard */,
-				B03A19B2190C748D00947238 /* Ribbit */,
-				B03A19CB190C748D00947238 /* RibbitTests */,
 				B03A19AB190C748D00947238 /* Frameworks */,
 				B03A19AA190C748D00947238 /* Products */,
+				B03A19B2190C748D00947238 /* Ribbit */,
+				B03A19CB190C748D00947238 /* RibbitTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -241,23 +230,6 @@
 				B03A19CE190C748D00947238 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		B03A19E9190C772300947238 /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				B030BC66190D9012009F5921 /* icon_image.png */,
-				B030BC67190D9012009F5921 /* icon_image@2x.png */,
-				B030BC68190D9012009F5921 /* icon_video.png */,
-				B030BC69190D9012009F5921 /* icon_video@2x.png */,
-				B03A19DD190C771100947238 /* camera.png */,
-				B03A19DE190C771100947238 /* camera@2x.png */,
-				B03A19DF190C771100947238 /* friends.png */,
-				B03A19E0190C771100947238 /* friends@2x.png */,
-				B03A19E1190C771100947238 /* inbox.png */,
-				B03A19E2190C771100947238 /* inbox@2x.png */,
-			);
-			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,19 +307,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B030BC6C190D9012009F5921 /* icon_video.png in Resources */,
 				B03A19DC190C74B100947238 /* MainStoryboard.storyboard in Resources */,
-				B03A19E5190C771100947238 /* friends.png in Resources */,
-				B030BC6A190D9012009F5921 /* icon_image.png in Resources */,
-				B03A19E6190C771100947238 /* friends@2x.png in Resources */,
-				B03A19E4190C771100947238 /* camera@2x.png in Resources */,
-				B03A19E7190C771100947238 /* inbox.png in Resources */,
 				B03A19B7190C748D00947238 /* InfoPlist.strings in Resources */,
-				B030BC6B190D9012009F5921 /* icon_image@2x.png in Resources */,
-				B03A19E3190C771100947238 /* camera.png in Resources */,
 				B03A19BF190C748D00947238 /* Images.xcassets in Resources */,
-				B03A19E8190C771100947238 /* inbox@2x.png in Resources */,
-				B030BC6D190D9012009F5921 /* icon_video@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,9 +329,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				B03A1A03190C9B0F00947238 /* LoginViewController.m in Sources */,
+				B009CECE19A05AB3003833DE /* TPKeyboardAvoidingScrollView.m in Sources */,
 				B030BC65190D50E9009F5921 /* CameraViewController.m in Sources */,
 				B03A1A06190C9B2300947238 /* SignUpViewController.m in Sources */,
 				B030BC62190D3B73009F5921 /* FriendsViewController.m in Sources */,
+				B009CED119A06052003833DE /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				B03A19BD190C748D00947238 /* AppDelegate.m in Sources */,
 				B03A19B9190C748D00947238 /* main.m in Sources */,
 				B030BC70190D937A009F5921 /* ImageViewController.m in Sources */,

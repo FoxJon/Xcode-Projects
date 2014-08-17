@@ -18,6 +18,8 @@
 //    self.window.backgroundColor = [UIColor whiteColor];
 //    [self.window makeKeyAndVisible];
     
+    [NSThread sleepForTimeInterval:0.5];
+    
     [Parse setApplicationId:@"DiV2gltWUggQeL02jbKZdC879m0R95gkvkNCAV2u"
                   clientKey:@"61VmfAjgtygfYhxHuSsay7LofIK31QrSHaPMEy7s"];
     return YES;

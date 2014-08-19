@@ -8,6 +8,7 @@
 
 #import "InboxViewController.h"
 #import "ImageViewController.h"
+#import "MSCellAccessory.h"
 
 @interface InboxViewController ()
 
@@ -27,6 +28,9 @@
         [self performSegueWithIdentifier:@"showLogin" sender:self];
     }
     
+    self.refreshControl = [[UIRefreshControl alloc]init];
+    [self.refreshControl addTarget:self action:@selector(retrieveMessages) forControlEvents:UIControlEventValueChanged];
+    
 //            PFObject *testObject = [PFObject objectWithClassName:@"TestObject"];
 //            testObject[@"foo"] = @"bar";
 //            [testObject saveInBackground];
@@ -39,18 +43,7 @@
     
     self.navigationController.navigationBarHidden = NO;
     
-    PFQuery *query = [PFQuery queryWithClassName:@"Messages"];
-    [query whereKey:@"recipientIds" equalTo:[[PFUser currentUser] objectId]];
-    [query orderByDescending:@"createdAt"];
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (error) {
-            NSLog(@"Error: %@ %@.", error, [error userInfo]);
-        } else {
-            self.messages = objects;
-            [self.tableView reloadData];
-            NSLog(@"retrieved %lu mesages", (unsigned long)[self.messages count]);
-        }
-    }];
+    [self retrieveMessages];
 }
 
 #pragma mark - Table view data source
@@ -72,9 +65,12 @@
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-
+    
     PFObject *message = [self.messages objectAtIndex:indexPath.row];
     cell.textLabel.text = [message objectForKey:@"senderName"];
+    
+    UIColor *disclosureColor = [UIColor colorWithRed:0.553 green:0.439 blue:0.718 alpha:1.0];
+    cell.accessoryView = [MSCellAccessory accessoryWithType:FLAT_DISCLOSURE_INDICATOR color:disclosureColor];
     
     NSString *fileType = [message objectForKey:@"fileType"];
     if ([fileType isEqualToString:@"image"]) {
@@ -86,7 +82,7 @@
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     self.selectedMessage = [self.messages objectAtIndex:indexPath.row];
     NSString *fileType = [self.selectedMessage objectForKey:@"fileType"];
@@ -121,6 +117,26 @@
         imageViewController.message = self.selectedMessage;
         
     }
+}
+
+#pragma mark - Helper methods
+- (void)retrieveMessages {
+    PFQuery *query = [PFQuery queryWithClassName:@"Messages"];
+    [query whereKey:@"recipientIds" equalTo:[[PFUser currentUser] objectId]];
+    [query orderByDescending:@"createdAt"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@ %@.", error, [error userInfo]);
+        } else {
+            self.messages = objects;
+            [self.tableView reloadData];
+            NSLog(@"retrieved %lu mesages", (unsigned long)[self.messages count]);
+        }
+        
+        if ([self.refreshControl isRefreshing]) {
+            [self.refreshControl endRefreshing];
+        }
+    }];
 }
 
 @end

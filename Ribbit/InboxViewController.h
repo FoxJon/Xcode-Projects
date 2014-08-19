@@ -14,6 +14,7 @@
 
 @property (nonatomic, strong)NSArray *messages;
 @property (nonatomic, strong)PFObject *selectedMessage;
+@property (nonatomic) UIRefreshControl *refreshControl;
 
 - (IBAction)logOut:(id)sender;
 @end

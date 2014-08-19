@@ -22,6 +22,9 @@
     
     [Parse setApplicationId:@"DiV2gltWUggQeL02jbKZdC879m0R95gkvkNCAV2u"
                   clientKey:@"61VmfAjgtygfYhxHuSsay7LofIK31QrSHaPMEy7s"];
+    
+    [self customizeUserInterface];
+    
     return YES;
 }
 
@@ -50,6 +53,37 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Helper methods
+
+-(void)customizeUserInterface {
+//    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0.553f green:0.435f blue:0.718f alpha:1.0f]];
+    
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"navBarBackground"] forBarMetrics:UIBarMetricsDefault];
+    
+    [[UINavigationBar appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil]];
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    
+    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil] forState:UIControlStateNormal];
+    
+    UITabBarController *tabBarController = (UITabBarController *)self.window.rootViewController;
+    UITabBar *tabBar = tabBarController.tabBar;
+    
+    UITabBarItem *tabInbox = [tabBar.items objectAtIndex:0];
+    UITabBarItem *tabFriends = [tabBar.items objectAtIndex:1];
+    UITabBarItem * tabCamera = [tabBar.items objectAtIndex:2];
+    
+    UIImage *inboxImage = [[UIImage imageNamed:@"inbox"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [tabInbox setImage:inboxImage];
+    UIImage *friendsImage = [[UIImage imageNamed:@"friends"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [tabFriends setImage:friendsImage];
+    UIImage *cameraImage = [[UIImage imageNamed:@"camera"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    [tabCamera setImage:cameraImage];
+    
+//    [tabInbox setFinishedSelectedImage:[UIImage imageNamed:@"inbox"] withFinishedUnselectedImage:[UIImage imageNamed:@"inbox"]];
+    
 }
 
 @end
